@@ -3,7 +3,11 @@ import { redirect } from 'next/navigation';
 import { getClerkMetadata } from '@/lib/auth';
 import RoleSelectionClient from './RoleSelectionClient';
 
-export default async function RoleSelectionPage() {
+export default async function RoleSelectionPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ role?: string }>;
+}) {
   const { sessionClaims } = await auth();
   const meta = getClerkMetadata(sessionClaims as Record<string, unknown> | null | undefined);
 
@@ -16,5 +20,8 @@ export default async function RoleSelectionPage() {
     );
   }
 
-  return <RoleSelectionClient />;
+  const { role } = await searchParams;
+  const preselectedRole = role === 'student' || role === 'business' ? role : null;
+
+  return <RoleSelectionClient preselectedRole={preselectedRole} />;
 }

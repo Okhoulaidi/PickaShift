@@ -142,7 +142,7 @@ export async function cancelShift(shiftId: string): Promise<ActionResult> {
         userId: app.student_id,
         title: 'Shift cancelled',
         body: `"${shift.title}" has been cancelled by the business.`,
-        link: '/applications',
+        link: '/dashboard/applications',
       })
     )
   );

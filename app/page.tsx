@@ -110,10 +110,10 @@ export default async function HomePage() {
                 Find 1–4 hour paid shifts that fit perfectly between your classes. Pick one. Work it. Get paid.
               </p>
               <div className="hero-ctas">
-                <Link className="btn btn-primary btn-lg" href="/browse">
+                <Link className="btn btn-primary btn-lg" href="/sign-up?role=student">
                   <Icon name="search" size={18} /> Browse Shifts Near Me
                 </Link>
-                <Link className="btn btn-outline btn-lg" href="/biz/shifts/new">
+                <Link className="btn btn-outline btn-lg" href="/sign-up?role=business">
                   <Icon name="plus" size={18} /> Post a Shift
                 </Link>
               </div>
@@ -199,8 +199,8 @@ export default async function HomePage() {
             </p>
           </div>
           <div className="howit">
-            <StepCol tag="For Students" title="Earn between classes" steps={STUDENT_STEPS} cta="Start earning" href="/sign-up" />
-            <StepCol tag="For Business" title="Staff up in minutes" steps={BIZ_STEPS} alt cta="Post your first shift" href="/sign-up" />
+            <StepCol tag="For Students" title="Earn between classes" steps={STUDENT_STEPS} cta="Start earning" href="/sign-up?role=student" />
+            <StepCol tag="For Business" title="Staff up in minutes" steps={BIZ_STEPS} alt cta="Post your first shift" href="/sign-up?role=business" />
           </div>
         </div>
       </section>
@@ -243,7 +243,7 @@ export default async function HomePage() {
           </div>
           <div className="testi-grid">
             {[
-              { q: 'I picked up three shifts in my first week and got paid the next morning. Genuinely the easiest money I’ve made as a student.', n: 'Sofía G.', r: 'UCM · Barista shifts', av: 'SG', c: '#2B7A55' },
+              { q: "I picked up three shifts in my first week and got paid the next morning. Genuinely the easiest money I've made as a student.", n: 'Sofía G.', r: 'UCM · Barista shifts', av: 'SG', c: '#2B7A55' },
               { q: 'No CV, no awkward interviews. I just filter by the hours between my lectures and apply with one tap.', n: 'Marco R.', r: 'UC3M · Event staff', av: 'MR', c: '#E8401C' },
               { q: 'As a café owner I filled a same-day gap in 20 minutes. The reliability scores make picking people effortless.', n: 'Julia L.', r: 'Café Lola · Chamberí', av: 'JL', c: '#1A1A1A' },
             ].map((t) => (

@@ -44,7 +44,7 @@ export async function applyToShift(shiftId: string): Promise<ActionResult<{ id: 
     userId: shift.business_id,
     title: 'New application',
     body: `A student applied to "${shift.title}".`,
-    link: `/biz/shifts/${shiftId}/applicants`,
+    link: '/biz/applicants',
   });
 
   return { success: true, data: { id: data.id } };
@@ -89,7 +89,7 @@ export async function acceptApplication(applicationId: string): Promise<ActionRe
     userId: application.student_id,
     title: 'Application accepted',
     body: `You were accepted for "${shift.title}".`,
-    link: `/applications`,
+    link: '/dashboard/applications',
   });
 
   return { success: true };
@@ -128,7 +128,7 @@ export async function rejectApplication(applicationId: string): Promise<ActionRe
     userId: application.student_id,
     title: 'Application declined',
     body: `Your application for "${shift.title}" was not accepted.`,
-    link: '/applications',
+    link: '/dashboard/applications',
   });
 
   return { success: true };
@@ -205,7 +205,7 @@ export async function completeApplication(applicationId: string): Promise<Action
     userId: application.student_id,
     title: 'Shift completed',
     body: `"${shift.title}" has been marked complete.`,
-    link: '/applications',
+    link: '/dashboard/applications',
   });
 
   return { success: true };

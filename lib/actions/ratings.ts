@@ -71,7 +71,7 @@ export async function submitRating(input: RatingInput): Promise<ActionResult> {
     userId: input.ratedId,
     title: 'New rating received',
     body: `You received a ${input.score}-star rating.`,
-    link: session.meta!.role === 'student' ? '/profile' : '/biz/dashboard',
+    link: session.meta!.role === 'student' ? '/dashboard/profile' : '/biz/dashboard',
   });
 
   return { success: true };

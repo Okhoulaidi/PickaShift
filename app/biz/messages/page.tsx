@@ -44,6 +44,7 @@ export default async function BizMessagesPage() {
       conversations={items}
       basePath="/biz/messages"
       notif={stats.unreadNotifications}
+      variant="business"
     />
   );
 }

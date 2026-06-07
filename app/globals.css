@@ -458,6 +458,57 @@ h2.section-title{font-weight:900;font-size:clamp(30px,3.6vw,42px);letter-spacing
 .role-card h3{margin:12px 0 6px;font-size:18px;font-weight:900;}
 .role-card p{margin:0;font-size:14px;color:var(--muted);}
 
+/* ===========================================================
+   BUSINESS DARK SIDEBAR (biz-mode)
+   =========================================================== */
+.biz-mode .sidebar{
+  background:#111827;border-right:1px solid rgba(255,255,255,.07);
+}
+.biz-mode .side-logo{
+  border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:20px;margin-bottom:4px;
+}
+/* make logo text white in biz mode */
+.biz-mode .logo-wordmark{color:#fff;}
+.biz-mode .logo-icon path{stroke:#fff;}
+
+.biz-mode .side-link{color:rgba(255,255,255,.55);}
+.biz-mode .side-link .ico{color:rgba(255,255,255,.4);}
+.biz-mode .side-link:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.9);}
+.biz-mode .side-link:hover .ico{color:rgba(255,255,255,.75);}
+.biz-mode .side-link.active{background:rgba(232,64,28,.18);color:#FF6B47;}
+.biz-mode .side-link.active .ico{color:#FF6B47;}
+.biz-mode .side-link .pill{background:var(--primary);color:#fff;}
+
+.biz-mode .side-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);}
+.biz-mode .side-card .sc-row div:first-of-type{color:#fff;}
+.biz-mode .side-card .sc-row div:last-of-type{color:rgba(255,255,255,.5) !important;}
+/* override inline color on sub-text */
+.biz-mode .side-foot [style*="color: var(--muted)"]{color:rgba(255,255,255,.45) !important;}
+
+/* ===========================================================
+   CV UPLOAD
+   =========================================================== */
+.cv-drop-zone{
+  border:2px dashed var(--line-strong);border-radius:14px;padding:36px 24px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  cursor:pointer;transition:border-color .15s,background .15s;
+}
+.cv-drop-zone:hover,.cv-drop-zone.drag{border-color:var(--primary);background:var(--primary-tint);}
+.cv-upload-ico{
+  width:56px;height:56px;border-radius:16px;
+  background:var(--primary-tint);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;
+}
+.cv-file-row{
+  display:flex;align-items:center;gap:14px;
+  background:var(--bg);border-radius:12px;padding:16px;
+}
+.cv-file-ico{
+  flex:none;width:44px;height:44px;border-radius:12px;
+  background:var(--primary-tint);color:var(--primary);
+  display:flex;align-items:center;justify-content:center;
+}
+
 .center-page{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
 .suspended-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:40px;max-width:480px;text-align:center;box-shadow:var(--sh-2);}
 .suspended-card h1{margin:0 0 12px;font-size:28px;font-weight:900;}

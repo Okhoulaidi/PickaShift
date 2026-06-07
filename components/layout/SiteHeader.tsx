@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { Logo } from '@/components/ui/Logo';
 
-const NAV_LINKS = [
+const PUBLIC_NAV_LINKS = [
   { label: 'How it Works', href: '/#how' },
-  { label: 'For Students', href: '/dashboard' },
-  { label: 'For Business', href: '/biz/dashboard' },
+  { label: 'For Students', href: '/sign-up?role=student' },
+  { label: 'For Business', href: '/sign-up?role=business' },
 ] as const;
 
 export interface SiteHeaderProps {
@@ -50,6 +50,9 @@ function AuthActions({ mobile }: { mobile?: boolean }) {
 
 export function SiteHeader({ active }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
+  const { isSignedIn } = useAuth();
+
+  const navLinks = isSignedIn ? [] : PUBLIC_NAV_LINKS;
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -63,7 +66,7 @@ export function SiteHeader({ active }: SiteHeaderProps) {
       <div className="wrap">
         <Logo />
         <nav className="nav-center">
-          {NAV_LINKS.map(({ label, href }) => (
+          {navLinks.map(({ label, href }) => (
             <Link
               key={label}
               href={href}
@@ -75,14 +78,16 @@ export function SiteHeader({ active }: SiteHeaderProps) {
         </nav>
         <div className="header-actions">
           <AuthActions />
-          <button
-            type="button"
-            className="btn btn-icon btn-outline hamburger"
-            aria-label="Menu"
-            onClick={() => setOpen(true)}
-          >
-            <Icon name="menu" size={20} />
-          </button>
+          {!isSignedIn && (
+            <button
+              type="button"
+              className="btn btn-icon btn-outline hamburger"
+              aria-label="Menu"
+              onClick={() => setOpen(true)}
+            >
+              <Icon name="menu" size={20} />
+            </button>
+          )}
         </div>
       </div>
 
@@ -95,7 +100,7 @@ export function SiteHeader({ active }: SiteHeaderProps) {
               <Icon name="x" size={20} />
             </button>
           </div>
-          {NAV_LINKS.map(({ label, href }) => (
+          {navLinks.map(({ label, href }) => (
             <Link
               key={label}
               href={href}

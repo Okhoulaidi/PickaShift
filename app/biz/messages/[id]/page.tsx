@@ -51,6 +51,7 @@ export default async function BizMessageThreadPage({ params }: { params: Promise
       messages={mapped}
       basePath="/biz/messages"
       notif={stats.unreadNotifications}
+      variant="business"
     />
   );
 }

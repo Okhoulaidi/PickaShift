@@ -66,7 +66,7 @@ export function PostShiftClient({ user, stats, defaultDistrict }: PostShiftClien
   }
 
   return (
-    <DashShell
+    <DashShell variant="business"
       nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
       active="Post a Shift"
       user={user}

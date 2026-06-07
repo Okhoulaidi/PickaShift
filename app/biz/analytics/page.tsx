@@ -27,7 +27,7 @@ export default async function BizAnalyticsPage() {
   ];
 
   return (
-    <DashShell
+    <DashShell variant="business"
       nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
       active="Analytics"
       user={user}

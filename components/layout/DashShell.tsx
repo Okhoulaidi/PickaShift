@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { Logo } from '@/components/ui/Logo';
+import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 
 export interface DashNavItem {
   label: string;
@@ -26,6 +27,7 @@ export interface DashShellProps {
   topTitle: string;
   topSub?: string;
   notif?: number;
+  variant?: 'student' | 'business';
 }
 
 export function DashShell({
@@ -36,9 +38,10 @@ export function DashShell({
   topTitle,
   topSub,
   notif = 0,
+  variant = 'student',
 }: DashShellProps) {
   return (
-    <div className="app">
+    <div className={`app${variant === 'business' ? ' biz-mode' : ''}`}>
       <aside className="sidebar">
         <div className="side-logo">
           <Logo className="logo" />
@@ -89,19 +92,7 @@ export function DashShell({
         {children}
       </div>
 
-      <nav className="bottom-nav">
-        {nav.slice(0, 5).map((n) => (
-          <Link
-            key={n.label}
-            href={n.href}
-            className={`bn-link${active === n.label ? ' active' : ''}`}
-          >
-            {n.pill != null && <span className="bn-dot" />}
-            <Icon name={n.icon} size={21} />
-            {n.short || n.label}
-          </Link>
-        ))}
-      </nav>
+      <MobileBottomNav nav={nav} active={active} />
     </div>
   );
 }

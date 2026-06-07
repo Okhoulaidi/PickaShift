@@ -20,18 +20,23 @@ export async function POST(req: NextRequest) {
       case 'user.created': {
         const { id, email_addresses, first_name, last_name, image_url, public_metadata } = event.data;
         const email = email_addresses[0]?.email_address ?? '';
-        const meta = public_metadata as { role?: string; onboardingComplete?: boolean };
+        const meta = public_metadata as { role?: 'student' | 'business' | 'admin'; onboardingComplete?: boolean };
 
-        const { error } = await supabase.from('profiles').upsert({
+        const profileRow: Record<string, unknown> = {
           id,
           email,
           first_name: first_name ?? null,
           last_name: last_name ?? null,
           avatar_url: image_url ?? null,
-          role: meta?.role ?? 'student',
           onboarding_complete: meta?.onboardingComplete ?? false,
-        });
+        };
 
+        // Role is set only by setUserRole() after explicit user selection.
+        if (meta?.role) {
+          profileRow.role = meta.role;
+        }
+
+        const { error } = await supabase.from('profiles').upsert(profileRow);
         if (error) throw error;
         break;
       }

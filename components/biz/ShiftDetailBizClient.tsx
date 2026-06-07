@@ -117,7 +117,7 @@ export function ShiftDetailBizClient({ user, stats, shift, applicants }: ShiftDe
   }
 
   return (
-    <DashShell
+    <DashShell variant="business"
       nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
       active="Manage Shifts"
       user={user}

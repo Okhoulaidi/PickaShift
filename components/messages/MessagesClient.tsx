@@ -34,6 +34,7 @@ interface MessagesListClientProps {
   conversations: ConversationItem[];
   basePath: string;
   notif?: number;
+  variant?: 'student' | 'business';
 }
 
 export function MessagesListClient({
@@ -44,9 +45,10 @@ export function MessagesListClient({
   conversations,
   basePath,
   notif,
+  variant,
 }: MessagesListClientProps) {
   return (
-    <DashShell nav={nav} active={active} user={user} topTitle={topTitle} notif={notif}>
+    <DashShell nav={nav} active={active} user={user} topTitle={topTitle} notif={notif} variant={variant}>
       <div className="content">
         {conversations.length === 0 ? (
           <div className="empty-state panel">
@@ -89,6 +91,7 @@ interface MessageThreadClientProps {
   messages: MessageItem[];
   basePath: string;
   notif?: number;
+  variant?: 'student' | 'business';
 }
 
 export function MessageThreadClient({
@@ -101,6 +104,7 @@ export function MessageThreadClient({
   messages: initialMessages,
   basePath,
   notif,
+  variant,
 }: MessageThreadClientProps) {
   const [messages, setMessages] = useState(initialMessages);
   const [body, setBody] = useState('');
@@ -142,6 +146,7 @@ export function MessageThreadClient({
       topTitle={partnerName}
       topSub={shiftTitle}
       notif={notif}
+      variant={variant}
     >
       <div className="content">
         <Link href={basePath} className="link-btn" style={{ marginBottom: 12, display: 'inline-flex' }}>

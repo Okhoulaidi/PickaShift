@@ -50,7 +50,7 @@ export function BizProfileClient({ user, stats, initial }: BizProfileClientProps
   }
 
   return (
-    <DashShell
+    <DashShell variant="business"
       nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
       active="Profile"
       user={user}

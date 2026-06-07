@@ -32,7 +32,7 @@ export default async function BizShiftsPage() {
   );
 
   return (
-    <DashShell
+    <DashShell variant="business"
       nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
       active="Manage Shifts"
       user={user}
