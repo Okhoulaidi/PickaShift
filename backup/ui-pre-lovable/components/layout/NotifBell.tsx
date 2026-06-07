@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
-import { Bell } from 'lucide-react';
+import { Icon } from '@/components/ui/Icon';
 import { fetchNotifications, markNotificationRead } from '@/lib/actions/notifications';
 import type { NotificationRecord } from '@/lib/queries/notifications';
 
@@ -31,13 +31,9 @@ export function NotifBell({ unreadCount, allHref }: NotifBellProps) {
     }
   }, []);
 
-  function toggleOpen() {
-    setOpen((wasOpen) => {
-      const next = !wasOpen;
-      if (next && !loaded) void load();
-      return next;
-    });
-  }
+  useEffect(() => {
+    if (open && !loaded) load();
+  }, [open, loaded, load]);
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
@@ -62,57 +58,51 @@ export function NotifBell({ unreadCount, allHref }: NotifBellProps) {
   const dot = unreadCount > 0 || unread > 0;
 
   return (
-    <div className="relative" ref={panelRef}>
+    <div className="notif-wrap" ref={panelRef}>
       <button
         type="button"
-        className="relative p-2.5 rounded-full bg-card border border-line hover:border-brand transition-colors"
+        className="icon-btn"
         aria-label="Notifications"
         aria-expanded={open}
-        onClick={toggleOpen}
+        onClick={() => setOpen((v) => !v)}
       >
-        <Bell className="w-4 h-4" />
-        {dot && (
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-brand rounded-full border-2 border-card" />
-        )}
+        <Icon name="bell" size={20} />
+        {dot && <span className="notif-dot" />}
       </button>
 
       {open && (
-        <div className="absolute top-[calc(100%+8px)] right-0 w-[min(360px,calc(100vw-32px))] bg-card border border-line rounded-2xl shadow-lg z-50 overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-line">
-            <span className="font-sora font-bold text-sm">Notifications</span>
-            <Link
-              href={allHref}
-              className="text-xs font-bold text-brand"
-              onClick={() => setOpen(false)}
-            >
+        <div className="notif-panel" role="menu">
+          <div className="notif-panel-head">
+            <span>Notifications</span>
+            <Link href={allHref} className="notif-all-link" onClick={() => setOpen(false)}>
               View all
             </Link>
           </div>
 
-          {loading && <div className="p-8 text-center text-sm text-muted-foreground">Loading…</div>}
+          {loading && (
+            <div className="notif-empty">Loading…</div>
+          )}
 
           {!loading && items.length === 0 && (
-            <div className="p-8 text-center text-sm text-muted-foreground">
-              <Bell className="w-6 h-6 mx-auto mb-2 opacity-30" />
-              <div className="font-semibold text-ink">You&apos;re all caught up</div>
-              <div className="mt-1">No notifications yet</div>
+            <div className="notif-empty">
+              <Icon name="bell" size={22} style={{ opacity: 0.35, marginBottom: 8 }} />
+              <div>You&apos;re all caught up</div>
+              <div style={{ fontSize: 13, marginTop: 4 }}>No notifications yet</div>
             </div>
           )}
 
           {!loading && items.length > 0 && (
-            <ul className="max-h-80 overflow-y-auto">
+            <ul className="notif-list">
               {items.map((item) => (
                 <li key={item.id}>
                   <button
                     type="button"
-                    className={`w-full text-left px-4 py-3 border-b border-line hover:bg-canvas transition-colors ${
-                      item.read_at ? '' : 'bg-brand-light/50'
-                    }`}
+                    className={`notif-item${item.read_at ? '' : ' unread'}`}
                     onClick={() => handleClick(item)}
                   >
-                    <div className="font-semibold text-sm">{item.title}</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">{item.body}</div>
-                    <div className="text-[11px] text-muted-foreground mt-1.5">
+                    <div className="notif-item-title">{item.title}</div>
+                    <div className="notif-item-body">{item.body}</div>
+                    <div className="notif-item-time">
                       {formatDistanceToNow(new Date(item.created_at), { addSuffix: true })}
                     </div>
                   </button>

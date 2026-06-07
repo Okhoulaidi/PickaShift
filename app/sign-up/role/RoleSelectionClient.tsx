@@ -37,9 +37,8 @@ export default function RoleSelectionClient({ preselectedRole }: Props) {
   }
 
   useEffect(() => {
-    if (preselectedRole && !autoFailed) {
-      choose(preselectedRole);
-    }
+    if (!preselectedRole || autoFailed) return;
+    void Promise.resolve().then(() => choose(preselectedRole));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preselectedRole, autoFailed]);
 

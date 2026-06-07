@@ -1,30 +1,22 @@
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
-import { Manrope, Sora } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { ToastProvider } from '@/components/ui/Toast';
 import './globals.css';
 
-const manrope = Manrope({
+const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-manrope',
-  display: 'swap',
-});
-
-const sora = Sora({
-  subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
-  variable: '--font-sora',
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
 export const metadata: Metadata = {
   title: {
-    default: 'PickaShift — Pick up shifts across Madrid',
-    template: '%s · PickaShift',
+    default: 'Pick a Shift — Work when you want to',
+    template: '%s · Pick a Shift',
   },
   description:
-    'Madrid\'s marketplace for student shift work. Students earn on their schedule, businesses staff up in minutes.',
+    'Flexible short-term paid shifts for students in Madrid. Browse openings, apply in seconds, and get paid fast.',
   keywords: ['Madrid', 'student jobs', 'shifts', 'part-time', 'flexible work'],
 };
 
@@ -33,8 +25,8 @@ export const dynamic = 'force-dynamic';
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`${manrope.variable} ${sora.variable}`}>
-        <body className="font-manrope antialiased">
+      <html lang="en">
+        <body className={inter.className}>
           <ToastProvider>{children}</ToastProvider>
         </body>
       </html>

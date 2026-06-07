@@ -54,6 +54,8 @@ export default async function StudentDashboardPage() {
       appliedIds={[...appliedIds]}
       firstName={profile.first_name ?? session.user.firstName ?? 'there'}
       district={district}
+      hasCv={!!student?.cv_url}
+      skillsCount={student?.skills?.length ?? 0}
     />
   );
 }

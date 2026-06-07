@@ -26,7 +26,7 @@ export function MobileBottomNav({ nav, active }: MobileBottomNavProps) {
 
   return (
     <>
-      <nav className="bottom-nav md:hidden">
+      <nav className="bottom-nav">
         {primary.map((n) => (
           <Link
             key={n.label}
@@ -53,11 +53,11 @@ export function MobileBottomNav({ nav, active }: MobileBottomNavProps) {
       </nav>
 
       {moreOpen && (
-        <div className="mobile-sheet open md:hidden">
+        <div className="mobile-sheet open">
           <div className="scrim" onClick={() => setMoreOpen(false)} aria-hidden />
-          <div className="panel rounded-t-2xl">
+          <div className="panel">
             <div className="m-top">
-              <strong className="font-sora text-lg font-bold">More</strong>
+              <strong style={{ fontSize: 18, fontWeight: 900 }}>More</strong>
               <button type="button" className="close-x" onClick={() => setMoreOpen(false)} aria-label="Close">
                 <Icon name="x" size={20} />
               </button>
@@ -66,14 +66,15 @@ export function MobileBottomNav({ nav, active }: MobileBottomNavProps) {
               <Link
                 key={n.label}
                 href={n.href}
-                className={`m-link font-semibold${active === n.label ? ' !text-brand' : ''}`}
+                className={`m-link${active === n.label ? ' active' : ''}`}
                 onClick={() => setMoreOpen(false)}
+                style={active === n.label ? { color: 'var(--primary)', fontWeight: 800 } : undefined}
               >
-                <span className="inline-flex items-center gap-3 w-full">
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 10 }}>
                   <Icon name={n.icon} size={20} />
                   {n.label}
                   {n.pill != null && (
-                    <span className="ml-auto bg-brand text-white text-[11px] font-extrabold px-2 py-0.5 rounded-full">
+                    <span className="pill" style={{ marginLeft: 'auto' }}>
                       {n.pill}
                     </span>
                   )}
