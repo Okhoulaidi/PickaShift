@@ -160,8 +160,7 @@ export default function BusinessOnboardingPage() {
               />
             </div>
             <p className="hint">
-              Your account will be reviewed by our team before you can post shifts. This usually takes 1–2
-              business days.
+              Almost done! Once you complete setup you can start posting shifts immediately.
             </p>
           </>
         )}
@@ -178,7 +177,7 @@ export default function BusinessOnboardingPage() {
             </button>
           ) : (
             <button type="button" className="btn btn-primary" disabled={loading} onClick={submit}>
-              {loading ? 'Saving…' : 'Submit for verification'}
+              {loading ? 'Saving…' : 'Complete setup'}
             </button>
           )}
         </div>
