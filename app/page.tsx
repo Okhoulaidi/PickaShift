@@ -85,6 +85,13 @@ export default async function HomePage() {
   ];
 
   const heroShift = shifts[0];
+  const heroBiz = heroShift?.business.business_name ?? 'Café Lola';
+  const heroTitle = heroShift?.title ?? 'Weekend barista';
+  const heroDistrict = heroShift?.district ?? 'Chamberí';
+  const heroPay =
+    heroShift && heroShift.pay_per_hour_cents
+      ? (heroShift.pay_per_hour_cents / 100).toFixed(2)
+      : '13.50';
 
   return (
     <>
@@ -110,32 +117,63 @@ export default async function HomePage() {
                   <Icon name="plus" size={18} /> Post a Shift
                 </Link>
               </div>
+              <div className="hero-trust">
+                <div className="hero-trust-avatars" aria-hidden>
+                  <span className="avatar sm" style={{ background: '#2B7A55' }}>SG</span>
+                  <span className="avatar sm" style={{ background: '#E8401C' }}>MR</span>
+                  <span className="avatar sm" style={{ background: '#1A1A1A' }}>JL</span>
+                </div>
+                <p>
+                  <strong>4.9/5</strong> from students who picked up a shift this month
+                </p>
+              </div>
             </div>
-            {heroShift && (
-              <div className="hero-visual">
-                <article className="shift-card">
-                  <div className="shift-top">
-                    <div className="biz-logo" style={{ background: '#E8401C' }}>
-                      {heroShift.business.business_name.slice(0, 2).toUpperCase()}
-                    </div>
-                    <div>
-                      <div className="biz-name">{heroShift.business.business_name}</div>
-                      <div className="biz-role">{heroShift.title}</div>
-                    </div>
+            <div className="hero-visual" aria-hidden>
+              <article className="hero-card">
+                <div className="shift-top">
+                  <div className="biz-logo" style={{ background: '#E8401C' }}>
+                    {heroBiz.slice(0, 2).toUpperCase()}
                   </div>
-                </article>
-                <div className="float-card" style={{ top: -26, right: -10 }}>
-                  <span className="avatar sm" style={{ background: '#2B7A55' }}>
-                    SG
+                  <div style={{ flex: 1 }}>
+                    <div className="biz-name">{heroBiz}</div>
+                    <div className="biz-role">{heroTitle}</div>
+                  </div>
+                  <span className="hero-pay-badge">€{heroPay}/hr</span>
+                </div>
+                <div className="hero-card-meta">
+                  <span>
+                    <Icon name="pin" size={15} /> {heroDistrict}
                   </span>
-                  <div style={{ fontSize: 13.5, fontWeight: 700, lineHeight: 1.3 }}>
-                    Sofía got paid
-                    <br />
-                    <span style={{ color: 'var(--green)', fontWeight: 800 }}>€48.00 ✓</span>
-                  </div>
+                  <span>
+                    <Icon name="clock" size={15} /> 4h shift
+                  </span>
+                  <span>
+                    <Icon name="calendar" size={15} /> Today
+                  </span>
+                </div>
+                <div className="hero-card-cta">Apply in one tap</div>
+              </article>
+              <div className="float-card" style={{ top: -24, right: -12 }}>
+                <span className="avatar sm" style={{ background: '#2B7A55' }}>
+                  SG
+                </span>
+                <div style={{ fontSize: 13.5, fontWeight: 700, lineHeight: 1.3 }}>
+                  Sofía got paid
+                  <br />
+                  <span style={{ color: 'var(--green)', fontWeight: 800 }}>€48.00 paid</span>
                 </div>
               </div>
-            )}
+              <div className="float-card" style={{ bottom: -22, left: -14 }}>
+                <span className="hero-float-ico">
+                  <Icon name="bolt" size={16} />
+                </span>
+                <div style={{ fontSize: 13.5, fontWeight: 700, lineHeight: 1.3 }}>
+                  Paid within
+                  <br />
+                  <span style={{ color: 'var(--primary)', fontWeight: 800 }}>24 hours</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="stats-row">
             {statItems.map((s) => (
@@ -175,6 +213,59 @@ export default async function HomePage() {
             <p className="section-sub">Real openings across Madrid. New ones drop every few minutes.</p>
           </div>
           <LandingShifts shifts={shifts as never} />
+        </div>
+      </section>
+
+      <section className="block trust-block">
+        <div className="wrap">
+          <div className="section-head">
+            <div className="kicker">Why students trust us</div>
+            <h2 className="section-title">Safe, fair and fast — every shift.</h2>
+            <p className="section-sub">
+              We handle contracts, payments and verification so you can just show up and earn.
+            </p>
+          </div>
+          <div className="trust-grid">
+            {[
+              { icon: 'euro', t: 'Paid within 24h', d: 'Money lands in your account the day after your shift — no chasing invoices.' },
+              { icon: 'check', t: 'Verified businesses', d: 'Every employer is ID-checked and rated before they can post a shift.' },
+              { icon: 'file', t: 'Contracts sorted', d: 'Legal paperwork and social security are handled automatically for you.' },
+              { icon: 'star', t: 'Build your score', d: 'Great work earns a reliability score that gets you picked first.' },
+            ].map((f) => (
+              <div className="trust-card" key={f.t}>
+                <span className="trust-ico">
+                  <Icon name={f.icon as never} size={20} />
+                </span>
+                <h4>{f.t}</h4>
+                <p>{f.d}</p>
+              </div>
+            ))}
+          </div>
+          <div className="testi-grid">
+            {[
+              { q: 'I picked up three shifts in my first week and got paid the next morning. Genuinely the easiest money I’ve made as a student.', n: 'Sofía G.', r: 'UCM · Barista shifts', av: 'SG', c: '#2B7A55' },
+              { q: 'No CV, no awkward interviews. I just filter by the hours between my lectures and apply with one tap.', n: 'Marco R.', r: 'UC3M · Event staff', av: 'MR', c: '#E8401C' },
+              { q: 'As a café owner I filled a same-day gap in 20 minutes. The reliability scores make picking people effortless.', n: 'Julia L.', r: 'Café Lola · Chamberí', av: 'JL', c: '#1A1A1A' },
+            ].map((t) => (
+              <figure className="testi-card" key={t.n}>
+                <div className="testi-stars" aria-label="5 out of 5 stars">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Icon key={i} name="star" size={15} fill />
+                  ))}
+                </div>
+                <blockquote>{t.q}</blockquote>
+                <figcaption>
+                  <span className="avatar sm" style={{ background: t.c }}>
+                    {t.av}
+                  </span>
+                  <span>
+                    <strong>{t.n}</strong>
+                    <span className="testi-role">{t.r}</span>
+                  </span>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
       </section>
 

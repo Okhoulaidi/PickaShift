@@ -102,11 +102,11 @@ export function BrowseClient({ shifts: initialShifts, appliedIds }: BrowseClient
               <label>Min pay (€/hr)</label>
               <input
                 type="number"
-                min="9.26"
+                min="0"
                 step="0.5"
                 value={minPay}
                 onChange={(e) => updateFilter('minPay', e.target.value)}
-                placeholder="9.26"
+                placeholder="Any"
               />
             </div>
             <div className="field">
@@ -121,13 +121,13 @@ export function BrowseClient({ shifts: initialShifts, appliedIds }: BrowseClient
               </select>
             </div>
             <div className="field">
-              <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer' }}>
+              <label className="check-row">
                 <input
                   type="checkbox"
                   checked={urgentOnly}
                   onChange={(e) => updateFilter('urgent', e.target.checked ? '1' : '')}
                 />
-                Urgent shifts only
+                <span>Urgent shifts only</span>
               </label>
             </div>
           </aside>
@@ -138,6 +138,7 @@ export function BrowseClient({ shifts: initialShifts, appliedIds }: BrowseClient
               selectedId={selectedId}
               onSelect={(s) => setSelectedId(s.id)}
               height={280}
+              className="shift-map"
             />
             <div className="shift-grid">
               {filtered.map((shift) => (

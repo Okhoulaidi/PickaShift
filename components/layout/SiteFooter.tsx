@@ -43,7 +43,11 @@ export function SiteFooter() {
         </div>
         <div className="footer-bottom">
           <span>© 2026 Pick a Shift · Madrid, España</span>
-          <span>Hecho con 🧡 para estudiantes</span>
+          <span className="footer-made">
+            Hecho con
+            <Icon name="heart" size={14} fill style={{ color: 'var(--primary)' }} />
+            para estudiantes
+          </span>
         </div>
       </div>
     </footer>
