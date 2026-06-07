@@ -1,21 +1,37 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
 import { useToast } from '@/components/ui/Toast';
-import { getSignedCvUploadUrl, saveCvUrl, deleteCv } from '@/lib/actions/profile';
+import {
+  deleteCv,
+  getSignedCvDownloadUrl,
+  getSignedCvUploadUrl,
+  saveCvUrl,
+} from '@/lib/actions/profile';
 
 interface Props {
+  /** Storage path (cvs/{id}.pdf) or legacy public URL from older uploads. */
   currentCvUrl: string | null;
 }
 
 export function CvUploadClient({ currentCvUrl }: Props) {
-  const [cvUrl, setCvUrl] = useState<string | null>(currentCvUrl);
+  const [cvPath, setCvPath] = useState<string | null>(currentCvUrl);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    currentCvUrl?.startsWith('http') ? currentCvUrl : null,
+  );
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const { show } = useToast();
+
+  useEffect(() => {
+    if (!cvPath || cvPath.startsWith('http')) return;
+    getSignedCvDownloadUrl().then((result) => {
+      if (result.data?.url) setPreviewUrl(result.data.url);
+    });
+  }, [cvPath]);
 
   async function handleFile(file: File) {
     if (!file) return;
@@ -57,8 +73,9 @@ export function CvUploadClient({ currentCvUrl }: Props) {
         return;
       }
 
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-      setCvUrl(`${supabaseUrl}/storage/v1/object/public/student-cvs/${result.data.path}`);
+      setCvPath(result.data.path);
+      const dl = await getSignedCvDownloadUrl();
+      if (dl.data?.url) setPreviewUrl(dl.data.url);
       show('CV uploaded successfully!');
     } finally {
       setUploading(false);
@@ -73,7 +90,8 @@ export function CvUploadClient({ currentCvUrl }: Props) {
       show(result.error);
       return;
     }
-    setCvUrl(null);
+    setCvPath(null);
+    setPreviewUrl(null);
     show('CV removed.');
   }
 
@@ -92,15 +110,13 @@ export function CvUploadClient({ currentCvUrl }: Props) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 24, maxWidth: 640 }}>
-
-      {/* Status banner */}
       <div className="panel" style={{ padding: 0, overflow: 'hidden' }}>
         <div className="panel-head">
           <div>
             <h3>Your CV</h3>
             <div className="ph-sub">Businesses see this when you apply for shifts. PDF only, max 5 MB.</div>
           </div>
-          {cvUrl && (
+          {cvPath && (
             <span className="badge badge-open">
               <span className="badge-dot" /> Uploaded
             </span>
@@ -108,8 +124,7 @@ export function CvUploadClient({ currentCvUrl }: Props) {
         </div>
 
         <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-          {cvUrl ? (
-            /* ---- Existing CV ---- */
+          {cvPath ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div className="cv-file-row">
                 <span className="cv-file-ico">
@@ -122,14 +137,16 @@ export function CvUploadClient({ currentCvUrl }: Props) {
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 8 }}>
-                  <a
-                    href={cvUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-outline btn-sm"
-                  >
-                    <Icon name="search" size={15} /> Preview
-                  </a>
+                  {previewUrl && (
+                    <a
+                      href={previewUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn btn-outline btn-sm"
+                    >
+                      <Icon name="search" size={15} /> Preview
+                    </a>
+                  )}
                   <button
                     type="button"
                     className="btn btn-outline btn-sm"
@@ -142,7 +159,6 @@ export function CvUploadClient({ currentCvUrl }: Props) {
                 </div>
               </div>
 
-              {/* Replace option */}
               <div
                 className={`cv-drop-zone${dragOver ? ' drag' : ''}`}
                 onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -158,7 +174,6 @@ export function CvUploadClient({ currentCvUrl }: Props) {
               </div>
             </div>
           ) : (
-            /* ---- Upload prompt ---- */
             <div
               className={`cv-drop-zone${dragOver ? ' drag' : ''}`}
               onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
@@ -192,7 +207,6 @@ export function CvUploadClient({ currentCvUrl }: Props) {
         </div>
       </div>
 
-      {/* Info card */}
       <div className="panel">
         <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           <h3 style={{ margin: 0, fontSize: 16, fontWeight: 900 }}>How businesses see your CV</h3>

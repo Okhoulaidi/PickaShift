@@ -1,5 +1,6 @@
 import { requireRole } from '@/lib/auth';
-import { ApplicationsClient, mapApplications } from '@/components/dashboard/ApplicationsClient';
+import { mapApplications } from '@/lib/applications-display';
+import { ApplicationsClient } from '@/components/dashboard/ApplicationsClient';
 import { studentDashUser } from '@/lib/dashboard-user';
 import { getDashboardStats, getStudentApplications } from '@/lib/queries/shifts';
 import { getStudentProfile } from '@/lib/queries/users';
@@ -7,30 +8,34 @@ import { unwrapRelation } from '@/lib/types';
 
 export default async function ApplicationsPage() {
   const session = await requireRole(['student']);
-  const [stats, student, pending, confirmed, completed] = await Promise.all([
+
+  const [stats, student, applications] = await Promise.all([
     getDashboardStats('student', session.userId),
     getStudentProfile(session.userId),
-    getStudentApplications(session.userId, 'pending'),
-    getStudentApplications(session.userId, 'accepted'),
-    getStudentApplications(session.userId, 'completed'),
+    getStudentApplications(session.userId),
   ]);
 
-  const profile = unwrapRelation(student?.profile) ?? session.user;
+  const profile = unwrapRelation(student?.profile);
   const user = studentDashUser(
     {
-      first_name: profile.first_name ?? session.user.firstName,
-      last_name: profile.last_name ?? session.user.lastName,
+      first_name: profile?.first_name ?? session.user.firstName ?? null,
+      last_name: profile?.last_name ?? session.user.lastName ?? null,
     },
     student,
   );
+
+  const mapped = mapApplications(applications);
+  const pending = mapped.filter((a) => a.status === 'pending');
+  const confirmed = mapped.filter((a) => a.status === 'accepted');
+  const completed = mapped.filter((a) => a.status === 'completed' || a.status === 'rejected');
 
   return (
     <ApplicationsClient
       user={user}
       stats={stats}
-      pending={mapApplications(pending)}
-      confirmed={mapApplications(confirmed)}
-      completed={mapApplications(completed)}
+      pending={pending}
+      confirmed={confirmed}
+      completed={completed}
     />
   );
 }

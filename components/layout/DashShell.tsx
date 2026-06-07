@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { Icon, type IconName } from '@/components/ui/Icon';
 import { Logo } from '@/components/ui/Logo';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
+import { NotifBell } from '@/components/layout/NotifBell';
 
 export interface DashNavItem {
   label: string;
@@ -40,6 +41,9 @@ export function DashShell({
   notif = 0,
   variant = 'student',
 }: DashShellProps) {
+  const notificationsHref =
+    variant === 'business' ? '/biz/notifications' : '/dashboard/notifications';
+
   return (
     <div className={`app${variant === 'business' ? ' biz-mode' : ''}`}>
       <aside className="sidebar">
@@ -80,10 +84,7 @@ export function DashShell({
             {topSub && <div className="sub">{topSub}</div>}
           </div>
           <div className="tb-actions">
-            <button type="button" className="icon-btn" aria-label="Notifications">
-              <Icon name="bell" size={20} />
-              {notif > 0 && <span className="notif-dot" />}
-            </button>
+            <NotifBell unreadCount={notif} allHref={notificationsHref} />
             <div className="avatar md" style={{ background: user.color }}>
               {user.initials}
             </div>

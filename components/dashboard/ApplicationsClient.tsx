@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { studentNav } from '@/lib/dashboard-nav';
+import type { ApplicationRow } from '@/lib/applications-display';
 import type { DashUser } from '@/components/layout/DashShell';
 import type { DashboardStats } from '@/lib/types';
 import {
@@ -14,22 +15,9 @@ import {
   bizColor,
   initials,
 } from '@/lib/utils';
-import { unwrapRelation } from '@/lib/types';
+import { format, parseISO } from 'date-fns';
 
 type Tab = 'pending' | 'confirmed' | 'completed';
-
-interface AppRow {
-  id: string;
-  status: string;
-  appliedAt: string;
-  title: string;
-  businessName: string;
-  shiftDate: string;
-  startTime: string;
-  endTime: string;
-  district: string;
-  payCents: number;
-}
 
 export function ApplicationsClient({
   user,
@@ -40,9 +28,9 @@ export function ApplicationsClient({
 }: {
   user: DashUser;
   stats: DashboardStats;
-  pending: AppRow[];
-  confirmed: AppRow[];
-  completed: AppRow[];
+  pending: ApplicationRow[];
+  confirmed: ApplicationRow[];
+  completed: ApplicationRow[];
 }) {
   const [tab, setTab] = useState<Tab>('pending');
   const lists = { pending, confirmed, completed };
@@ -89,6 +77,9 @@ export function ApplicationsClient({
             <div className="up-list" style={{ padding: '0 22px' }}>
               {items.map((app) => {
                 const color = bizColor(app.businessName);
+                const appliedLabel = app.appliedAt
+                  ? format(parseISO(app.appliedAt), 'd MMM yyyy')
+                  : '';
                 return (
                   <div className="up-item" key={app.id}>
                     <div className="biz-logo" style={{ background: color, width: 44, height: 44 }}>
@@ -109,6 +100,11 @@ export function ApplicationsClient({
                         <span>
                           <Icon name="euro" size={14} /> {formatPayHour(app.payCents)}/hr
                         </span>
+                        {appliedLabel && (
+                          <span>
+                            <Icon name="clock" size={14} /> Applied {appliedLabel}
+                          </span>
+                        )}
                       </div>
                     </div>
                     <span
@@ -125,23 +121,4 @@ export function ApplicationsClient({
       </div>
     </DashShell>
   );
-}
-
-export function mapApplications(apps: Awaited<ReturnType<typeof import('@/lib/queries/shifts').getStudentApplications>>): AppRow[] {
-  return apps.map((app) => {
-    const shift = unwrapRelation(app.shift);
-    const biz = shift ? unwrapRelation(shift.business) : null;
-    return {
-      id: app.id,
-      status: app.status,
-      appliedAt: app.applied_at,
-      title: shift?.title ?? 'Shift',
-      businessName: biz?.business_name ?? 'Business',
-      shiftDate: shift?.shift_date ?? '',
-      startTime: shift?.start_time ?? '',
-      endTime: shift?.end_time ?? '',
-      district: shift?.district ?? '',
-      payCents: shift?.pay_per_hour_cents ?? 0,
-    };
-  });
 }

@@ -7,6 +7,7 @@ import { businessDashUser } from '@/lib/dashboard-user';
 import { getBusinessProfile } from '@/lib/queries/users';
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { createAdminClient } from '@/lib/supabase/admin';
+import { resolveCvDownloadUrl } from '@/lib/storage/cv';
 import { unwrapRelation } from '@/lib/types';
 import { bizColor, initials, formatShiftDate } from '@/lib/utils';
 
@@ -26,20 +27,30 @@ export default async function BizApplicantsPage() {
     .select(`
       id, status, applied_at,
       shift:shifts!inner(id, title, shift_date, district, business_id),
-      student:students(university, degree, cv_url,
+      student:students(id, university, degree, cv_url,
         profile:profiles(first_name, last_name, avatar_url)
       )
     `)
     .eq('shift.business_id', session.userId)
     .order('applied_at', { ascending: false });
 
-  const grouped: Record<string, typeof applications> = {};
+  const grouped: Record<string, NonNullable<typeof applications>> = {};
   for (const app of applications ?? []) {
     const shift = unwrapRelation(app.shift);
     if (!shift) continue;
     const key = shift.id as string;
     if (!grouped[key]) grouped[key] = [];
     grouped[key]!.push(app);
+  }
+
+  const cvUrlCache = new Map<string, string | null>();
+  for (const app of applications ?? []) {
+    const student = unwrapRelation(app.student);
+    if (!student?.id || !student.cv_url || cvUrlCache.has(student.id)) continue;
+    cvUrlCache.set(
+      student.id,
+      await resolveCvDownloadUrl(student.cv_url, student.id),
+    );
   }
 
   const user = businessDashUser(business);
@@ -100,6 +111,7 @@ export default async function BizApplicantsPage() {
                     const student = unwrapRelation(app.student);
                     const profile = student ? unwrapRelation(student.profile) : null;
                     const name = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || 'Student';
+                    const cvHref = student?.id ? cvUrlCache.get(student.id) : null;
                     return (
                       <div className="appl-row" key={app.id}>
                         <div className="appl-person">
@@ -124,8 +136,8 @@ export default async function BizApplicantsPage() {
                           {app.status}
                         </span>
                         <div className="appl-actions">
-                          {student?.cv_url && (
-                            <a href={student.cv_url} target="_blank" rel="noreferrer" className="btn btn-sm btn-outline">
+                          {cvHref && (
+                            <a href={cvHref} target="_blank" rel="noreferrer" className="btn btn-sm btn-outline">
                               <Icon name="file" size={14} /> CV
                             </a>
                           )}

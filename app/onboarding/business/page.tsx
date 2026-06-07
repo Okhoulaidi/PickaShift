@@ -1,5 +1,6 @@
 'use client';
 
+import { useSession } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Logo } from '@/components/ui/Logo';
@@ -13,6 +14,7 @@ export default function BusinessOnboardingPage() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { session } = useSession();
   const { show } = useToast();
 
   const [businessName, setBusinessName] = useState('');
@@ -51,6 +53,7 @@ export default function BusinessOnboardingPage() {
       return;
     }
 
+    await session?.reload();
     router.push('/biz/dashboard');
   }
 

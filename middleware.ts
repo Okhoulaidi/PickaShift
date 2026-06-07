@@ -22,7 +22,6 @@ const isAdminRoute = createRouteMatcher(['/admin(.*)']);
 const isBusinessRoute = createRouteMatcher(['/biz(.*)']);
 const isStudentRoute = createRouteMatcher([
   '/dashboard(.*)',
-  '/browse(.*)',
   '/applications(.*)',
   '/messages(.*)',
   '/profile(.*)',
@@ -56,7 +55,8 @@ export default clerkMiddleware(async (auth, req) => {
     return NextResponse.redirect(new URL('/sign-up/role', req.url));
   }
 
-  if (meta.role && !meta.onboardingComplete && !isOnboardingRoute(req)) {
+  // Only redirect when onboarding is explicitly incomplete (avoids JWT lag loops).
+  if (meta.role && meta.onboardingComplete === false && !isOnboardingRoute(req)) {
     const onboarding = meta.role === 'business' ? '/onboarding/business' : '/onboarding/student';
     return NextResponse.redirect(new URL(onboarding, req.url));
   }

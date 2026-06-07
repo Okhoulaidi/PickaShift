@@ -42,6 +42,9 @@ export const SLOT_LABELS: Record<string, string> = {
   morning: 'Morning', afternoon: 'Afternoon', evening: 'Evening',
 };
 
+/** Supabase Storage bucket id for student CV uploads (case-sensitive). */
+export const STUDENT_CV_BUCKET = 'student-cvs';
+
 export type UserRole = 'student' | 'business' | 'admin';
 
 export interface UserMetadata {
