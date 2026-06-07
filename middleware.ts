@@ -22,7 +22,7 @@ const isAdminRoute = createRouteMatcher(['/admin(.*)']);
 const isBusinessRoute = createRouteMatcher(['/biz(.*)']);
 const isStudentRoute = createRouteMatcher([
   '/dashboard(.*)',
-  '/browse',
+  '/browse(.*)',
   '/applications(.*)',
   '/messages(.*)',
   '/profile(.*)',
