@@ -1,22 +1,20 @@
-import { requireRole } from '@/lib/auth';
-import { studentDashUser } from '@/lib/dashboard-user';
-import { studentNav } from '@/lib/dashboard-nav';
 import { DashShell } from '@/components/layout/DashShell';
-import { createAdminClient } from '@/lib/supabase/admin';
 import { Icon } from '@/components/ui/Icon';
+import { studentNav } from '@/lib/dashboard-nav';
+import { studentDashUser } from '@/lib/dashboard-user';
+import { requireStudentProfile } from '@/lib/guards/student';
+import { getDashboardStats } from '@/lib/queries/shifts';
+import { createAdminClient } from '@/lib/supabase/admin';
+import { unwrapRelation } from '@/lib/types';
+
+export const dynamic = 'force-dynamic';
 
 export default async function ReviewsPage() {
-  const session = await requireRole(['student']);
+  const { session, profile: student } = await requireStudentProfile();
+  const stats = await getDashboardStats('student', session.userId);
   const supabase = createAdminClient();
 
-  const { data: student } = await supabase
-    .from('students')
-    .select('*, profile:profiles(*)')
-    .eq('id', session.userId)
-    .single();
-
-  const profile = Array.isArray(student?.profile) ? student?.profile[0] : student?.profile;
-
+  const profile = unwrapRelation(student.profile);
   const user = studentDashUser(
     {
       first_name: profile?.first_name ?? session.user.firstName,
@@ -36,7 +34,14 @@ export default async function ReviewsPage() {
     : null;
 
   return (
-    <DashShell nav={studentNav()} active="My Reviews" user={user} topTitle="My Reviews" topSub="Ratings left by businesses after completed shifts">
+    <DashShell
+      nav={studentNav(stats.pendingApplications ?? 0)}
+      active="My Reviews"
+      user={user}
+      topTitle="My Reviews"
+      topSub="Ratings left by businesses after completed shifts"
+      notif={stats.unreadNotifications}
+    >
       <div className="content">
         {avgScore && (
           <div className="dash-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
@@ -74,8 +79,8 @@ export default async function ReviewsPage() {
               </div>
               <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 0, padding: 0 }}>
                 {ratings.map((r) => {
-                  const rater = Array.isArray(r.rater) ? r.rater[0] : r.rater;
-                  const shift = Array.isArray(r.shift) ? r.shift[0] : r.shift;
+                  const rater = unwrapRelation(r.rater);
+                  const shift = unwrapRelation(r.shift);
                   return (
                     <div key={r.id} style={{ padding: '18px 22px', borderBottom: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 8 }}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>

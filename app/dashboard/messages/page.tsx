@@ -1,21 +1,21 @@
-import { requireRole } from '@/lib/auth';
 import { MessagesListClient } from '@/components/messages/MessagesClient';
 import { studentNav } from '@/lib/dashboard-nav';
 import { studentDashUser } from '@/lib/dashboard-user';
+import { requireStudentProfile } from '@/lib/guards/student';
 import { getConversations, getLastMessagePreview } from '@/lib/queries/messages';
 import { getDashboardStats } from '@/lib/queries/shifts';
-import { getStudentProfile } from '@/lib/queries/users';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function StudentMessagesPage() {
-  const session = await requireRole(['student']);
-  const [stats, student, conversations] = await Promise.all([
+  const { session, profile: student } = await requireStudentProfile();
+  const [stats, conversations] = await Promise.all([
     getDashboardStats('student', session.userId),
-    getStudentProfile(session.userId),
     getConversations(session.userId, 'student'),
   ]);
 
-  const profile = unwrapRelation(student?.profile);
+  const profile = unwrapRelation(student.profile);
   const user = studentDashUser(
     {
       first_name: profile?.first_name ?? session.user.firstName,

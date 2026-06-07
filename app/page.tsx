@@ -270,7 +270,7 @@ export default function HomePage() {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto mt-24 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between gap-4 text-xs text-white/50">
           <span className="flex items-center gap-2">
-            <Logo className="logo logo-sm !text-white scale-75 origin-left" /> © 2026 PickaShift S.L.
+            <Logo className="logo logo-sm !text-white scale-75 origin-left" /> © 2026 Pick a Shift S.L.
           </span>
           <div className="flex gap-6">
             <Link href="/sign-in" className="hover:text-white transition-colors">Log in</Link>

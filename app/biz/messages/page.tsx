@@ -6,6 +6,8 @@ import { getConversations, getLastMessagePreview } from '@/lib/queries/messages'
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BizMessagesPage() {
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, conversations] = await Promise.all([

@@ -9,6 +9,8 @@ import { getStudentAppliedShiftIds, getStudentProfile } from '@/lib/queries/user
 import { unwrapRelation } from '@/lib/types';
 import type { ShiftWithBusiness } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BrowsePage() {
   const { userId, sessionClaims } = await auth();
   const meta = getClerkMetadata(sessionClaims as Record<string, unknown> | null | undefined);

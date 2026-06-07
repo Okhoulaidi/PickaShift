@@ -5,6 +5,8 @@ import { getDashboardStats } from '@/lib/queries/shifts';
 import { getAllProfiles } from '@/lib/queries/users';
 import { getProfile } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminUsersPage() {
   const session = await requireRole(['admin']);
   const [stats, users, profile] = await Promise.all([

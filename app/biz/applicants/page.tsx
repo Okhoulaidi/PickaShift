@@ -10,6 +10,8 @@ import { resolveCvDownloadUrl } from '@/lib/storage/cv';
 import { unwrapRelation } from '@/lib/types';
 import { bizColor, initials, formatShiftDate } from '@/lib/utils';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BizApplicantsPage() {
   const { session, profile: business } = await requireBusinessProfile();
   const stats = await getDashboardStats('business', session.userId);

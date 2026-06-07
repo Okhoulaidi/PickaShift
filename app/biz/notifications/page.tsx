@@ -8,6 +8,8 @@ import { requireBusinessProfile } from '@/lib/guards/business';
 import { getUserNotifications } from '@/lib/queries/notifications';
 import { getDashboardStats } from '@/lib/queries/shifts';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BizNotificationsPage() {
   const { profile: business } = await requireBusinessProfile();
   const [stats, notifications] = await Promise.all([

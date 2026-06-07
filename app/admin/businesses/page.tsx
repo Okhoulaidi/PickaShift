@@ -6,6 +6,8 @@ import { getDashboardStats } from '@/lib/queries/shifts';
 import { getUnverifiedBusinesses } from '@/lib/queries/users';
 import { getProfile } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminBusinessesPage() {
   const session = await requireRole(['admin']);
   const [stats, businesses, profile] = await Promise.all([

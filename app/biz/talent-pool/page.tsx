@@ -7,6 +7,8 @@ import { getTalentPool } from '@/lib/queries/users';
 import { bizColor, initials } from '@/lib/utils';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function TalentPoolPage() {
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, pool] = await Promise.all([

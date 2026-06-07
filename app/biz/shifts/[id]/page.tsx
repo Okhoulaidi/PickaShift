@@ -5,6 +5,8 @@ import { requireBusinessProfile } from '@/lib/guards/business';
 import { getDashboardStats, getShiftApplicants, getShiftById } from '@/lib/queries/shifts';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BizShiftDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const { session, profile: business } = await requireBusinessProfile();

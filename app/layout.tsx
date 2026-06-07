@@ -20,15 +20,13 @@ const sora = Sora({
 
 export const metadata: Metadata = {
   title: {
-    default: 'PickaShift — Pick up shifts across Madrid',
-    template: '%s · PickaShift',
+    default: 'Pick a Shift — Flexible shifts for students in Madrid',
+    template: '%s · Pick a Shift',
   },
   description:
     'Madrid\'s marketplace for student shift work. Students earn on their schedule, businesses staff up in minutes.',
   keywords: ['Madrid', 'student jobs', 'shifts', 'part-time', 'flexible work'],
 };
-
-export const dynamic = 'force-dynamic';
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

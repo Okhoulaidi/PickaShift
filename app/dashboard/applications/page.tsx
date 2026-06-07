@@ -5,6 +5,8 @@ import { requireStudentProfile } from '@/lib/guards/student';
 import { getDashboardStats, getStudentApplications } from '@/lib/queries/shifts';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function ApplicationsPage() {
   const { session, profile: student } = await requireStudentProfile();
 

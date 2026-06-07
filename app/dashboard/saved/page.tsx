@@ -1,22 +1,16 @@
-import { requireRole } from '@/lib/auth';
-import { studentDashUser } from '@/lib/dashboard-user';
-import { studentNav } from '@/lib/dashboard-nav';
-import { DashShell } from '@/components/layout/DashShell';
-import { createAdminClient } from '@/lib/supabase/admin';
 import Link from 'next/link';
+import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
+import { studentNav } from '@/lib/dashboard-nav';
+import { studentDashUser } from '@/lib/dashboard-user';
+import { requireStudentProfile } from '@/lib/guards/student';
+import { unwrapRelation } from '@/lib/types';
+
+export const dynamic = 'force-dynamic';
 
 export default async function SavedShiftsPage() {
-  const session = await requireRole(['student']);
-  const supabase = createAdminClient();
-
-  const { data: student } = await supabase
-    .from('students')
-    .select('*, profile:profiles(*)')
-    .eq('id', session.userId)
-    .single();
-
-  const profile = Array.isArray(student?.profile) ? student?.profile[0] : student?.profile;
+  const { session, profile: student } = await requireStudentProfile();
+  const profile = unwrapRelation(student.profile);
 
   const user = studentDashUser(
     {

@@ -1,12 +1,13 @@
 import { notFound } from 'next/navigation';
-import { requireRole } from '@/lib/auth';
 import { MessageThreadClient } from '@/components/messages/MessagesClient';
 import { studentNav } from '@/lib/dashboard-nav';
 import { studentDashUser } from '@/lib/dashboard-user';
+import { requireStudentProfile } from '@/lib/guards/student';
 import { getConversationById, getMessages } from '@/lib/queries/messages';
 import { getDashboardStats } from '@/lib/queries/shifts';
-import { getStudentProfile } from '@/lib/queries/users';
 import { unwrapRelation } from '@/lib/types';
+
+export const dynamic = 'force-dynamic';
 
 export default async function StudentMessageThreadPage({
   params,
@@ -14,18 +15,17 @@ export default async function StudentMessageThreadPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const session = await requireRole(['student']);
+  const { session, profile: student } = await requireStudentProfile();
 
   const conversation = await getConversationById(id, session.userId, 'student');
   if (!conversation) notFound();
 
-  const [stats, student, messages] = await Promise.all([
+  const [stats, messages] = await Promise.all([
     getDashboardStats('student', session.userId),
-    getStudentProfile(session.userId),
     getMessages(id),
   ]);
 
-  const profile = unwrapRelation(student?.profile);
+  const profile = unwrapRelation(student.profile);
   const user = studentDashUser(
     {
       first_name: profile?.first_name ?? session.user.firstName,

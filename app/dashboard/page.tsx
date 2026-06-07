@@ -6,6 +6,8 @@ import { getStudentAppliedShiftIds } from '@/lib/queries/users';
 import { unwrapRelation } from '@/lib/types';
 import type { ShiftWithBusiness } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function StudentDashboardPage() {
   const { session, profile: student } = await requireStudentProfile();
   const [stats, applications, allShifts, appliedIds] = await Promise.all([

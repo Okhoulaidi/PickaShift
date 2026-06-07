@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import { DashShell, type DashNavItem, type DashUser } from '@/components/layout/DashShell';
-import { SiteHeader } from '@/components/layout/SiteHeader';
+import { LandingNav } from '@/components/landing/LandingNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { ShiftMap } from '@/components/map/ShiftMap';
 import { ShiftCard } from '@/components/shift/ShiftCard';
@@ -200,7 +200,7 @@ export function BrowseClient({ shifts, appliedIds, shell }: BrowseClientProps) {
 
   return (
     <>
-      <SiteHeader active="For Students" />
+      <LandingNav />
       {content}
       <SiteFooter />
     </>

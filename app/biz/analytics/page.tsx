@@ -6,6 +6,8 @@ import { requireBusinessProfile } from '@/lib/guards/business';
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { getBusinessAnalytics } from '@/lib/queries/users';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BizAnalyticsPage() {
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, analytics] = await Promise.all([

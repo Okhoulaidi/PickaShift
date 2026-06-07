@@ -8,6 +8,8 @@ import { getBusinessShifts, getDashboardStats } from '@/lib/queries/shifts';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { formatPayHour, formatShiftDate, formatTimeRange } from '@/lib/utils';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BizShiftsPage() {
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, shifts] = await Promise.all([

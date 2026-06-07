@@ -8,6 +8,8 @@ import { createAdminClient } from '@/lib/supabase/admin';
 import { unwrapRelation } from '@/lib/types';
 import { bizColor, initials } from '@/lib/utils';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BizReviewsPage() {
   const { session, profile: business } = await requireBusinessProfile();
   const stats = await getDashboardStats('business', session.userId);

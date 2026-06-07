@@ -5,6 +5,8 @@ import { studentDashUser } from '@/lib/dashboard-user';
 import { requireStudentProfile } from '@/lib/guards/student';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function CvPage() {
   const { session, profile: student } = await requireStudentProfile();
   const profile = unwrapRelation(student.profile);

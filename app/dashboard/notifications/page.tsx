@@ -1,24 +1,24 @@
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
-import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { studentNav } from '@/lib/dashboard-nav';
 import { studentDashUser } from '@/lib/dashboard-user';
-import { getDashboardStats } from '@/lib/queries/shifts';
+import { requireStudentProfile } from '@/lib/guards/student';
 import { getUserNotifications } from '@/lib/queries/notifications';
-import { getStudentProfile } from '@/lib/queries/users';
+import { getDashboardStats } from '@/lib/queries/shifts';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function NotificationsPage() {
-  const session = await requireRole(['student']);
-  const [stats, student, notifications] = await Promise.all([
+  const { session, profile: student } = await requireStudentProfile();
+  const [stats, notifications] = await Promise.all([
     getDashboardStats('student', session.userId),
-    getStudentProfile(session.userId),
     getUserNotifications(session.userId, 50),
   ]);
 
-  const profile = unwrapRelation(student?.profile);
+  const profile = unwrapRelation(student.profile);
   const user = studentDashUser(
     {
       first_name: profile?.first_name ?? session.user.firstName ?? null,

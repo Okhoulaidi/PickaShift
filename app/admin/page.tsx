@@ -7,6 +7,8 @@ import { adminDashUser } from '@/lib/dashboard-user';
 import { getDashboardStats, getPlatformStats } from '@/lib/queries/shifts';
 import { getProfile } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminPage() {
   const session = await requireRole(['admin']);
   const [stats, platform, profile] = await Promise.all([

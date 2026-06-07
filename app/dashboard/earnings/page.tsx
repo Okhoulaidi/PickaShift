@@ -1,23 +1,23 @@
 import Link from 'next/link';
-import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { studentNav } from '@/lib/dashboard-nav';
 import { studentDashUser } from '@/lib/dashboard-user';
+import { requireStudentProfile } from '@/lib/guards/student';
 import { getDashboardStats, getStudentApplications } from '@/lib/queries/shifts';
-import { getStudentProfile } from '@/lib/queries/users';
 import { formatPay, shiftHours } from '@/lib/utils';
 import { unwrapRelation } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+
 export default async function EarningsPage() {
-  const session = await requireRole(['student']);
-  const [stats, student, completedApps] = await Promise.all([
+  const { session, profile: student } = await requireStudentProfile();
+  const [stats, completedApps] = await Promise.all([
     getDashboardStats('student', session.userId),
-    getStudentProfile(session.userId),
     getStudentApplications(session.userId, 'completed'),
   ]);
 
-  const profile = unwrapRelation(student?.profile);
+  const profile = unwrapRelation(student.profile);
   const user = studentDashUser(
     {
       first_name: profile?.first_name ?? session.user.firstName,
@@ -76,7 +76,7 @@ export default async function EarningsPage() {
                 <Icon name="gauge" size={20} />
               </div>
             </div>
-            <div className="ds-num">{Number(student?.reliability_score ?? 5).toFixed(1)}</div>
+            <div className="ds-num">{Number(student.reliability_score ?? 5).toFixed(1)}</div>
             <div className="ds-lbl">Reliability score</div>
           </div>
         </div>
