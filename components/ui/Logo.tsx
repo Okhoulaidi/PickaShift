@@ -1,48 +1,33 @@
-'use client';
-
-import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
 
 export interface LogoProps {
   className?: string;
-  imageSrc?: string;
 }
 
-export function Logo({ className = 'logo', imageSrc = '/logo.svg' }: LogoProps) {
-  const [imgError, setImgError] = useState(false);
-  const showText = !imageSrc || imgError;
-
-  if (showText) {
-    return (
-      <Link href="/" aria-label="Pick a Shift home" className={className}>
-        <span
-          style={{
-            color: 'var(--primary)',
-            fontWeight: 900,
-            fontSize: className.includes('logo-sm') ? '1.05rem' : '1.2rem',
-            letterSpacing: '-0.02em',
-            lineHeight: 1.1,
-            display: 'block',
-          }}
-        >
-          Pick a Shift
-        </span>
-      </Link>
-    );
-  }
-
+/**
+ * Pick a Shift wordmark — rendered inline as HTML + SVG mark.
+ * Transparent background, uses Inter (already loaded), primary orange via CSS var.
+ * Mark paths taken from the designed pas-mark_orange.svg asset.
+ */
+export function Logo({ className = 'logo' }: LogoProps) {
   return (
-    <Link href="/" aria-label="Pick a Shift home">
-      <Image
-        src={imageSrc}
-        alt="Pick a Shift"
-        width={160}
-        height={40}
-        className={className}
-        onError={() => setImgError(true)}
-        priority
-      />
+    <Link href="/" aria-label="Pick a Shift home" className={`logo-wordmark ${className}`}>
+      <span className="logo-pica">Pick a</span>
+      <span className="logo-shift">
+        SH
+        {/* Person-in-i mark — viewBox 0 0 120 142 */}
+        <svg
+          className="logo-icon"
+          viewBox="0 0 120 142"
+          aria-hidden="true"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="44.5" y="52" width="31" height="90" rx="15.5" transform="rotate(9 60 142)" />
+          <ellipse cx="61" cy="24" rx="22" ry="24" transform="rotate(10 61 24)" />
+        </svg>
+        FT
+      </span>
     </Link>
   );
 }

@@ -35,6 +35,11 @@ export async function setUserRole(role: 'student' | 'business'): Promise<ActionR
   const session = await requireActionAuth();
   if (session.error) return { error: session.error };
 
+  // Hard lock: once a role is set it cannot be changed via this action.
+  if (session.meta?.role) {
+    return { error: 'Your account type is already set and cannot be changed.' };
+  }
+
   const supabase = createAdminClient();
   const user = await currentUser();
   if (!user) return { error: 'User not found' };
@@ -115,7 +120,8 @@ export async function completeBusinessOnboarding(input: BusinessOnboardingInput)
     website: input.website ?? null,
     description: input.description ?? null,
     logo_url: input.logoUrl ?? null,
-    verified: false,
+    verified: true,
+    verified_at: new Date().toISOString(),
   });
 
   if (businessError) return { error: businessError.message };
@@ -132,6 +138,6 @@ export async function completeBusinessOnboarding(input: BusinessOnboardingInput)
 
   if (profileError) return { error: profileError.message };
 
-  await syncClerkMetadata(session.userId, { role: 'business' as UserRole, onboardingComplete: true, verified: false });
+  await syncClerkMetadata(session.userId, { role: 'business' as UserRole, onboardingComplete: true, verified: true });
   return { success: true };
 }

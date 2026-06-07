@@ -27,13 +27,6 @@ export async function createShift(input: ShiftInput): Promise<ActionResult<{ id:
   if (session.error) return { error: session.error };
 
   const supabase = createAdminClient();
-  const { data: business } = await supabase
-    .from('businesses')
-    .select('verified')
-    .eq('id', session.userId)
-    .single();
-
-  if (!business?.verified) return { error: 'Business must be verified to post shifts' };
 
   const coords = input.lat != null && input.lng != null
     ? { lat: input.lat, lng: input.lng }

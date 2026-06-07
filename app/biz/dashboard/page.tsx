@@ -43,23 +43,10 @@ export default async function BizDashboardPage() {
       active="Overview"
       user={user}
       topTitle={`Welcome, ${business.business_name}`}
-      topSub={
-        business.verified
-          ? 'Your dashboard at a glance'
-          : 'Pending verification — you cannot post shifts yet'
-      }
+      topSub="Your dashboard at a glance"
       notif={stats.unreadNotifications}
     >
       <div className="content">
-        {!business.verified && (
-          <div className="panel panel-body" style={{ background: 'var(--amber-tint)', borderColor: 'var(--amber)' }}>
-            <strong>Account pending verification</strong>
-            <p style={{ margin: '8px 0 0', color: 'var(--muted)' }}>
-              Our team is reviewing your business. You&apos;ll be notified once approved.
-            </p>
-          </div>
-        )}
-
         <div className="dash-stats">
           <div className="dash-stat">
             <div className="ds-top">
