@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick a Shift — Student Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel">
+const {useState}=React;
+
+const NAV=[
+  {label:'Home',short:'Home',icon:'home',href:'#'},
+  {label:'Browse Shifts',short:'Browse',icon:'search',href:'#'},
+  {label:'My Applications',short:'Applied',icon:'clipboard',href:'#',pill:2},
+  {label:'My Profile',short:'Profile',icon:'user',href:'#'},
+  {label:'Notifications',short:'Alerts',icon:'bell',href:'#'},
+];
+const USER={name:'Sofía García',sub:'UCM · Económicas',initials:'SG',color:'#2B7A55'};
+
+const STATS=[
+  {icon:'check',num:'27',lbl:'Shifts completed',trend:'+4 this month',up:true},
+  {icon:'clock',num:'96',lbl:'Hours worked',trend:'+12h this month',up:true},
+  {icon:'euro',num:'€1,184',lbl:'Total earned',trend:'+€148 this month',up:true},
+  {icon:'gauge',num:'4.9',lbl:'Reliability score',trend:'Top 5% in Madrid',up:true},
+];
+
+const UPCOMING=[
+  {d:'05',m:'Jun',title:'Barista — Brew & Bean',time:'Today · 17:00–21:00',loc:'Malasaña',color:'#E8401C',status:'Confirmed'},
+  {d:'06',m:'Jun',title:'Sales Assistant — FNAC Callao',time:'Tomorrow · 16:00–20:00',loc:'Gran Vía',color:'#3454D1',status:'Confirmed'},
+  {d:'08',m:'Jun',title:'Event Usher — Teatro Real',time:'Sun · 18:00–22:00',loc:'Ópera',color:'#9333A8',status:'Confirmed'},
+];
+
+function DashStat({s}){
+  return (
+    <div className="dash-stat">
+      <div className="ds-top">
+        <div className="ds-ico"><Icon name={s.icon} size={20}/></div>
+        <span className={'ds-trend '+(s.up?'up':'down')}><Icon name={s.up?'arrowup':'arrowdown'} size={13}/></span>
+      </div>
+      <div className="ds-num">{s.num}</div>
+      <div className="ds-lbl">{s.lbl}</div>
+      <div style={{marginTop:10,fontSize:12.5,color:'var(--muted)',fontWeight:600}}>{s.trend}</div>
+    </div>
+  );
+}
+
+function Content(){
+  const [applied,setApplied]=useState({});
+  const [toast,showToast]=useToast();
+  const onApply=(s)=>{setApplied(p=>({...p,[s.id]:true}));showToast('Applied to '+s.biz+' — we\u2019ll notify you!');};
+  return (
+    <div className="content">
+      <div className="dash-stats">{STATS.map(s=><DashStat key={s.lbl} s={s}/>)}</div>
+
+      <section>
+        <div className="section-title-row">
+          <h2>Available shifts near you</h2>
+          <a className="link-btn" href="#">View all <Icon name="chevright" size={15}/></a>
+        </div>
+        <div className="h-scroll">
+          {SHIFTS.map(s=><ShiftCard key={s.id} s={s} applied={!!applied[s.id]} onApply={onApply}/>)}
+        </div>
+      </section>
+
+      <div style={{display:'grid',gridTemplateColumns:'1.45fr 1fr',gap:24,alignItems:'start'}} className="two-col">
+        <div className="panel">
+          <div className="panel-head">
+            <div><h3>My upcoming shifts</h3><div className="ph-sub">3 confirmed this week</div></div>
+            <a className="link-btn" href="#">Calendar <Icon name="calendar" size={15}/></a>
+          </div>
+          <div className="panel-body" style={{paddingTop:6,paddingBottom:8}}>
+            <div className="up-list">
+              {UPCOMING.map((u,i)=>(
+                <div className="up-item" key={i}>
+                  <div className="up-date"><div className="d">{u.d}</div><div className="m">{u.m}</div></div>
+                  <div className="up-info">
+                    <div className="u-title">{u.title}</div>
+                    <div className="u-meta">
+                      <span><Icon name="clock" size={14}/> {u.time}</span>
+                      <span><Icon name="pin" size={14}/> {u.loc}</span>
+                    </div>
+                  </div>
+                  <span className="badge badge-open"><span className="badge-dot"></span>{u.status}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="panel">
+          <div className="panel-head">
+            <div><h3>Shifts near Malasaña</h3><div className="ph-sub">8 open within 1.5 km</div></div>
+          </div>
+          <div className="panel-body">
+            <div className="map-ph">
+              <div className="pin"><Icon name="pin" size={44} fill/></div>
+              <div className="map-label"><Icon name="pin" size={15}/> Malasaña, Madrid</div>
+              <div className="map-zoom"><button>+</button><button>–</button></div>
+            </div>
+            <a className="btn btn-light btn-block" style={{marginTop:14}} href="#"><Icon name="search" size={17}/> Open full map</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App(){
+  return (
+    <>
+      <DashShell nav={NAV} active="Home" user={USER}
+        topTitle="Hey Sofía 👋" topSub="You have 2 shifts coming up this week — you're on a 27-shift streak.">
+        <Content/>
+      </DashShell>
+    </>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<style>@media(max-width:980px){.two-col{grid-template-columns:1fr !important;}}</style>
+</body>
+</html>

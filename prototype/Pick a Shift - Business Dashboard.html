@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick a Shift — Business Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel">
+const {useState}=React;
+
+const NAV=[
+  {label:'Overview',short:'Home',icon:'home',href:'#'},
+  {label:'Post a Shift',short:'Post',icon:'plus',href:'#'},
+  {label:'Manage Shifts',short:'Shifts',icon:'briefcase',href:'#',pill:3},
+  {label:'Worker Pool',short:'Workers',icon:'users',href:'#'},
+  {label:'Analytics',short:'Stats',icon:'chart',href:'#'},
+];
+const BIZ={name:'Brew & Bean',sub:'Café · Malasaña',initials:'B&',color:'#E8401C'};
+
+const STATS=[
+  {icon:'briefcase',num:'3',lbl:'Open shifts',trend:'2 filling fast',up:true},
+  {icon:'users',num:'18',lbl:'Applicants today',trend:'+6 vs. yesterday',up:true},
+  {icon:'check',num:'24',lbl:'Shifts filled this month',trend:'+9 vs. last month',up:true},
+  {icon:'gauge',num:'2.1%',lbl:'No-show rate',trend:'−0.8% this month',up:true},
+];
+
+const LISTINGS=[
+  {title:'Weekend Barista',sub:'Sat 7 Jun · 12:00–16:00 · €13/hr',loc:'Malasaña',status:'urgent',applicants:9,posted:'2h ago'},
+  {title:'Evening Counter Staff',sub:'Today · 17:00–21:00 · €12/hr',loc:'Malasaña',status:'open',applicants:5,posted:'5h ago'},
+  {title:'Sunday Brunch Server',sub:'Sun 8 Jun · 10:00–14:00 · €12.5/hr',loc:'Malasaña',status:'filled',applicants:12,posted:'1d ago'},
+];
+
+const APPLICANTS=[
+  {name:'Lucía Fernández',sub:'UC3M · 31 shifts',score:98,avail:'Today, evenings',color:'#2B7A55'},
+  {name:'Marc Oller',sub:'UPM · 12 shifts',score:91,avail:'Weekends',color:'#3454D1'},
+  {name:'Aisha Ndiaye',sub:'UCM · 44 shifts',score:96,avail:'Flexible',color:'#9333A8'},
+  {name:'Pablo Ruiz',sub:'IE · 7 shifts',score:84,avail:'Mornings',color:'#C9890E'},
+];
+
+function DashStat({s}){
+  return (
+    <div className="dash-stat">
+      <div className="ds-top">
+        <div className="ds-ico"><Icon name={s.icon} size={20}/></div>
+        <span className="ds-trend up"><Icon name="trend" size={14}/></span>
+      </div>
+      <div className="ds-num">{s.num}</div>
+      <div className="ds-lbl">{s.lbl}</div>
+      <div style={{marginTop:10,fontSize:12.5,color:'var(--green)',fontWeight:700}}>{s.trend}</div>
+    </div>
+  );
+}
+
+const STATUS={
+  urgent:{cls:'badge-urgent',label:'Urgent',icon:'flame'},
+  open:{cls:'badge-open',label:'Open',icon:null},
+  filled:{cls:'badge-filled',label:'Filled',icon:'check'},
+};
+function Listing({l}){
+  const st=STATUS[l.status];
+  return (
+    <div className="listing">
+      <div className="l-top">
+        <div>
+          <div className="l-title">{l.title}</div>
+          <div className="l-sub">{l.sub}</div>
+        </div>
+        <span className={'badge '+st.cls}>{st.icon&&<Icon name={st.icon} size={12} fill={st.icon==='flame'}/>}{st.label}</span>
+      </div>
+      <div className="l-meta">
+        <span><Icon name="pin" size={14} style={{verticalAlign:'-2px',marginRight:4}}/><b>{l.loc}</b></span>
+        <span>Posted {l.posted}</span>
+      </div>
+      <div className="l-foot">
+        <div className="appl-stack">
+          {[0,1,2].map(i=><span key={i} className="avatar sm av" style={{background:APPLICANTS[i].color}}>{initials(APPLICANTS[i].name)}</span>)}
+          {l.applicants>3 && <span className="avatar sm more">+{l.applicants-3}</span>}
+          <span style={{marginLeft:12,fontSize:13.5,color:'var(--muted)',fontWeight:600}}>{l.applicants} applicants</span>
+        </div>
+        <a className="btn btn-sm btn-outline" href="#">Review</a>
+      </div>
+    </div>
+  );
+}
+
+function ApplicantRow({a,state,onAct}){
+  return (
+    <div className="appl-row">
+      <div className="appl-person">
+        <span className="avatar md" style={{background:a.color}}>{initials(a.name)}</span>
+        <div style={{minWidth:0}}><div className="ap-name">{a.name}</div><div className="ap-sub">{a.sub}</div></div>
+      </div>
+      <div className="score"><span style={{color:a.score>=95?'var(--green)':'var(--text)'}}>{(a.score/20).toFixed(1)}</span>
+        <span className="bar"><i style={{width:a.score+'%'}}></i></span>
+      </div>
+      <div className="appl-col-avail" style={{fontSize:13.5,color:'var(--muted)',fontWeight:600}}>{a.avail}</div>
+      <div className="appl-actions">
+        {state==='accepted' && <span className="badge badge-open"><Icon name="check" size={12}/> Accepted</span>}
+        {state==='rejected' && <span className="badge badge-filled">Declined</span>}
+        {!state && <>
+          <button className="btn btn-sm btn-outline" onClick={()=>onAct(a,'rejected')}><Icon name="x" size={15}/><span> Reject</span></button>
+          <button className="btn btn-sm btn-primary" onClick={()=>onAct(a,'accepted')}><Icon name="check" size={15}/><span> Accept</span></button>
+        </>}
+      </div>
+    </div>
+  );
+}
+
+const SKILLS=['Barista','Cash handling','Food service','Customer service','POS / TPV','English','Cocktails','Heavy lifting'];
+function PostShiftModal({onClose,onPost}){
+  const [skills,setSkills]=useState(['Barista','Cash handling']);
+  const toggle=(s)=>setSkills(p=>p.includes(s)?p.filter(x=>x!==s):[...p,s]);
+  return (
+    <div className="modal-scrim" onClick={onClose}>
+      <div className="modal" onClick={e=>e.stopPropagation()}>
+        <div className="modal-head">
+          <div><h3>Post a new shift</h3><p>Goes live instantly to workers near Malasaña.</p></div>
+          <button className="close-x" onClick={onClose}><Icon name="x" size={20}/></button>
+        </div>
+        <div className="modal-body">
+          <div className="field">
+            <label>Job title <span className="req">*</span></label>
+            <input defaultValue="Weekend Barista" placeholder="e.g. Evening Barista"/>
+          </div>
+          <div className="field">
+            <label>Date <span className="req">*</span></label>
+            <input type="date" defaultValue="2026-06-07"/>
+          </div>
+          <div className="grid-2">
+            <div className="field"><label>Start time <span className="req">*</span></label><input type="time" defaultValue="12:00"/></div>
+            <div className="field"><label>End time <span className="req">*</span></label><input type="time" defaultValue="16:00"/></div>
+          </div>
+          <div className="grid-2">
+            <div className="field">
+              <label>Location <span className="req">*</span></label>
+              <select defaultValue="Malasaña"><option>Malasaña</option><option>La Latina</option><option>Centro</option><option>Chamberí</option><option>Salamanca</option><option>Chueca</option></select>
+            </div>
+            <div className="field">
+              <label>Pay per hour (€) <span className="req">*</span></label>
+              <input type="number" defaultValue="13" min="9" step="0.5"/>
+              <span className="hint">Madrid minimum is €9.26/hr</span>
+            </div>
+          </div>
+          <div className="field">
+            <label>Description</label>
+            <textarea defaultValue="Busy weekend morning service. You'll be pulling espresso, taking orders at the till and keeping the counter tidy. Training provided on arrival."></textarea>
+          </div>
+          <div className="field">
+            <label>Skills needed</label>
+            <div className="chips">
+              {SKILLS.map(s=><button key={s} className={'chip'+(skills.includes(s)?' on':'')} onClick={()=>toggle(s)}>{s}</button>)}
+            </div>
+          </div>
+        </div>
+        <div className="modal-foot">
+          <button className="btn btn-ghost" onClick={onClose}>Cancel</button>
+          <button className="btn btn-primary" onClick={()=>onPost('Weekend Barista')}><Icon name="bolt" size={16} fill/> Post shift</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Content(){
+  const [modal,setModal]=useState(false);
+  const [acts,setActs]=useState({});
+  const [toast,showToast]=useToast();
+  const onAct=(a,state)=>{setActs(p=>({...p,[a.name]:state}));showToast(state==='accepted'?a.name.split(' ')[0]+' accepted — shift confirmed!':a.name.split(' ')[0]+' declined.');};
+  const onPost=(t)=>{setModal(false);showToast('“'+t+'” is now live — workers notified!');};
+  return (
+    <div className="content">
+      <div className="dash-stats">{STATS.map(s=><DashStat key={s.lbl} s={s}/>)}</div>
+
+      <section>
+        <div className="section-title-row">
+          <h2>Active shift listings</h2>
+          <button className="btn btn-primary" onClick={()=>setModal(true)}><Icon name="plus" size={17}/> Post New Shift</button>
+        </div>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:18,marginTop:14}} className="listing-grid">
+          {LISTINGS.map((l,i)=><Listing key={i} l={l}/>)}
+        </div>
+      </section>
+
+      <div className="panel">
+        <div className="panel-head">
+          <div><h3>Recent applicants</h3><div className="ph-sub">Ranked by reliability score</div></div>
+          <a className="link-btn" href="#">View worker pool <Icon name="chevright" size={15}/></a>
+        </div>
+        <div className="appl-head">
+          <div>Worker</div><div>Reliability</div><div className="appl-col-avail">Availability</div><div style={{textAlign:'right'}}>Action</div>
+        </div>
+        {APPLICANTS.map(a=><ApplicantRow key={a.name} a={a} state={acts[a.name]} onAct={onAct}/>)}
+      </div>
+
+      {modal && <PostShiftModal onClose={()=>setModal(false)} onPost={onPost}/>}
+      {toast}
+    </div>
+  );
+}
+
+function App(){
+  return (
+    <DashShell nav={NAV} active="Overview" user={BIZ}
+      topTitle="Hey Brew & Bean ☕" topSub="18 new applicants today across 3 open shifts.">
+      <Content/>
+    </DashShell>
+  );
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+<style>@media(max-width:980px){.listing-grid{grid-template-columns:1fr !important;}}@media(max-width:600px){.listing-grid{grid-template-columns:1fr !important;}}</style>
+</body>
+</html>
