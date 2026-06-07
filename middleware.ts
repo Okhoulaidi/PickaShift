@@ -46,11 +46,13 @@ export default clerkMiddleware(async (auth, req) => {
   const path = req.nextUrl.pathname;
 
   if (isPublicRoute(req)) {
-    if (userId && path === '/sign-in') {
-      if (meta.role && meta.onboardingComplete !== true) {
+    if (userId) {
+      if (meta.onboardingComplete === true && (path === '/' || path === '/sign-in')) {
+        return NextResponse.redirect(new URL(dashboardPath(meta), req.url));
+      }
+      if (path === '/sign-in' && meta.role && meta.onboardingComplete !== true) {
         return NextResponse.redirect(new URL(onboardingPath(meta), req.url));
       }
-      return NextResponse.redirect(new URL(dashboardPath(meta), req.url));
     }
     return NextResponse.next();
   }

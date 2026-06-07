@@ -1,7 +1,6 @@
 'use client';
 
 import { useSession } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Logo } from '@/components/ui/Logo';
 import { useToast } from '@/components/ui/Toast';
@@ -22,7 +21,6 @@ const STEPS = ['Basics', 'Skills', 'Availability'];
 export default function StudentOnboardingPage() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const { session } = useSession();
   const { show } = useToast();
 
@@ -81,7 +79,7 @@ export default function StudentOnboardingPage() {
     }
 
     await session?.reload();
-    router.push('/dashboard');
+    window.location.href = '/dashboard';
   }
 
   return (

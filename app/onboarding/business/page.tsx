@@ -1,7 +1,6 @@
 'use client';
 
 import { useSession } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Logo } from '@/components/ui/Logo';
 import { useToast } from '@/components/ui/Toast';
@@ -13,7 +12,6 @@ const STEPS = ['Business info', 'Location & contact', 'About'];
 export default function BusinessOnboardingPage() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const { session } = useSession();
   const { show } = useToast();
 
@@ -54,7 +52,7 @@ export default function BusinessOnboardingPage() {
     }
 
     await session?.reload();
-    router.push('/biz/dashboard');
+    window.location.href = '/biz/dashboard';
   }
 
   return (
