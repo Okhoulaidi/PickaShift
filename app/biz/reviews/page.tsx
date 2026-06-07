@@ -1,22 +1,16 @@
-import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
-import { getBusinessProfile } from '@/lib/queries/users';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { unwrapRelation } from '@/lib/types';
 import { bizColor, initials } from '@/lib/utils';
 
 export default async function BizReviewsPage() {
-  const session = await requireRole(['business']);
-  const [business, stats] = await Promise.all([
-    getBusinessProfile(session.userId),
-    getDashboardStats('business', session.userId),
-  ]);
-
-  if (!business) return <div className="center-page">Business profile not found.</div>;
+  const { session, profile: business } = await requireBusinessProfile();
+  const stats = await getDashboardStats('business', session.userId);
 
   const supabase = createAdminClient();
 

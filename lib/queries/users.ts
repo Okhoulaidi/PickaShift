@@ -1,32 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin';
 
-export async function getStudentProfile(userId: string) {
-  const supabase = createAdminClient();
-  const { data } = await supabase
-    .from('students')
-    .select(`
-      *,
-      profile:profiles(*)
-    `)
-    .eq('id', userId)
-    .single();
-
-  return data;
-}
-
-export async function getBusinessProfile(userId: string) {
-  const supabase = createAdminClient();
-  const { data } = await supabase
-    .from('businesses')
-    .select(`
-      *,
-      profile:profiles(*)
-    `)
-    .eq('id', userId)
-    .single();
-
-  return data;
-}
+export { getBusinessProfile } from '@/lib/queries/business';
+export { getStudentProfile } from '@/lib/queries/student';
 
 export async function getTalentPool(businessId: string) {
   const supabase = createAdminClient();

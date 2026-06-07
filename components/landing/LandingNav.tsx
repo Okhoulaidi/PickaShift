@@ -1,6 +1,6 @@
 'use client';
 
-import { SignInButton, SignUpButton, UserButton, useAuth } from '@clerk/nextjs';
+import { SignInButton, UserButton, useAuth } from '@clerk/nextjs';
 import Link from 'next/link';
 import { Logo } from '@/components/ui/Logo';
 
@@ -29,14 +29,12 @@ export function LandingNav() {
                   Log in
                 </button>
               </SignInButton>
-              <SignUpButton mode="modal">
-                <button
-                  type="button"
-                  className="bg-brand text-white text-sm font-semibold px-4 sm:px-5 py-2 rounded-lg hover:bg-brand-dark transition-colors"
-                >
-                  Join
-                </button>
-              </SignUpButton>
+              <Link
+                href="/sign-up?role=student"
+                className="bg-brand !text-white text-sm font-semibold px-4 sm:px-5 py-2 rounded-lg hover:bg-brand-dark transition-colors"
+              >
+                Join
+              </Link>
             </>
           )}
         </div>

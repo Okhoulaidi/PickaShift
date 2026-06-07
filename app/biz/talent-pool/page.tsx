@@ -1,21 +1,19 @@
-import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getDashboardStats } from '@/lib/queries/shifts';
-import { getBusinessProfile, getTalentPool } from '@/lib/queries/users';
+import { getTalentPool } from '@/lib/queries/users';
 import { bizColor, initials } from '@/lib/utils';
 import { unwrapRelation } from '@/lib/types';
 
 export default async function TalentPoolPage() {
-  const session = await requireRole(['business']);
-  const [stats, business, pool] = await Promise.all([
+  const { session, profile: business } = await requireBusinessProfile();
+  const [stats, pool] = await Promise.all([
     getDashboardStats('business', session.userId),
-    getBusinessProfile(session.userId),
     getTalentPool(session.userId),
   ]);
 
-  if (!business) return null;
   const user = businessDashUser(business);
 
   return (

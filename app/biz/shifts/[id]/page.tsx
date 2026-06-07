@@ -1,25 +1,21 @@
 import { notFound } from 'next/navigation';
-import { requireRole } from '@/lib/auth';
 import { ShiftDetailBizClient } from '@/components/biz/ShiftDetailBizClient';
 import { businessDashUser } from '@/lib/dashboard-user';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getDashboardStats, getShiftApplicants, getShiftById } from '@/lib/queries/shifts';
-import { getBusinessProfile } from '@/lib/queries/users';
 import { unwrapRelation } from '@/lib/types';
 
 export default async function BizShiftDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const session = await requireRole(['business']);
+  const { session, profile: business } = await requireBusinessProfile();
 
   const shift = await getShiftById(id);
   if (!shift || shift.business_id !== session.userId) notFound();
 
-  const [stats, business, applicants] = await Promise.all([
+  const [stats, applicants] = await Promise.all([
     getDashboardStats('business', session.userId),
-    getBusinessProfile(session.userId),
     getShiftApplicants(id),
   ]);
-
-  if (!business) notFound();
 
   const mapped = applicants.map((app) => {
     const student = unwrapRelation(app.student);

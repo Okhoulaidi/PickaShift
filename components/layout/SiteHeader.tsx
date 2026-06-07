@@ -1,6 +1,6 @@
 'use client';
 
-import { SignInButton, SignUpButton, UserButton, useAuth } from '@clerk/nextjs';
+import { SignInButton, UserButton, useAuth } from '@clerk/nextjs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Icon } from '@/components/ui/Icon';
@@ -39,11 +39,9 @@ function AuthActions({ mobile }: { mobile?: boolean }) {
           Log In
         </button>
       </SignInButton>
-      <SignUpButton mode="modal">
-        <button type="button" className={signupClass}>
-          Sign Up
-        </button>
-      </SignUpButton>
+      <Link href="/sign-up?role=student" className={signupClass}>
+        Sign Up
+      </Link>
     </>
   );
 }

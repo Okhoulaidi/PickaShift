@@ -1,25 +1,19 @@
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
-import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
-import { getDashboardStats } from '@/lib/queries/shifts';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getUserNotifications } from '@/lib/queries/notifications';
-import { getBusinessProfile } from '@/lib/queries/users';
+import { getDashboardStats } from '@/lib/queries/shifts';
 
 export default async function BizNotificationsPage() {
-  const session = await requireRole(['business']);
-  const [business, stats, notifications] = await Promise.all([
-    getBusinessProfile(session.userId),
-    getDashboardStats('business', session.userId),
-    getUserNotifications(session.userId, 50),
+  const { profile: business } = await requireBusinessProfile();
+  const [stats, notifications] = await Promise.all([
+    getDashboardStats('business', business.id),
+    getUserNotifications(business.id, 50),
   ]);
-
-  if (!business) {
-    return <div className="center-page">Business profile not found.</div>;
-  }
 
   const user = businessDashUser(business);
   const pending = stats.pendingReview ?? 0;

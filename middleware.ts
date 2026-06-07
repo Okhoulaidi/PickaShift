@@ -56,7 +56,7 @@ export default clerkMiddleware(async (auth, req) => {
   }
 
   // Only redirect when onboarding is explicitly incomplete (avoids JWT lag loops).
-  if (meta.role && meta.onboardingComplete === false && !isOnboardingRoute(req)) {
+  if (meta.role && meta.onboardingComplete !== true && !isOnboardingRoute(req)) {
     const onboarding = meta.role === 'business' ? '/onboarding/business' : '/onboarding/student';
     return NextResponse.redirect(new URL(onboarding, req.url));
   }

@@ -1,21 +1,18 @@
-import { requireRole } from '@/lib/auth';
 import { MessagesListClient } from '@/components/messages/MessagesClient';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getConversations, getLastMessagePreview } from '@/lib/queries/messages';
 import { getDashboardStats } from '@/lib/queries/shifts';
-import { getBusinessProfile } from '@/lib/queries/users';
 import { unwrapRelation } from '@/lib/types';
 
 export default async function BizMessagesPage() {
-  const session = await requireRole(['business']);
-  const [stats, business, conversations] = await Promise.all([
+  const { session, profile: business } = await requireBusinessProfile();
+  const [stats, conversations] = await Promise.all([
     getDashboardStats('business', session.userId),
-    getBusinessProfile(session.userId),
     getConversations(session.userId, 'business'),
   ]);
 
-  if (!business) return null;
   const user = businessDashUser(business);
 
   const items = await Promise.all(

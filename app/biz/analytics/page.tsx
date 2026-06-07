@@ -1,20 +1,18 @@
-import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getDashboardStats } from '@/lib/queries/shifts';
-import { getBusinessAnalytics, getBusinessProfile } from '@/lib/queries/users';
+import { getBusinessAnalytics } from '@/lib/queries/users';
 
 export default async function BizAnalyticsPage() {
-  const session = await requireRole(['business']);
-  const [stats, business, analytics] = await Promise.all([
+  const { session, profile: business } = await requireBusinessProfile();
+  const [stats, analytics] = await Promise.all([
     getDashboardStats('business', session.userId),
-    getBusinessProfile(session.userId),
     getBusinessAnalytics(session.userId),
   ]);
 
-  if (!business) return null;
   const user = businessDashUser(business);
 
   const cards = [

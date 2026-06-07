@@ -1,27 +1,23 @@
 import { notFound } from 'next/navigation';
-import { requireRole } from '@/lib/auth';
 import { MessageThreadClient } from '@/components/messages/MessagesClient';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getConversationById, getMessages } from '@/lib/queries/messages';
 import { getDashboardStats } from '@/lib/queries/shifts';
-import { getBusinessProfile } from '@/lib/queries/users';
 import { unwrapRelation } from '@/lib/types';
 
 export default async function BizMessageThreadPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const session = await requireRole(['business']);
+  const { session, profile: business } = await requireBusinessProfile();
 
   const conversation = await getConversationById(id, session.userId, 'business');
   if (!conversation) notFound();
 
-  const [stats, business, messages] = await Promise.all([
+  const [stats, messages] = await Promise.all([
     getDashboardStats('business', session.userId),
-    getBusinessProfile(session.userId),
     getMessages(id),
   ]);
-
-  if (!business) notFound();
 
   const student = unwrapRelation(conversation.student);
   const profile = student ? unwrapRelation(student.profile) : null;

@@ -11,8 +11,13 @@ export default async function RoleSelectionPage({
   const { sessionClaims } = await auth();
   const meta = getClerkMetadata(sessionClaims as Record<string, unknown> | null | undefined);
 
-  // Hard lock: if a role is already set, send to the right dashboard.
   if (meta.role) {
+    if (meta.onboardingComplete !== true) {
+      if (meta.role === 'business') redirect('/onboarding/business');
+      if (meta.role === 'admin') redirect('/admin');
+      redirect('/onboarding/student');
+    }
+
     redirect(
       meta.role === 'business' ? '/biz/dashboard'
       : meta.role === 'admin'  ? '/admin'

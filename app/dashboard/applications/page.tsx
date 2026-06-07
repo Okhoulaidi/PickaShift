@@ -1,21 +1,19 @@
-import { requireRole } from '@/lib/auth';
 import { mapApplications } from '@/lib/applications-display';
 import { ApplicationsClient } from '@/components/dashboard/ApplicationsClient';
 import { studentDashUser } from '@/lib/dashboard-user';
+import { requireStudentProfile } from '@/lib/guards/student';
 import { getDashboardStats, getStudentApplications } from '@/lib/queries/shifts';
-import { getStudentProfile } from '@/lib/queries/users';
 import { unwrapRelation } from '@/lib/types';
 
 export default async function ApplicationsPage() {
-  const session = await requireRole(['student']);
+  const { session, profile: student } = await requireStudentProfile();
 
-  const [stats, student, applications] = await Promise.all([
+  const [stats, applications] = await Promise.all([
     getDashboardStats('student', session.userId),
-    getStudentProfile(session.userId),
     getStudentApplications(session.userId),
   ]);
 
-  const profile = unwrapRelation(student?.profile);
+  const profile = unwrapRelation(student.profile);
   const user = studentDashUser(
     {
       first_name: profile?.first_name ?? session.user.firstName ?? null,

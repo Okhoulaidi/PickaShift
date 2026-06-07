@@ -1,23 +1,20 @@
 import Link from 'next/link';
-import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
+import { requireBusinessProfile } from '@/lib/guards/business';
 import { getBusinessShifts, getDashboardStats } from '@/lib/queries/shifts';
-import { getBusinessProfile } from '@/lib/queries/users';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { formatPayHour, formatShiftDate, formatTimeRange } from '@/lib/utils';
 
 export default async function BizShiftsPage() {
-  const session = await requireRole(['business']);
-  const [stats, business, shifts] = await Promise.all([
+  const { session, profile: business } = await requireBusinessProfile();
+  const [stats, shifts] = await Promise.all([
     getDashboardStats('business', session.userId),
-    getBusinessProfile(session.userId),
     getBusinessShifts(session.userId),
   ]);
 
-  if (!business) return null;
   const user = businessDashUser(business);
   const supabase = createAdminClient();
 

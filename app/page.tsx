@@ -26,7 +26,7 @@ export default function HomePage() {
         <div className="relative w-full lg:w-1/2 bg-card flex flex-col justify-center px-8 sm:px-12 lg:px-20 py-20">
           <div className="max-w-md animate-reveal">
             <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand mb-4 block">
-              For Talent
+              For student
             </span>
             <h1 className="font-sora text-5xl md:text-6xl xl:text-7xl font-extrabold leading-[0.9] tracking-tighter mb-8 text-balance">
               OWN YOUR <br />
@@ -38,10 +38,10 @@ export default function HomePage() {
             </p>
             <Link
               href="/sign-up?role=student"
-              className="group inline-flex items-center gap-3 bg-brand text-white px-7 py-4 rounded-xl font-sora font-bold text-sm uppercase tracking-widest hover:bg-brand-dark transition-colors"
+              className="group inline-flex items-center gap-3 bg-brand !text-white px-7 py-4 rounded-xl font-sora font-bold text-sm uppercase tracking-widest hover:bg-brand-dark transition-colors"
             >
               Find a Shift
-              <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="size-4 !text-white group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
@@ -61,10 +61,10 @@ export default function HomePage() {
             </p>
             <Link
               href="/sign-up?role=business"
-              className="group inline-flex items-center gap-3 bg-white text-brand px-7 py-4 rounded-xl font-sora font-bold text-sm uppercase tracking-widest hover:bg-canvas transition-colors"
+              className="group inline-flex items-center gap-3 bg-white !text-ink px-7 py-4 rounded-xl font-sora font-bold text-sm uppercase tracking-widest hover:bg-canvas transition-colors"
             >
               Post a Shift
-              <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="size-4 !text-ink group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/sign-up?role=business"
-              className="block w-full text-center bg-ink text-white py-4 rounded-xl font-sora font-bold text-xs uppercase tracking-widest hover:bg-brand transition-colors"
+              className="block w-full text-center bg-ink !text-white py-4 rounded-xl font-sora font-bold text-xs uppercase tracking-widest hover:bg-brand transition-colors"
             >
               Get Started
             </Link>
@@ -236,7 +236,7 @@ export default function HomePage() {
             <p className="font-sora text-3xl font-extrabold tracking-tighter mb-6">Ready to join?</p>
             <Link
               href="/sign-up?role=student"
-              className="bg-white text-brand px-6 py-3 rounded-lg font-extrabold text-xs uppercase tracking-widest hover:bg-canvas transition-colors"
+              className="bg-white !text-ink px-6 py-3 rounded-lg font-extrabold text-xs uppercase tracking-widest hover:bg-canvas transition-colors"
             >
               Create Profile
             </Link>
@@ -256,13 +256,13 @@ export default function HomePage() {
           <div className="flex flex-wrap justify-center gap-4">
             <Link
               href="/sign-up?role=student"
-              className="bg-brand hover:bg-brand-dark px-8 py-5 rounded-2xl font-sora font-bold text-sm uppercase tracking-widest transition-colors"
+              className="bg-brand hover:bg-brand-dark !text-white px-8 py-5 rounded-2xl font-sora font-bold text-sm uppercase tracking-widest transition-colors"
             >
               I&apos;m a Student
             </Link>
             <Link
               href="/sign-up?role=business"
-              className="bg-white/10 hover:bg-white/20 border border-white/20 px-8 py-5 rounded-2xl font-sora font-bold text-sm uppercase tracking-widest transition-colors"
+              className="bg-white/10 hover:bg-white/20 border border-white/20 !text-white px-8 py-5 rounded-2xl font-sora font-bold text-sm uppercase tracking-widest transition-colors"
             >
               I&apos;m a Business
             </Link>
