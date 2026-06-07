@@ -71,6 +71,17 @@ export async function completeStudentOnboarding(input: StudentOnboardingInput): 
   const user = await currentUser();
   if (!user) return { error: 'User not found' };
 
+  const { error: profileError } = await supabase.from('profiles').upsert({
+    id: session.userId,
+    role: 'student' as UserRole,
+    email: user.emailAddresses[0]?.emailAddress ?? '',
+    first_name: user.firstName ?? null,
+    last_name: user.lastName ?? null,
+    avatar_url: user.imageUrl ?? null,
+    onboarding_complete: true,
+  });
+  if (profileError) return { error: profileError.message };
+
   const { error: studentError } = await supabase.from('students').upsert({
     id: session.userId,
     university: input.university,
@@ -83,21 +94,7 @@ export async function completeStudentOnboarding(input: StudentOnboardingInput): 
     district: input.district,
     cv_url: input.cvUrl ?? null,
   });
-
   if (studentError) return { error: studentError.message };
-
-  const { error: profileError } = await supabase
-    .from('profiles')
-    .update({
-      role: 'student',
-      first_name: user.firstName,
-      last_name: user.lastName,
-      avatar_url: user.imageUrl,
-      onboarding_complete: true,
-    })
-    .eq('id', session.userId);
-
-  if (profileError) return { error: profileError.message };
 
   await syncClerkMetadata(session.userId, { role: 'student' as UserRole, onboardingComplete: true });
   return { success: true };
@@ -112,6 +109,17 @@ export async function completeBusinessOnboarding(input: BusinessOnboardingInput)
   const supabase = createAdminClient();
   const user = await currentUser();
   if (!user) return { error: 'User not found' };
+
+  const { error: profileError } = await supabase.from('profiles').upsert({
+    id: session.userId,
+    role: 'business' as UserRole,
+    email: user.emailAddresses[0]?.emailAddress ?? '',
+    first_name: user.firstName ?? null,
+    last_name: user.lastName ?? null,
+    avatar_url: user.imageUrl ?? null,
+    onboarding_complete: true,
+  });
+  if (profileError) return { error: profileError.message };
 
   const { error: businessError } = await supabase.from('businesses').upsert({
     id: session.userId,
@@ -128,21 +136,7 @@ export async function completeBusinessOnboarding(input: BusinessOnboardingInput)
     verified: true,
     verified_at: new Date().toISOString(),
   });
-
   if (businessError) return { error: businessError.message };
-
-  const { error: profileError } = await supabase
-    .from('profiles')
-    .update({
-      role: 'business',
-      first_name: user.firstName,
-      last_name: user.lastName,
-      avatar_url: user.imageUrl,
-      onboarding_complete: true,
-    })
-    .eq('id', session.userId);
-
-  if (profileError) return { error: profileError.message };
 
   await syncClerkMetadata(session.userId, { role: 'business' as UserRole, onboardingComplete: true, verified: true });
   return { success: true };
