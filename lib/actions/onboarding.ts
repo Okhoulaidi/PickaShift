@@ -89,6 +89,7 @@ export async function completeStudentOnboarding(input: StudentOnboardingInput): 
   const { error: profileError } = await supabase
     .from('profiles')
     .update({
+      role: 'student',
       first_name: user.firstName,
       last_name: user.lastName,
       avatar_url: user.imageUrl,
@@ -133,6 +134,7 @@ export async function completeBusinessOnboarding(input: BusinessOnboardingInput)
   const { error: profileError } = await supabase
     .from('profiles')
     .update({
+      role: 'business',
       first_name: user.firstName,
       last_name: user.lastName,
       avatar_url: user.imageUrl,
