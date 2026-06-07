@@ -34,25 +34,14 @@ function dashboardPath(meta: UserMetadata) {
   return '/dashboard';
 }
 
-function onboardingPath(meta: UserMetadata) {
-  if (meta.role === 'business') return '/onboarding/business';
-  if (meta.role === 'admin') return '/admin';
-  return '/onboarding/student';
-}
-
 export default clerkMiddleware(async (auth, req) => {
   const { userId, sessionClaims } = await auth();
   const meta = (sessionClaims?.metadata ?? sessionClaims?.public_metadata ?? {}) as UserMetadata;
   const path = req.nextUrl.pathname;
 
   if (isPublicRoute(req)) {
-    if (userId) {
-      if (meta.onboardingComplete === true && (path === '/' || path === '/sign-in')) {
-        return NextResponse.redirect(new URL(dashboardPath(meta), req.url));
-      }
-      if (path === '/sign-in' && meta.role && meta.onboardingComplete !== true) {
-        return NextResponse.redirect(new URL(onboardingPath(meta), req.url));
-      }
+    if (userId && meta.role && (path === '/' || path === '/sign-in')) {
+      return NextResponse.redirect(new URL(dashboardPath(meta), req.url));
     }
     return NextResponse.next();
   }
@@ -69,17 +58,6 @@ export default clerkMiddleware(async (auth, req) => {
 
   if (!meta.role && !isOnboardingRoute(req) && path !== '/sign-up/role') {
     return NextResponse.redirect(new URL('/sign-up/role', req.url));
-  }
-
-  if (meta.role && meta.onboardingComplete !== true && !isOnboardingRoute(req)) {
-    return NextResponse.redirect(new URL(onboardingPath(meta), req.url));
-  }
-
-  // Only block re-selecting role once onboarding is done.
-  // Do NOT redirect away from /onboarding/* — DB profile guards handle that
-  // (avoids loop when JWT says complete but Supabase row is missing).
-  if (meta.onboardingComplete === true && path === '/sign-up/role') {
-    return NextResponse.redirect(new URL(dashboardPath(meta), req.url));
   }
 
   if (isAdminRoute(req) && meta.role !== 'admin') {
