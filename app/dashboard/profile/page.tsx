@@ -25,6 +25,8 @@ export default async function StudentProfilePage() {
       user={user}
       stats={stats}
       initial={{
+        firstName: profile?.first_name ?? session.user.firstName ?? '',
+        lastName: profile?.last_name ?? session.user.lastName ?? '',
         university: student.university ?? UNIVERSITIES[0],
         degree: student.degree ?? '',
         yearOfStudy: student.year_of_study ?? 1,

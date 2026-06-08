@@ -21,6 +21,8 @@ interface ProfileClientProps {
   user: DashUser;
   stats: DashboardStats;
   initial: {
+    firstName: string;
+    lastName: string;
     university: string;
     degree: string;
     yearOfStudy: number;
@@ -55,6 +57,8 @@ export function StudentProfileClient({ user, stats, initial }: ProfileClientProp
     e.preventDefault();
     setLoading(true);
     const result = await updateStudentProfile({
+      firstName: form.firstName,
+      lastName: form.lastName,
       university: form.university,
       degree: form.degree,
       yearOfStudy: form.yearOfStudy,
@@ -78,6 +82,24 @@ export function StudentProfileClient({ user, stats, initial }: ProfileClientProp
     >
       <div className="content">
         <form className="panel panel-body" onSubmit={save}>
+          <div className="grid-2">
+            <div className="field">
+              <label>First name</label>
+              <input
+                value={form.firstName}
+                onChange={(e) => setForm((f) => ({ ...f, firstName: e.target.value }))}
+                placeholder="e.g. María"
+              />
+            </div>
+            <div className="field">
+              <label>Last name</label>
+              <input
+                value={form.lastName}
+                onChange={(e) => setForm((f) => ({ ...f, lastName: e.target.value }))}
+                placeholder="e.g. García"
+              />
+            </div>
+          </div>
           <div className="grid-2">
             <div className="field">
               <label>University</label>

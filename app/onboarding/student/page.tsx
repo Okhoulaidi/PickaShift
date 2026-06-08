@@ -24,6 +24,8 @@ export default function StudentOnboardingPage() {
   const { session } = useSession();
   const { show } = useToast();
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [university, setUniversity] = useState<string>(UNIVERSITIES[0]);
   const [degree, setDegree] = useState('');
   const [yearOfStudy, setYearOfStudy] = useState(2);
@@ -49,6 +51,11 @@ export default function StudentOnboardingPage() {
   }
 
   async function submit() {
+    if (!firstName.trim() || !lastName.trim()) {
+      show('Please enter your first and last name');
+      setStep(0);
+      return;
+    }
     if (!degree.trim()) {
       show('Please enter your degree programme');
       setStep(0);
@@ -62,6 +69,8 @@ export default function StudentOnboardingPage() {
 
     setLoading(true);
     const result = await completeStudentOnboarding({
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
       university,
       degree: degree.trim(),
       yearOfStudy,
@@ -100,6 +109,28 @@ export default function StudentOnboardingPage() {
 
         {step === 0 && (
           <>
+            <div className="grid-2">
+              <div className="field">
+                <label>
+                  First name <span className="req">*</span>
+                </label>
+                <input
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="e.g. María"
+                />
+              </div>
+              <div className="field">
+                <label>
+                  Last name <span className="req">*</span>
+                </label>
+                <input
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="e.g. García"
+                />
+              </div>
+            </div>
             <div className="field">
               <label>University</label>
               <select value={university} onChange={(e) => setUniversity(e.target.value)}>

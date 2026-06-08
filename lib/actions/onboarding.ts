@@ -7,6 +7,8 @@ import type { UserRole } from '@/lib/constants';
 import type { ActionResult } from '@/lib/types';
 
 export interface StudentOnboardingInput {
+  firstName: string;
+  lastName: string;
   university: string;
   degree: string;
   yearOfStudy: number;
@@ -75,8 +77,8 @@ export async function completeStudentOnboarding(input: StudentOnboardingInput): 
     id: session.userId,
     role: 'student' as UserRole,
     email: user.emailAddresses[0]?.emailAddress ?? '',
-    first_name: user.firstName ?? null,
-    last_name: user.lastName ?? null,
+    first_name: input.firstName.trim() || user.firstName || null,
+    last_name: input.lastName.trim() || user.lastName || null,
     avatar_url: user.imageUrl ?? null,
     onboarding_complete: true,
   });

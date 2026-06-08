@@ -7,6 +7,8 @@ import { cvStoragePath, ensureStudentCvBucket } from '@/lib/storage/cv';
 import type { ActionResult } from '@/lib/types';
 
 export interface StudentProfileInput {
+  firstName?: string;
+  lastName?: string;
   university: string;
   degree: string;
   yearOfStudy: number;
@@ -36,6 +38,15 @@ export async function updateStudentProfile(input: StudentProfileInput): Promise<
   if (session.error) return { error: session.error };
 
   const supabase = createAdminClient();
+
+  // Update name in profiles table if provided
+  if (input.firstName !== undefined || input.lastName !== undefined) {
+    const nameUpdate: Record<string, string | null> = {};
+    if (input.firstName !== undefined) nameUpdate.first_name = input.firstName.trim() || null;
+    if (input.lastName !== undefined) nameUpdate.last_name = input.lastName.trim() || null;
+    await supabase.from('profiles').update(nameUpdate).eq('id', session.userId);
+  }
+
   const { error } = await supabase
     .from('students')
     .update({
