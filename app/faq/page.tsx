@@ -49,12 +49,12 @@ const FAQS: FAQ[] = [
   {
     tag: 'Students',
     q: 'What happens if I can\'t make a shift I accepted?',
-    a: 'Contact the business immediately via the platform messaging and let them know as early as possible. Cancellations close to the shift time will negatively affect your reliability score, which businesses can see.',
+    a: 'Contact the business immediately via the platform messaging and let them know as early as possible. Giving notice early is the professional thing to do and protects your standing with businesses on the platform.',
   },
   {
     tag: 'Students',
     q: 'How does my reliability score work?',
-    a: 'Your reliability score is calculated from your history of showing up to and completing accepted shifts. It starts neutral and improves the more you complete shifts without cancelling. A higher score makes you a more attractive candidate to businesses.',
+    a: 'After each completed shift, the business can leave a rating out of 5. Your reliability score is the average of all ratings you\'ve received. It\'s visible to businesses when they review your application — the higher it is, the more competitive you look.',
   },
   // Businesses
   {
@@ -70,7 +70,7 @@ const FAQS: FAQ[] = [
   {
     tag: 'Businesses',
     q: 'What if a student doesn\'t show up?',
-    a: 'A student who doesn\'t show up will receive a no-show mark that damages their reliability score. Report the incident via the Contact page and we\'ll investigate. Repeated no-shows may result in the student\'s account being suspended.',
+    a: 'Report the incident via the Contact page with the shift details and we\'ll investigate. Confirmed no-shows may result in the student\'s account being suspended. We take reliability seriously on both sides.',
   },
   {
     tag: 'Businesses',

@@ -13,21 +13,12 @@ const FOOTER_COLS: [string, { label: string; href: string }[]][] = [
     ],
   ],
   [
-    'Company',
-    [
-      { label: 'About', href: '#' },
-      { label: 'Blog', href: '#' },
-      { label: 'Press', href: '#' },
-      { label: 'Careers', href: '#' },
-    ],
-  ],
-  [
     'Support',
     [
       { label: 'Help Center', href: '/help' },
       { label: 'Contact', href: '/contact' },
-      { label: 'Privacy', href: '/privacy' },
-      { label: 'Terms', href: '/terms' },
+      { label: 'Privacy Policy', href: '/privacy' },
+      { label: 'Terms of Service', href: '/terms' },
     ],
   ],
 ];

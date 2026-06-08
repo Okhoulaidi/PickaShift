@@ -54,11 +54,11 @@ const CATEGORIES: Category[] = [
       },
       {
         q: 'Can I cancel an application or accepted shift?',
-        a: 'You can withdraw a pending application at any time. If you\'ve already been accepted, please cancel as early as possible — ideally at least 24 hours before the shift. Repeated last-minute cancellations may affect your reliability score and future applications.',
+        a: 'If you\'ve applied but haven\'t been accepted yet, contact us via the Contact page and we\'ll handle the cancellation. If you\'ve already been accepted, reach out to the business directly through the platform messaging as early as possible — ideally at least 24 hours before the shift. Last-minute cancellations affect your standing with businesses.',
       },
       {
         q: 'What is a reliability score?',
-        a: 'Your reliability score reflects how consistently you\'ve shown up to and completed accepted shifts. It\'s visible to businesses reviewing your application and helps you stand out. A higher score significantly improves your chances of being accepted.',
+        a: 'Your reliability score is a rating out of 5 that businesses give you after a completed shift. It\'s visible on your profile when businesses review applications. A higher score helps you stand out and improves your chances of being accepted for competitive shifts.',
       },
       {
         q: 'How do I upload my CV?',
