@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useSession } from '@clerk/nextjs';
 import { useState } from 'react';
 import { Logo } from '@/components/ui/Logo';
@@ -8,6 +9,10 @@ import { completeBusinessOnboarding } from '@/lib/actions/onboarding';
 import { BUSINESS_TYPES, MADRID_DISTRICTS } from '@/lib/constants';
 
 const STEPS = ['Business info', 'Location & contact', 'About'];
+
+const inputClass =
+  'w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm text-ink focus:outline-none focus:border-brand transition-colors';
+const labelClass = 'block text-sm font-semibold text-ink mb-1.5';
 
 export default function BusinessOnboardingPage() {
   const [step, setStep] = useState(0);
@@ -56,131 +61,174 @@ export default function BusinessOnboardingPage() {
   }
 
   return (
-    <div className="auth-page">
-      <div className="auth-card" style={{ maxWidth: 560, width: '100%' }}>
-        <Logo className="logo logo-sm" />
-        <h1 style={{ fontWeight: 900, fontSize: 26, margin: '20px 0 6px' }}>Set up your business</h1>
-        <p style={{ color: 'var(--muted)', margin: '0 0 20px' }}>
-          Step {step + 1} of {STEPS.length} — {STEPS[step]}
-        </p>
+    <div className="min-h-screen bg-canvas flex flex-col items-center justify-center px-4 py-12 font-manrope text-ink">
+      <div className="w-full max-w-xl">
+        <Link href="/" className="inline-block mb-8">
+          <Logo className="logo logo-sm" />
+        </Link>
 
-        <div className="onboarding-progress">
-          {STEPS.map((_, i) => (
-            <div
-              key={i}
-              className={`step-dot${i < step ? ' done' : ''}${i === step ? ' current' : ''}`}
-            />
-          ))}
-        </div>
+        <div className="bg-card border border-line rounded-2xl p-6 sm:p-8">
+          <h1 className="text-2xl font-black mb-1.5">Set up your business</h1>
+          <p className="text-muted-foreground text-sm mb-5">
+            Step {step + 1} of {STEPS.length} — {STEPS[step]}
+          </p>
 
-        {step === 0 && (
-          <>
-            <div className="field">
-              <label>
-                Business name <span className="req">*</span>
-              </label>
-              <input
-                value={businessName}
-                onChange={(e) => setBusinessName(e.target.value)}
-                placeholder="e.g. Brew & Bean"
+          <div className="flex gap-2 mb-8">
+            {STEPS.map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 flex-1 rounded-full transition-colors ${
+                  i <= step ? 'bg-brand' : 'bg-line'
+                }`}
               />
+            ))}
+          </div>
+
+          {step === 0 && (
+            <div className="space-y-4">
+              <div>
+                <label className={labelClass}>
+                  Business name <span className="text-brand">*</span>
+                </label>
+                <input
+                  className={inputClass}
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  placeholder="e.g. Brew & Bean"
+                />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>Business type</label>
+                  <select
+                    className={inputClass}
+                    value={businessType}
+                    onChange={(e) => setBusinessType(e.target.value)}
+                  >
+                    {BUSINESS_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className={labelClass}>NIF / CIF</label>
+                  <input
+                    className={inputClass}
+                    value={nif}
+                    onChange={(e) => setNif(e.target.value)}
+                    placeholder="Optional"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="grid-2">
-              <div className="field">
-                <label>Business type</label>
-                <select value={businessType} onChange={(e) => setBusinessType(e.target.value)}>
-                  {BUSINESS_TYPES.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
+          )}
+
+          {step === 1 && (
+            <div className="space-y-4">
+              <div>
+                <label className={labelClass}>District</label>
+                <select
+                  className={inputClass}
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                >
+                  {MADRID_DISTRICTS.map((d) => (
+                    <option key={d} value={d}>
+                      {d}
                     </option>
                   ))}
                 </select>
               </div>
-              <div className="field">
-                <label>NIF / CIF</label>
-                <input value={nif} onChange={(e) => setNif(e.target.value)} placeholder="Optional" />
-              </div>
-            </div>
-          </>
-        )}
-
-        {step === 1 && (
-          <>
-            <div className="field">
-              <label>District</label>
-              <select value={district} onChange={(e) => setDistrict(e.target.value)}>
-                {MADRID_DISTRICTS.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="field">
-              <label>Address</label>
-              <input
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="Street address"
-              />
-            </div>
-            <div className="grid-2">
-              <div className="field">
-                <label>Phone</label>
-                <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="+34 …" />
-              </div>
-              <div className="field">
-                <label>Public email</label>
+              <div>
+                <label className={labelClass}>Address</label>
                 <input
-                  type="email"
-                  value={publicEmail}
-                  onChange={(e) => setPublicEmail(e.target.value)}
-                  placeholder="hello@yourbusiness.com"
+                  className={inputClass}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Street address"
+                />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>Phone</label>
+                  <input
+                    className={inputClass}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="+34 …"
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>Public email</label>
+                  <input
+                    type="email"
+                    className={inputClass}
+                    value={publicEmail}
+                    onChange={(e) => setPublicEmail(e.target.value)}
+                    placeholder="hello@yourbusiness.com"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className={labelClass}>Website</label>
+                <input
+                  className={inputClass}
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  placeholder="https://…"
                 />
               </div>
             </div>
-            <div className="field">
-              <label>Website</label>
-              <input
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
-                placeholder="https://…"
-              />
-            </div>
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <div className="field">
-              <label>Description</label>
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="What does your business do? What should workers know?"
-              />
-            </div>
-            <p className="hint">
-              Almost done! Once you complete setup you can start posting shifts immediately.
-            </p>
-          </>
-        )}
-
-        <div style={{ display: 'flex', gap: 10, marginTop: 24, justifyContent: 'flex-end' }}>
-          {step > 0 && (
-            <button type="button" className="btn btn-ghost" onClick={() => setStep((s) => s - 1)}>
-              Back
-            </button>
           )}
-          {step < STEPS.length - 1 ? (
-            <button type="button" className="btn btn-primary" onClick={() => setStep((s) => s + 1)}>
-              Continue
-            </button>
-          ) : (
-            <button type="button" className="btn btn-primary" disabled={loading} onClick={submit}>
-              {loading ? 'Saving…' : 'Complete setup'}
-            </button>
+
+          {step === 2 && (
+            <div className="space-y-4">
+              <div>
+                <label className={labelClass}>Description</label>
+                <textarea
+                  className={`${inputClass} resize-none min-h-[100px]`}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="What does your business do? What should workers know?"
+                />
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Almost done! Once you complete setup you can start posting shifts immediately.
+              </p>
+            </div>
           )}
+
+          <div className="flex gap-2.5 mt-6 justify-end">
+            {step > 0 && (
+              <button
+                type="button"
+                className="px-5 py-2.5 rounded-xl border border-line text-sm font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
+                onClick={() => setStep((s) => s - 1)}
+              >
+                Back
+              </button>
+            )}
+            {step < STEPS.length - 1 ? (
+              <button
+                type="button"
+                className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors"
+                onClick={() => setStep((s) => s + 1)}
+              >
+                Continue
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors disabled:opacity-60"
+                disabled={loading}
+                onClick={submit}
+              >
+                {loading ? 'Saving…' : 'Complete setup'}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

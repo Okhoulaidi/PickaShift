@@ -1,4 +1,6 @@
+import Link from 'next/link';
 import { SignUp } from '@clerk/nextjs';
+import { Logo } from '@/components/ui/Logo';
 
 export default async function SignUpPage({
   searchParams,
@@ -10,7 +12,10 @@ export default async function SignUpPage({
   const redirectUrl = validRole ? `/sign-up/role?role=${validRole}` : '/sign-up/role';
 
   return (
-    <div className="auth-page">
+    <div className="min-h-screen bg-canvas flex flex-col items-center justify-center px-4 font-manrope">
+      <Link href="/" className="mb-8">
+        <Logo className="logo logo-sm" />
+      </Link>
       <SignUp
         routing="path"
         path="/sign-up"

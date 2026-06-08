@@ -14,7 +14,6 @@ export function studentNav(pendingApps = 0): DashNavItem[] {
     },
     { label: 'Messages', short: 'Chat', icon: 'chat', href: '/dashboard/messages' },
     { label: 'My Profile', short: 'Profile', icon: 'user', href: '/dashboard/profile' },
-    { label: 'Saved Shifts', short: 'Saved', icon: 'bookmark', href: '/dashboard/saved' },
     { label: 'My CV', short: 'CV', icon: 'upload', href: '/dashboard/cv' },
     { label: 'Earnings', short: 'Earn', icon: 'euro', href: '/dashboard/earnings' },
     { label: 'My Reviews', short: 'Reviews', icon: 'star', href: '/dashboard/reviews' },

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { SiteHeader } from '@/components/layout/SiteHeader';
+import { LandingNav } from '@/components/landing/LandingNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { Icon } from '@/components/ui/Icon';
 import { useToast } from '@/components/ui/Toast';
@@ -53,7 +53,7 @@ export function ShiftDetailClient({
 
   return (
     <>
-      <SiteHeader />
+      <LandingNav />
       <div className="wrap" style={{ paddingTop: 32, paddingBottom: 48 }}>
         <Link href="/browse" className="link-btn" style={{ marginBottom: 20, display: 'inline-flex' }}>
           <Icon name="chevleft" size={15} /> Back to browse

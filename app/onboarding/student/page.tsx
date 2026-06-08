@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useSession } from '@clerk/nextjs';
 import { useState } from 'react';
 import { Logo } from '@/components/ui/Logo';
@@ -17,6 +18,16 @@ import {
 } from '@/lib/constants';
 
 const STEPS = ['Basics', 'Skills', 'Availability'];
+
+const inputClass =
+  'w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm text-ink focus:outline-none focus:border-brand transition-colors';
+const labelClass = 'block text-sm font-semibold text-ink mb-1.5';
+const chipClass = (active: boolean) =>
+  `px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+    active
+      ? 'bg-brand text-white border-brand'
+      : 'border-line bg-canvas text-ink hover:border-brand'
+  }`;
 
 export default function StudentOnboardingPage() {
   const [step, setStep] = useState(0);
@@ -92,160 +103,195 @@ export default function StudentOnboardingPage() {
   }
 
   return (
-    <div className="auth-page">
-      <div className="auth-card" style={{ maxWidth: 560, width: '100%' }}>
-        <Logo className="logo logo-sm" />
-        <h1 style={{ fontWeight: 900, fontSize: 26, margin: '20px 0 6px' }}>Set up your student profile</h1>
-        <p style={{ color: 'var(--muted)', margin: '0 0 20px' }}>Step {step + 1} of {STEPS.length} — {STEPS[step]}</p>
+    <div className="min-h-screen bg-canvas flex flex-col items-center justify-center px-4 py-12 font-manrope text-ink">
+      <div className="w-full max-w-xl">
+        <Link href="/" className="inline-block mb-8">
+          <Logo className="logo logo-sm" />
+        </Link>
 
-        <div className="onboarding-progress">
-          {STEPS.map((_, i) => (
-            <div
-              key={i}
-              className={`step-dot${i < step ? ' done' : ''}${i === step ? ' current' : ''}`}
-            />
-          ))}
-        </div>
+        <div className="bg-card border border-line rounded-2xl p-6 sm:p-8">
+          <h1 className="text-2xl font-black mb-1.5">Set up your student profile</h1>
+          <p className="text-muted-foreground text-sm mb-5">
+            Step {step + 1} of {STEPS.length} — {STEPS[step]}
+          </p>
 
-        {step === 0 && (
-          <>
-            <div className="grid-2">
-              <div className="field">
-                <label>
-                  First name <span className="req">*</span>
-                </label>
-                <input
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="e.g. María"
-                />
-              </div>
-              <div className="field">
-                <label>
-                  Last name <span className="req">*</span>
-                </label>
-                <input
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="e.g. García"
-                />
-              </div>
-            </div>
-            <div className="field">
-              <label>University</label>
-              <select value={university} onChange={(e) => setUniversity(e.target.value)}>
-                {UNIVERSITIES.map((u) => (
-                  <option key={u} value={u}>
-                    {u}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="field">
-              <label>
-                Degree programme <span className="req">*</span>
-              </label>
-              <input
-                value={degree}
-                onChange={(e) => setDegree(e.target.value)}
-                placeholder="e.g. Economics, Computer Science"
+          <div className="flex gap-2 mb-8">
+            {STEPS.map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 flex-1 rounded-full transition-colors ${
+                  i <= step ? 'bg-brand' : 'bg-line'
+                }`}
               />
-            </div>
-            <div className="grid-2">
-              <div className="field">
-                <label>Year of study</label>
-                <select
-                  value={yearOfStudy}
-                  onChange={(e) => setYearOfStudy(Number(e.target.value))}
-                >
-                  {[1, 2, 3, 4, 5, 6].map((y) => (
-                    <option key={y} value={y}>
-                      Year {y}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="field">
-                <label>Home district</label>
-                <select value={district} onChange={(e) => setDistrict(e.target.value)}>
-                  {MADRID_DISTRICTS.map((d) => (
-                    <option key={d} value={d}>
-                      {d}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="field">
-              <label>Short bio</label>
-              <textarea
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                placeholder="Tell businesses a bit about yourself…"
-              />
-            </div>
-          </>
-        )}
-
-        {step === 1 && (
-          <div className="field">
-            <label>Your skills</label>
-            <div className="chips">
-              {SKILLS.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  className={`chip${skills.includes(s) ? ' on' : ''}`}
-                  onClick={() => toggleSkill(s)}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {step === 2 && (
-          <div className="field">
-            <label>When are you usually free?</label>
-            <p className="hint" style={{ marginBottom: 12 }}>
-              Tap slots you&apos;re typically available. You can always change this later.
-            </p>
-            {DAYS.map((day) => (
-              <div key={day} style={{ marginBottom: 14 }}>
-                <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 8 }}>{DAY_LABELS[day]}</div>
-                <div className="chips">
-                  {SLOTS.map((slot) => (
-                    <button
-                      key={slot}
-                      type="button"
-                      className={`chip${(availability[day] ?? []).includes(slot) ? ' on' : ''}`}
-                      onClick={() => toggleAvail(day, slot)}
-                    >
-                      {SLOT_LABELS[slot]}
-                    </button>
-                  ))}
-                </div>
-              </div>
             ))}
           </div>
-        )}
 
-        <div style={{ display: 'flex', gap: 10, marginTop: 24, justifyContent: 'flex-end' }}>
-          {step > 0 && (
-            <button type="button" className="btn btn-ghost" onClick={() => setStep((s) => s - 1)}>
-              Back
-            </button>
+          {step === 0 && (
+            <div className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>
+                    First name <span className="text-brand">*</span>
+                  </label>
+                  <input
+                    className={inputClass}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="e.g. María"
+                  />
+                </div>
+                <div>
+                  <label className={labelClass}>
+                    Last name <span className="text-brand">*</span>
+                  </label>
+                  <input
+                    className={inputClass}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="e.g. García"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className={labelClass}>University</label>
+                <select
+                  className={inputClass}
+                  value={university}
+                  onChange={(e) => setUniversity(e.target.value)}
+                >
+                  {UNIVERSITIES.map((u) => (
+                    <option key={u} value={u}>
+                      {u}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className={labelClass}>
+                  Degree programme <span className="text-brand">*</span>
+                </label>
+                <input
+                  className={inputClass}
+                  value={degree}
+                  onChange={(e) => setDegree(e.target.value)}
+                  placeholder="e.g. Economics, Computer Science"
+                />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={labelClass}>Year of study</label>
+                  <select
+                    className={inputClass}
+                    value={yearOfStudy}
+                    onChange={(e) => setYearOfStudy(Number(e.target.value))}
+                  >
+                    {[1, 2, 3, 4, 5, 6].map((y) => (
+                      <option key={y} value={y}>
+                        Year {y}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className={labelClass}>Home district</label>
+                  <select
+                    className={inputClass}
+                    value={district}
+                    onChange={(e) => setDistrict(e.target.value)}
+                  >
+                    {MADRID_DISTRICTS.map((d) => (
+                      <option key={d} value={d}>
+                        {d}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className={labelClass}>Short bio</label>
+                <textarea
+                  className={`${inputClass} resize-none min-h-[100px]`}
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="Tell businesses a bit about yourself…"
+                />
+              </div>
+            </div>
           )}
-          {step < STEPS.length - 1 ? (
-            <button type="button" className="btn btn-primary" onClick={() => setStep((s) => s + 1)}>
-              Continue
-            </button>
-          ) : (
-            <button type="button" className="btn btn-primary" disabled={loading} onClick={submit}>
-              {loading ? 'Saving…' : 'Complete profile'}
-            </button>
+
+          {step === 1 && (
+            <div>
+              <label className={labelClass}>Your skills</label>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {SKILLS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    className={chipClass(skills.includes(s))}
+                    onClick={() => toggleSkill(s)}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            </div>
           )}
+
+          {step === 2 && (
+            <div>
+              <label className={labelClass}>When are you usually free?</label>
+              <p className="text-xs text-muted-foreground mb-3">
+                Tap slots you&apos;re typically available. You can always change this later.
+              </p>
+              {DAYS.map((day) => (
+                <div key={day} className="mb-4">
+                  <div className="font-bold text-sm mb-2">{DAY_LABELS[day]}</div>
+                  <div className="flex flex-wrap gap-2">
+                    {SLOTS.map((slot) => (
+                      <button
+                        key={slot}
+                        type="button"
+                        className={chipClass((availability[day] ?? []).includes(slot))}
+                        onClick={() => toggleAvail(day, slot)}
+                      >
+                        {SLOT_LABELS[slot]}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="flex gap-2.5 mt-6 justify-end">
+            {step > 0 && (
+              <button
+                type="button"
+                className="px-5 py-2.5 rounded-xl border border-line text-sm font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
+                onClick={() => setStep((s) => s - 1)}
+              >
+                Back
+              </button>
+            )}
+            {step < STEPS.length - 1 ? (
+              <button
+                type="button"
+                className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors"
+                onClick={() => setStep((s) => s + 1)}
+              >
+                Continue
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors disabled:opacity-60"
+                disabled={loading}
+                onClick={submit}
+              >
+                {loading ? 'Saving…' : 'Complete profile'}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>

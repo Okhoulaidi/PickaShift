@@ -42,19 +42,26 @@ export async function POST(req: NextRequest) {
       }
 
       case 'user.updated': {
-        const { id, email_addresses, first_name, last_name, image_url } = event.data;
+        const { id, email_addresses, first_name, last_name, image_url, public_metadata } = event.data;
         const email = email_addresses[0]?.email_address;
+        const meta = public_metadata as {
+          role?: 'student' | 'business' | 'admin';
+          suspended?: boolean;
+          onboardingComplete?: boolean;
+        };
 
-        const { error } = await supabase
-          .from('profiles')
-          .update({
-            ...(email ? { email } : {}),
-            first_name: first_name ?? null,
-            last_name: last_name ?? null,
-            avatar_url: image_url ?? null,
-          })
-          .eq('id', id);
+        const update: Record<string, unknown> = {
+          ...(email ? { email } : {}),
+          first_name: first_name ?? null,
+          last_name: last_name ?? null,
+          avatar_url: image_url ?? null,
+        };
 
+        if (meta?.role !== undefined) update.role = meta.role;
+        if (meta?.suspended !== undefined) update.suspended = meta.suspended;
+        if (meta?.onboardingComplete !== undefined) update.onboarding_complete = meta.onboardingComplete;
+
+        const { error } = await supabase.from('profiles').update(update).eq('id', id);
         if (error) throw error;
         break;
       }
