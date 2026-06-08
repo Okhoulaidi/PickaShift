@@ -10,6 +10,52 @@ import { bizColor, initials } from '@/lib/utils';
 
 export const dynamic = 'force-dynamic';
 
+function StarRating({ score }: { score: number }) {
+  return (
+    <div className="flex gap-0.5">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} className={`inline-flex ${i < score ? 'text-brand' : 'text-line'}`}>
+          <Icon name="star" size={15} fill={i < score} />
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function ReviewRow({
+  name,
+  shiftTitle,
+  shiftDate,
+  score,
+  comment,
+}: {
+  name: string;
+  shiftTitle?: string;
+  shiftDate?: string;
+  score: number;
+  comment?: string | null;
+}) {
+  return (
+    <div className="flex flex-col gap-2 px-6 py-4">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <div className="avatar sm" style={{ background: bizColor(name) }}>
+            {initials(name)}
+          </div>
+          <span className="font-black text-sm">{name}</span>
+        </div>
+        <StarRating score={score} />
+      </div>
+      {shiftTitle && (
+        <div className="text-sm text-muted-foreground">
+          {shiftTitle} · {shiftDate}
+        </div>
+      )}
+      {comment && <p className="text-sm leading-relaxed m-0">&ldquo;{comment}&rdquo;</p>}
+    </div>
+  );
+}
+
 export default async function BizReviewsPage() {
   const { session, profile: business } = await requireBusinessProfile();
   const stats = await getDashboardStats('business', session.userId);
@@ -43,97 +89,91 @@ export default async function BizReviewsPage() {
       topSub="Ratings you've given workers and received from them"
       notif={stats.unreadNotifications}
     >
-      <div className="content">
+      <div className="space-y-6">
         {avgReceived && (
-          <div className="dash-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-            <div className="dash-stat">
-              <div className="ds-top"><div className="ds-ico"><Icon name="star" size={18} /></div></div>
-              <div className="ds-num">{avgReceived}</div>
-              <div className="ds-lbl">Your avg rating from workers</div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-card border border-line rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+                <Icon name="star" size={18} />
+              </div>
+              <div className="text-2xl font-black text-ink">{avgReceived}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">Your avg rating from workers</div>
             </div>
-            <div className="dash-stat">
-              <div className="ds-top"><div className="ds-ico"><Icon name="users" size={18} /></div></div>
-              <div className="ds-num">{received?.length ?? 0}</div>
-              <div className="ds-lbl">Reviews received</div>
+            <div className="bg-card border border-line rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+                <Icon name="users" size={18} />
+              </div>
+              <div className="text-2xl font-black text-ink">{received?.length ?? 0}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">Reviews received</div>
             </div>
-            <div className="dash-stat">
-              <div className="ds-top"><div className="ds-ico"><Icon name="clipboard" size={18} /></div></div>
-              <div className="ds-num">{given?.length ?? 0}</div>
-              <div className="ds-lbl">Reviews you&apos;ve given</div>
+            <div className="bg-card border border-line rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+                <Icon name="clipboard" size={18} />
+              </div>
+              <div className="text-2xl font-black text-ink">{given?.length ?? 0}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">Reviews you&apos;ve given</div>
             </div>
           </div>
         )}
 
-        <div className="panel">
-          <div className="panel-head">
-            <h3>Reviews from workers</h3>
+        <div className="bg-card border border-line rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-line">
+            <h3 className="font-black text-ink">Reviews from workers</h3>
           </div>
-          <div className="panel-body" style={{ padding: 0 }}>
-            {received && received.length > 0 ? (
-              received.map((r) => {
+          {received && received.length > 0 ? (
+            <div className="divide-y divide-line">
+              {received.map((r) => {
                 const rater = unwrapRelation(r.rater);
                 const shift = unwrapRelation(r.shift);
                 const name = [rater?.first_name, rater?.last_name].filter(Boolean).join(' ') || 'Worker';
                 return (
-                  <div key={r.id} style={{ padding: '18px 22px', borderBottom: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <div className="avatar sm" style={{ background: bizColor(name) }}>{initials(name)}</div>
-                        <span style={{ fontWeight: 800, fontSize: 15 }}>{name}</span>
-                      </div>
-                      <div style={{ display: 'flex', gap: 3 }}>
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Icon key={i} name="star" size={15} fill={i < (r.score ?? 0)} style={{ color: i < (r.score ?? 0) ? 'var(--primary)' : 'var(--line-strong)' }} />
-                        ))}
-                      </div>
-                    </div>
-                    {shift && <div style={{ fontSize: 13, color: 'var(--muted)' }}>{shift.title} · {shift.shift_date}</div>}
-                    {r.comment && <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.55 }}>&ldquo;{r.comment}&rdquo;</p>}
-                  </div>
+                  <ReviewRow
+                    key={r.id}
+                    name={name}
+                    shiftTitle={shift?.title}
+                    shiftDate={shift?.shift_date}
+                    score={r.score ?? 0}
+                    comment={r.comment}
+                  />
                 );
-              })
-            ) : (
-              <div className="empty-state" style={{ padding: '40px 24px' }}>
-                <p>No reviews from workers yet.</p>
-              </div>
-            )}
-          </div>
+              })}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-10 text-center px-6">
+              <p className="text-sm text-muted-foreground">No reviews from workers yet.</p>
+            </div>
+          )}
         </div>
 
-        <div className="panel">
-          <div className="panel-head">
-            <h3>Reviews you&apos;ve given</h3>
+        <div className="bg-card border border-line rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-line">
+            <h3 className="font-black text-ink">Reviews you&apos;ve given</h3>
           </div>
-          <div className="panel-body" style={{ padding: 0 }}>
-            {given && given.length > 0 ? (
-              given.map((r) => {
+          {given && given.length > 0 ? (
+            <div className="divide-y divide-line">
+              {given.map((r) => {
                 const rated = unwrapRelation(r.rated);
                 const shift = unwrapRelation(r.shift);
                 const name = [rated?.first_name, rated?.last_name].filter(Boolean).join(' ') || 'Worker';
                 return (
-                  <div key={r.id} style={{ padding: '18px 22px', borderBottom: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 8 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <div className="avatar sm" style={{ background: bizColor(name) }}>{initials(name)}</div>
-                        <span style={{ fontWeight: 800, fontSize: 15 }}>{name}</span>
-                      </div>
-                      <div style={{ display: 'flex', gap: 3 }}>
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Icon key={i} name="star" size={15} fill={i < (r.score ?? 0)} style={{ color: i < (r.score ?? 0) ? 'var(--primary)' : 'var(--line-strong)' }} />
-                        ))}
-                      </div>
-                    </div>
-                    {shift && <div style={{ fontSize: 13, color: 'var(--muted)' }}>{shift.title} · {shift.shift_date}</div>}
-                    {r.comment && <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.55 }}>&ldquo;{r.comment}&rdquo;</p>}
-                  </div>
+                  <ReviewRow
+                    key={r.id}
+                    name={name}
+                    shiftTitle={shift?.title}
+                    shiftDate={shift?.shift_date}
+                    score={r.score ?? 0}
+                    comment={r.comment}
+                  />
                 );
-              })
-            ) : (
-              <div className="empty-state" style={{ padding: '40px 24px' }}>
-                <p>You haven&apos;t reviewed any workers yet. Reviews appear after a shift is completed.</p>
-              </div>
-            )}
-          </div>
+              })}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-10 text-center px-6">
+              <p className="text-sm text-muted-foreground">
+                You haven&apos;t reviewed any workers yet. Reviews appear after a shift is completed.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </DashShell>

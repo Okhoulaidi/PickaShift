@@ -27,8 +27,9 @@ export default async function ApplicationsPage() {
   const mapped = mapApplications(applications);
   const pending = mapped.filter((a) => a.status === 'pending');
   const confirmed = mapped.filter((a) => a.status === 'accepted');
-  const completed = mapped.filter(
-    (a) => a.status === 'completed' || a.status === 'rejected' || a.status === 'cancelled',
+  const completed = mapped.filter((a) => a.status === 'completed');
+  const closed = mapped.filter(
+    (a) => a.status === 'rejected' || a.status === 'cancelled',
   );
 
   return (
@@ -38,6 +39,7 @@ export default async function ApplicationsPage() {
       pending={pending}
       confirmed={confirmed}
       completed={completed}
+      closed={closed}
     />
   );
 }

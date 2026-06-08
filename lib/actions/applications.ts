@@ -3,6 +3,8 @@
 import { requireActionAuth } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createConversation } from '@/lib/actions/messages';
+import { notifyApplicationAccepted } from '@/lib/email/notify-acceptance';
+import { notifyNewApplication } from '@/lib/email/notify-application';
 import { createNotification } from '@/lib/notifications/create-notification';
 import { shiftHours } from '@/lib/utils';
 import type { ActionResult } from '@/lib/types';
@@ -47,6 +49,29 @@ export async function applyToShift(shiftId: string): Promise<ActionResult<{ id: 
     link: '/biz/applicants',
   });
   if (notifyError) console.error('createNotification failed:', notifyError);
+
+  const { data: bizProfile } = await supabase
+    .from('profiles')
+    .select('email, first_name')
+    .eq('id', shift.business_id)
+    .single();
+
+  const { data: studentProfile } = await supabase
+    .from('profiles')
+    .select('first_name, last_name')
+    .eq('id', session.userId)
+    .single();
+
+  if (bizProfile?.email) {
+    void notifyNewApplication({
+      businessEmail: bizProfile.email,
+      businessName: business?.business_name ?? bizProfile.first_name ?? 'there',
+      studentName:
+        [studentProfile?.first_name, studentProfile?.last_name].filter(Boolean).join(' ') || 'A student',
+      shiftTitle: shift.title,
+      applicantsUrl: `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://pickashift.org'}/biz/applicants`,
+    });
+  }
 
   return { success: true, data: { id: data.id } };
 }
@@ -95,6 +120,29 @@ export async function acceptApplication(applicationId: string): Promise<ActionRe
   });
   if (notifyError) console.error('createNotification failed:', notifyError);
 
+  const { data: studentProfile } = await supabase
+    .from('profiles')
+    .select('email, first_name, last_name')
+    .eq('id', application.student_id)
+    .single();
+
+  const { data: bizProfile } = await supabase
+    .from('businesses')
+    .select('business_name')
+    .eq('id', session.userId)
+    .single();
+
+  if (studentProfile?.email) {
+    void notifyApplicationAccepted({
+      studentEmail: studentProfile.email,
+      studentName:
+        [studentProfile.first_name, studentProfile.last_name].filter(Boolean).join(' ') || 'there',
+      shiftTitle: shift.title,
+      businessName: bizProfile?.business_name ?? 'The business',
+      dashboardUrl: `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://pickashift.org'}/dashboard/applications`,
+    });
+  }
+
   return { success: true };
 }
 
@@ -134,6 +182,42 @@ export async function rejectApplication(applicationId: string): Promise<ActionRe
     link: '/dashboard/applications',
   });
   if (notifyError) console.error('createNotification failed:', notifyError);
+
+  return { success: true };
+}
+
+export async function withdrawApplication(applicationId: string): Promise<ActionResult> {
+  const session = await requireActionAuth(['student']);
+  if (session.error) return { error: session.error };
+
+  const supabase = createAdminClient();
+  const { data: application } = await supabase
+    .from('applications')
+    .select('id, status, student_id, shift:shifts!inner(title, business_id)')
+    .eq('id', applicationId)
+    .single();
+
+  if (!application) return { error: 'Application not found' };
+  if (application.student_id !== session.userId) return { error: 'Forbidden' };
+  if (application.status !== 'pending') return { error: 'Only pending applications can be withdrawn' };
+
+  const { error } = await supabase
+    .from('applications')
+    .update({ status: 'cancelled' })
+    .eq('id', applicationId);
+
+  if (error) return { error: error.message };
+
+  const shift = unwrapRelation(application.shift);
+  if (shift) {
+    const { error: notifyError } = await createNotification({
+      userId: shift.business_id,
+      title: 'Application withdrawn',
+      body: `A student withdrew their application for "${shift.title}".`,
+      link: '/biz/applicants',
+    });
+    if (notifyError) console.error('createNotification failed:', notifyError);
+  }
 
   return { success: true };
 }

@@ -25,6 +25,16 @@ export async function getUserNotifications(
   return data ?? [];
 }
 
+export async function markNotificationsRead(userId: string, ids: string[]): Promise<void> {
+  if (!ids.length) return;
+  const supabase = createAdminClient();
+  await supabase
+    .from('notifications')
+    .update({ read_at: new Date().toISOString() })
+    .in('id', ids)
+    .eq('user_id', userId);
+}
+
 export async function getUnreadNotificationCount(userId: string): Promise<number> {
   const supabase = createAdminClient();
   const { count, error } = await supabase

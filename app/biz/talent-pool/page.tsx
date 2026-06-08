@@ -19,7 +19,8 @@ export default async function TalentPoolPage() {
   const user = businessDashUser(business);
 
   return (
-    <DashShell variant="business"
+    <DashShell
+      variant="business"
       nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
       active="Worker Pool"
       user={user}
@@ -27,42 +28,48 @@ export default async function TalentPoolPage() {
       topSub="Workers you've saved for future shifts"
       notif={stats.unreadNotifications}
     >
-      <div className="content">
+      <div className="space-y-6">
         {pool.length === 0 ? (
-          <div className="empty-state panel">
-            <h3>No saved workers yet</h3>
-            <p>Save great workers from completed shifts to hire them again faster.</p>
+          <div className="bg-card border border-line rounded-2xl overflow-hidden">
+            <div className="flex flex-col items-center justify-center py-16 text-center px-6">
+              <h3 className="font-black text-lg mb-2">No saved workers yet</h3>
+              <p className="text-sm text-muted-foreground">
+                Save great workers from completed shifts to hire them again faster.
+              </p>
+            </div>
           </div>
         ) : (
-          <div className="panel">
-            {pool.map((entry) => {
-              const student = unwrapRelation(entry.student);
-              const profile = student ? unwrapRelation(student.profile) : null;
-              const name = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || 'Worker';
-              const color = bizColor(name);
-              return (
-                <div className="appl-row" key={entry.id}>
-                  <div className="appl-person">
-                    <span className="avatar md" style={{ background: color }}>
-                      {initials(name)}
-                    </span>
-                    <div>
-                      <div className="ap-name">{name}</div>
-                      <div className="ap-sub">
-                        {student?.university} · {student?.shifts_completed} shifts · Score{' '}
-                        {Number(student?.reliability_score ?? 5).toFixed(1)}
+          <div className="bg-card border border-line rounded-2xl overflow-hidden">
+            <div className="divide-y divide-line">
+              {pool.map((entry) => {
+                const student = unwrapRelation(entry.student);
+                const profile = student ? unwrapRelation(student.profile) : null;
+                const name = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || 'Worker';
+                const color = bizColor(name);
+                return (
+                  <div key={entry.id} className="flex items-center gap-4 px-6 py-4">
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <span className="avatar md" style={{ background: color }}>
+                        {initials(name)}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-sm text-ink">{name}</div>
+                        <div className="text-sm text-muted-foreground mt-0.5">
+                          {student?.university} · {student?.shifts_completed} shifts · Score{' '}
+                          {Number(student?.reliability_score ?? 5).toFixed(1)}
+                        </div>
+                        {entry.note && (
+                          <div className="text-sm text-muted-foreground mt-1">{entry.note}</div>
+                        )}
                       </div>
-                      {entry.note && (
-                        <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>{entry.note}</div>
-                      )}
+                    </div>
+                    <div className="text-sm text-muted-foreground shrink-0 hidden sm:block max-w-[200px] truncate">
+                      {(student?.skills ?? []).slice(0, 4).join(', ') || '—'}
                     </div>
                   </div>
-                  <div className="score">
-                    {(student?.skills ?? []).slice(0, 4).join(', ') || '—'}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

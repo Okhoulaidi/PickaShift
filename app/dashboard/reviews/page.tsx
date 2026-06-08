@@ -9,6 +9,18 @@ import { unwrapRelation } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 
+function StarRating({ score }: { score: number }) {
+  return (
+    <div className="flex gap-0.5">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} className={`inline-flex ${i < score ? 'text-brand' : 'text-line'}`}>
+          <Icon name="star" size={15} fill={i < score} />
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export default async function ReviewsPage() {
   const { session, profile: student } = await requireStudentProfile();
   const stats = await getDashboardStats('student', session.userId);
@@ -42,72 +54,60 @@ export default async function ReviewsPage() {
       topSub="Ratings left by businesses after completed shifts"
       notif={stats.unreadNotifications}
     >
-      <div className="content">
+      <div className="space-y-6">
         {avgScore && (
-          <div className="dash-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
-            <div className="dash-stat">
-              <div className="ds-top">
-                <div className="ds-ico"><Icon name="star" size={18} /></div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-card border border-line rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+                <Icon name="star" size={18} />
               </div>
-              <div className="ds-num">{avgScore}</div>
-              <div className="ds-lbl">Average rating</div>
+              <div className="text-2xl font-black text-ink">{avgScore}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">Average rating</div>
             </div>
-            <div className="dash-stat">
-              <div className="ds-top">
-                <div className="ds-ico"><Icon name="clipboard" size={18} /></div>
+            <div className="bg-card border border-line rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+                <Icon name="clipboard" size={18} />
               </div>
-              <div className="ds-num">{ratings?.length ?? 0}</div>
-              <div className="ds-lbl">Total reviews</div>
+              <div className="text-2xl font-black text-ink">{ratings?.length ?? 0}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">Total reviews</div>
             </div>
-            <div className="dash-stat">
-              <div className="ds-top">
-                <div className="ds-ico"><Icon name="check" size={18} /></div>
+            <div className="bg-card border border-line rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+                <Icon name="check" size={18} />
               </div>
-              <div className="ds-num">
+              <div className="text-2xl font-black text-ink">
                 {ratings?.filter((r) => (r.score ?? 0) >= 4).length ?? 0}
               </div>
-              <div className="ds-lbl">5★ or 4★ reviews</div>
+              <div className="text-xs text-muted-foreground mt-0.5">5★ or 4★ reviews</div>
             </div>
           </div>
         )}
 
-        <div className="panel">
+        <div className="bg-card border border-line rounded-2xl overflow-hidden">
           {ratings && ratings.length > 0 ? (
             <>
-              <div className="panel-head">
-                <h3>All reviews</h3>
+              <div className="flex items-center justify-between px-6 py-4 border-b border-line">
+                <h3 className="font-black text-ink">All reviews</h3>
               </div>
-              <div className="panel-body" style={{ display: 'flex', flexDirection: 'column', gap: 0, padding: 0 }}>
+              <div className="divide-y divide-line">
                 {ratings.map((r) => {
                   const rater = unwrapRelation(r.rater);
                   const shift = unwrapRelation(r.shift);
                   return (
-                    <div key={r.id} style={{ padding: '18px 22px', borderBottom: '1px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 8 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-                        <div style={{ fontWeight: 800, fontSize: 15 }}>
+                    <div key={r.id} className="flex flex-col gap-2 px-6 py-4">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="font-black text-sm">
                           {rater?.first_name} {rater?.last_name}
                         </div>
-                        <div style={{ display: 'flex', gap: 3 }}>
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <Icon
-                              key={i}
-                              name="star"
-                              size={15}
-                              fill={i < (r.score ?? 0)}
-                              style={{ color: i < (r.score ?? 0) ? 'var(--primary)' : 'var(--line-strong)' }}
-                            />
-                          ))}
-                        </div>
+                        <StarRating score={r.score ?? 0} />
                       </div>
                       {shift && (
-                        <div style={{ fontSize: 13, color: 'var(--muted)' }}>
+                        <div className="text-sm text-muted-foreground">
                           {shift.title} · {shift.shift_date}
                         </div>
                       )}
                       {r.comment && (
-                        <p style={{ margin: 0, fontSize: 14.5, color: 'var(--text)', lineHeight: 1.55 }}>
-                          &ldquo;{r.comment}&rdquo;
-                        </p>
+                        <p className="text-sm text-ink leading-relaxed m-0">&ldquo;{r.comment}&rdquo;</p>
                       )}
                     </div>
                   );
@@ -115,13 +115,13 @@ export default async function ReviewsPage() {
               </div>
             </>
           ) : (
-            <div className="panel-body">
-              <div className="empty-state" style={{ padding: '64px 24px' }}>
-                <span className="ds-ico" style={{ width: 56, height: 56, borderRadius: 16, marginBottom: 16 }}>
+            <div className="p-6">
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
                   <Icon name="star" size={26} />
-                </span>
-                <h3>No reviews yet</h3>
-                <p style={{ marginTop: 8, maxWidth: 320 }}>
+                </div>
+                <h3 className="font-black text-lg mb-2">No reviews yet</h3>
+                <p className="text-sm text-muted-foreground max-w-xs">
                   After you complete a shift, businesses can leave you a review. Great shifts earn great scores.
                 </p>
               </div>

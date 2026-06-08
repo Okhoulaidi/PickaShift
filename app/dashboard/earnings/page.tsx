@@ -41,71 +41,63 @@ export default async function EarningsPage() {
       topSub="Your shift income on Pick a Shift"
       notif={stats.unreadNotifications}
     >
-      <div className="content">
-        <div className="dash-stats">
-          <div className="dash-stat">
-            <div className="ds-top">
-              <div className="ds-ico">
-                <Icon name="euro" size={20} />
-              </div>
+      <div className="space-y-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="bg-card border border-line rounded-2xl p-5">
+            <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+              <Icon name="euro" size={20} />
             </div>
-            <div className="ds-num">{formatPay(stats.totalEarnedCents ?? 0)}</div>
-            <div className="ds-lbl">Total earned</div>
+            <div className="text-2xl font-black text-ink">{formatPay(stats.totalEarnedCents ?? 0)}</div>
+            <div className="text-xs text-muted-foreground mt-0.5">Total earned</div>
           </div>
-          <div className="dash-stat">
-            <div className="ds-top">
-              <div className="ds-ico">
-                <Icon name="check" size={20} />
-              </div>
+          <div className="bg-card border border-line rounded-2xl p-5">
+            <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+              <Icon name="check" size={20} />
             </div>
-            <div className="ds-num">{stats.completedShifts ?? 0}</div>
-            <div className="ds-lbl">Completed shifts</div>
+            <div className="text-2xl font-black text-ink">{stats.completedShifts ?? 0}</div>
+            <div className="text-xs text-muted-foreground mt-0.5">Completed shifts</div>
           </div>
-          <div className="dash-stat">
-            <div className="ds-top">
-              <div className="ds-ico">
-                <Icon name="clock" size={20} />
-              </div>
+          <div className="bg-card border border-line rounded-2xl p-5">
+            <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+              <Icon name="clock" size={20} />
             </div>
-            <div className="ds-num">{Math.round(totalHours)}h</div>
-            <div className="ds-lbl">Hours worked</div>
+            <div className="text-2xl font-black text-ink">{Math.round(totalHours)}h</div>
+            <div className="text-xs text-muted-foreground mt-0.5">Hours worked</div>
           </div>
-          <div className="dash-stat">
-            <div className="ds-top">
-              <div className="ds-ico">
-                <Icon name="gauge" size={20} />
-              </div>
+          <div className="bg-card border border-line rounded-2xl p-5">
+            <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+              <Icon name="gauge" size={20} />
             </div>
-            <div className="ds-num">{Number(student.reliability_score ?? 5).toFixed(1)}</div>
-            <div className="ds-lbl">Reliability score</div>
+            <div className="text-2xl font-black text-ink">{Number(student.reliability_score ?? 5).toFixed(1)}</div>
+            <div className="text-xs text-muted-foreground mt-0.5">Reliability score</div>
           </div>
         </div>
 
-        <div className="panel">
-          <div className="panel-head">
-            <h3>Recent completed shifts</h3>
+        <div className="bg-card border border-line rounded-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-6 py-4 border-b border-line">
+            <h3 className="font-black text-ink">Recent completed shifts</h3>
           </div>
-          <div className="panel-body">
+          <div className="p-6">
             {completedApps.length === 0 ? (
-              <p style={{ color: 'var(--muted)', textAlign: 'center' }}>
-                No completed shifts yet. <Link href="/browse">Find your first shift</Link>
+              <p className="text-muted-foreground text-center text-sm">
+                No completed shifts yet. <Link href="/browse" className="text-brand font-semibold">Find your first shift</Link>
               </p>
             ) : (
-              <div className="up-list">
+              <div className="divide-y divide-line">
                 {completedApps.slice(0, 10).map((app) => {
                   const shift = unwrapRelation(app.shift);
                   const biz = shift ? unwrapRelation(shift.business) : null;
                   const hours = shift ? shiftHours(shift.start_time, shift.end_time) : 0;
                   const earned = shift ? Math.round(shift.pay_per_hour_cents * hours) : 0;
                   return (
-                    <div className="up-item" key={app.id}>
-                      <div className="up-info">
-                        <div className="u-title">
+                    <div key={app.id} className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0">
+                      <div>
+                        <div className="font-semibold text-sm text-ink">
                           {shift?.title} — {biz?.business_name}
                         </div>
-                        <div className="u-meta">{shift?.shift_date}</div>
+                        <div className="text-sm text-muted-foreground mt-0.5">{shift?.shift_date}</div>
                       </div>
-                      <strong style={{ color: 'var(--green)' }}>{formatPay(earned)}</strong>
+                      <strong className="text-green-600 font-black">{formatPay(earned)}</strong>
                     </div>
                   );
                 })}

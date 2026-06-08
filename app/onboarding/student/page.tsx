@@ -11,7 +11,6 @@ import {
   JOB_TYPES,
   LANGUAGES,
   MADRID_DISTRICTS,
-  NATIONALITIES,
   STUDENT_CV_BUCKET,
   UNIVERSITIES,
   VISA_TYPES,
@@ -55,7 +54,7 @@ export default function StudentOnboardingPage() {
   const [university, setUniversity] = useState<string>(UNIVERSITIES[0]);
   const [degree, setDegree] = useState('');
   const [yearOfStudy, setYearOfStudy] = useState(2);
-  const [nationality, setNationality] = useState<string>(NATIONALITIES[0]);
+  const [nationality, setNationality] = useState<string>('');
 
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [avatarUploading, setAvatarUploading] = useState(false);
@@ -263,17 +262,12 @@ export default function StudentOnboardingPage() {
                 </div>
                 <div>
                   <label className={labelClass}>Nationality</label>
-                  <select
+                  <input
                     className={inputClass}
                     value={nationality}
                     onChange={(e) => setNationality(e.target.value)}
-                  >
-                    {NATIONALITIES.map((n) => (
-                      <option key={n} value={n}>
-                        {n}
-                      </option>
-                    ))}
-                  </select>
+                    placeholder="e.g. Spanish, Italian…"
+                  />
                 </div>
               </div>
             </div>

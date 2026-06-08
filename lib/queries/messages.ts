@@ -137,4 +137,27 @@ export async function getLastMessagePreview(conversationId: string) {
   return data;
 }
 
+export async function getLastMessagePreviews(
+  conversationIds: string[],
+): Promise<Record<string, { body: string; sent_at: string } | null>> {
+  if (!conversationIds.length) return {};
+
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from('messages')
+    .select('conversation_id, body, sent_at')
+    .in('conversation_id', conversationIds)
+    .order('sent_at', { ascending: false });
+
+  if (error || !data) return {};
+
+  const map: Record<string, { body: string; sent_at: string }> = {};
+  for (const row of data) {
+    if (!map[row.conversation_id]) {
+      map[row.conversation_id] = { body: row.body, sent_at: row.sent_at };
+    }
+  }
+  return map;
+}
+
 export type ConversationWithProfiles = Awaited<ReturnType<typeof getConversations>>[number];

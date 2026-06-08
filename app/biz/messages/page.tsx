@@ -2,7 +2,7 @@ import { MessagesListClient } from '@/components/messages/MessagesClient';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
 import { requireBusinessProfile } from '@/lib/guards/business';
-import { getConversations, getLastMessagePreview } from '@/lib/queries/messages';
+import { getConversations, getLastMessagePreviews } from '@/lib/queries/messages';
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { unwrapRelation } from '@/lib/types';
 
@@ -17,21 +17,20 @@ export default async function BizMessagesPage() {
 
   const user = businessDashUser(business);
 
-  const items = await Promise.all(
-    conversations.map(async (c) => {
-      const shift = unwrapRelation(c.shift);
-      const preview = await getLastMessagePreview(c.id);
-      const name =
-        [c.student_profile?.first_name, c.student_profile?.last_name].filter(Boolean).join(' ') || 'Student';
-      return {
-        id: c.id,
-        title: shift?.title ?? 'Shift',
-        partnerName: name,
-        lastMessageAt: c.last_message_at,
-        preview: preview?.body,
-      };
-    }),
-  );
+  const previews = await getLastMessagePreviews(conversations.map((c) => c.id));
+
+  const items = conversations.map((c) => {
+    const shift = unwrapRelation(c.shift);
+    const name =
+      [c.student_profile?.first_name, c.student_profile?.last_name].filter(Boolean).join(' ') || 'Student';
+    return {
+      id: c.id,
+      title: shift?.title ?? 'Shift',
+      partnerName: name,
+      lastMessageAt: c.last_message_at,
+      preview: previews[c.id]?.body,
+    };
+  });
 
   return (
     <MessagesListClient

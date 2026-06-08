@@ -52,8 +52,12 @@ export function MessagesListClient({
       <div className="content">
         {conversations.length === 0 ? (
           <div className="empty-state panel">
-            <h3>No messages yet</h3>
-            <p>Messages appear when a business accepts your application.</p>
+            <h3>No conversations yet</h3>
+            <p>
+              {variant === 'business'
+                ? 'Accept a student application to start messaging.'
+                : 'When a business accepts your application, you can message them here.'}
+            </p>
           </div>
         ) : (
           <div className="panel">

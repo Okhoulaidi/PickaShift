@@ -69,17 +69,20 @@ export default async function BizApplicantsPage() {
       topSub="All applications across your shifts"
       notif={stats.unreadNotifications}
     >
-      <div className="content">
+      <div className="space-y-6">
         {Object.keys(grouped).length === 0 ? (
-          <div className="panel">
-            <div className="panel-body">
-              <div className="empty-state" style={{ padding: '64px 24px' }}>
-                <span className="ds-ico" style={{ width: 56, height: 56, borderRadius: 16, marginBottom: 16 }}>
+          <div className="bg-card border border-line rounded-2xl overflow-hidden">
+            <div className="p-6">
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
                   <Icon name="clipboard" size={26} />
-                </span>
-                <h3>No applicants yet</h3>
-                <p style={{ marginTop: 8 }}>Post a shift to start receiving applications.</p>
-                <Link href="/biz/shifts/new" className="btn btn-primary" style={{ marginTop: 20 }}>
+                </div>
+                <h3 className="font-black text-lg mb-2">No applicants yet</h3>
+                <p className="text-sm text-muted-foreground mb-5">Post a shift to start receiving applications.</p>
+                <Link
+                  href="/biz/shifts/new"
+                  className="inline-flex items-center gap-2 bg-brand text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors"
+                >
                   <Icon name="plus" size={16} /> Post a Shift
                 </Link>
               </div>
@@ -91,46 +94,52 @@ export default async function BizApplicantsPage() {
             const shift = unwrapRelation(firstApp?.shift);
             if (!shift) return null;
             return (
-              <div className="panel" key={shift.id as string}>
-                <div className="panel-head">
+              <div className="bg-card border border-line rounded-2xl overflow-hidden" key={shift.id as string}>
+                <div className="flex items-center justify-between px-6 py-4 border-b border-line gap-4">
                   <div>
-                    <h3>{shift.title as string}</h3>
-                    <div className="ph-sub">
+                    <h3 className="font-black text-ink">{shift.title as string}</h3>
+                    <div className="text-sm text-muted-foreground mt-0.5">
                       {formatShiftDate(shift.shift_date as string)} · {shift.district as string} · {apps!.length} applicant{apps!.length !== 1 ? 's' : ''}
                     </div>
                   </div>
-                  <Link href={`/biz/shifts/${shift.id}`} className="btn btn-sm btn-outline">
+                  <Link
+                    href={`/biz/shifts/${shift.id}`}
+                    className="border border-line px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-muted/40 transition-colors shrink-0"
+                  >
                     Manage shift →
                   </Link>
                 </div>
-                <div style={{ padding: 0 }}>
-                  <div className="appl-head">
-                    <span>Applicant</span>
-                    <span>University</span>
-                    <span>Status</span>
-                    <span />
-                  </div>
+                <div className="hidden sm:grid grid-cols-[1fr_1fr_auto_auto] gap-4 px-6 py-3 border-b border-line text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                  <span>Applicant</span>
+                  <span>University</span>
+                  <span>Status</span>
+                  <span />
+                </div>
+                <div className="divide-y divide-line">
                   {apps!.map((app) => {
                     const student = unwrapRelation(app.student);
                     const profile = student?.id ? profileMap.get(student.id) : null;
                     const name = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || 'Student';
                     const cvHref = student?.id ? cvUrlCache.get(student.id) : null;
                     return (
-                      <div className="appl-row" key={app.id}>
-                        <div className="appl-person">
+                      <div
+                        key={app.id}
+                        className="flex flex-col sm:grid sm:grid-cols-[1fr_1fr_auto_auto] sm:items-center gap-3 sm:gap-4 px-6 py-4"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
                           <div className="avatar md" style={{ background: bizColor(name) }}>
                             {initials(name)}
                           </div>
-                          <div>
-                            <div className="ap-name">{name}</div>
-                            <div className="ap-sub">{student?.degree ?? ''}</div>
+                          <div className="min-w-0">
+                            <div className="font-semibold text-sm text-ink">{name}</div>
+                            <div className="text-sm text-muted-foreground mt-0.5">{student?.degree ?? ''}</div>
                           </div>
                         </div>
-                        <span style={{ fontSize: 13.5, color: 'var(--muted)' }}>
+                        <span className="text-sm text-muted-foreground">
                           {student?.university?.replace(/\s*\([^)]*\)\s*/g, '').trim() ?? '—'}
                         </span>
                         <span
-                          className={`badge ${
+                          className={`badge w-fit ${
                             app.status === 'accepted' ? 'badge-open' :
                             app.status === 'rejected' ? 'badge-filled' :
                             'badge-soft'
@@ -138,13 +147,21 @@ export default async function BizApplicantsPage() {
                         >
                           {app.status}
                         </span>
-                        <div className="appl-actions">
+                        <div className="flex items-center gap-2 sm:justify-end">
                           {cvHref && (
-                            <a href={cvHref} target="_blank" rel="noreferrer" className="btn btn-sm btn-outline">
+                            <a
+                              href={cvHref}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1 border border-line px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-muted/40 transition-colors"
+                            >
                               <Icon name="file" size={14} /> CV
                             </a>
                           )}
-                          <Link href={`/biz/shifts/${shift.id}`} className="btn btn-sm btn-primary">
+                          <Link
+                            href={`/biz/shifts/${shift.id}`}
+                            className="bg-brand text-white px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-brand-dark transition-colors"
+                          >
                             Review
                           </Link>
                         </div>

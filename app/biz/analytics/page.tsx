@@ -27,7 +27,8 @@ export default async function BizAnalyticsPage() {
   ];
 
   return (
-    <DashShell variant="business"
+    <DashShell
+      variant="business"
       nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
       active="Analytics"
       user={user}
@@ -35,41 +36,37 @@ export default async function BizAnalyticsPage() {
       topSub="Performance overview for your business"
       notif={stats.unreadNotifications}
     >
-      <div className="content">
-        <div className="dash-stats" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+      <div className="space-y-6">
+        <div className="grid grid-cols-3 gap-4">
           {cards.map((c) => (
-            <div className="dash-stat" key={c.lbl}>
-              <div className="ds-top">
-                <div className="ds-ico">
-                  <Icon name={c.icon} size={20} />
-                </div>
+            <div key={c.lbl} className="bg-card border border-line rounded-2xl p-5">
+              <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
+                <Icon name={c.icon} size={20} />
               </div>
-              <div className="ds-num">{c.num}</div>
-              <div className="ds-lbl">{c.lbl}</div>
+              <div className="text-2xl font-black text-ink">{c.num}</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{c.lbl}</div>
             </div>
           ))}
         </div>
 
-        <div className="panel panel-body">
-          <h3 style={{ margin: '0 0 16px', fontWeight: 900 }}>Shift breakdown</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+        <div className="bg-card border border-line rounded-2xl p-6">
+          <h3 className="font-black text-ink mb-4">Shift breakdown</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div>
-              <div style={{ fontSize: 24, fontWeight: 900, color: 'var(--green)' }}>{analytics.openShifts}</div>
-              <div style={{ color: 'var(--muted)', fontSize: 14 }}>Open</div>
+              <div className="text-2xl font-black text-green-600">{analytics.openShifts}</div>
+              <div className="text-sm text-muted-foreground">Open</div>
             </div>
             <div>
-              <div style={{ fontSize: 24, fontWeight: 900 }}>{analytics.filledShifts}</div>
-              <div style={{ color: 'var(--muted)', fontSize: 14 }}>Filled</div>
+              <div className="text-2xl font-black text-ink">{analytics.filledShifts}</div>
+              <div className="text-sm text-muted-foreground">Filled</div>
             </div>
             <div>
-              <div style={{ fontSize: 24, fontWeight: 900 }}>{analytics.completedShifts}</div>
-              <div style={{ color: 'var(--muted)', fontSize: 14 }}>Completed</div>
+              <div className="text-2xl font-black text-ink">{analytics.completedShifts}</div>
+              <div className="text-sm text-muted-foreground">Completed</div>
             </div>
             <div>
-              <div style={{ fontSize: 24, fontWeight: 900, color: 'var(--primary)' }}>
-                {Number(business.rating_avg).toFixed(1)}
-              </div>
-              <div style={{ color: 'var(--muted)', fontSize: 14 }}>Avg rating</div>
+              <div className="text-2xl font-black text-brand">{Number(business.rating_avg).toFixed(1)}</div>
+              <div className="text-sm text-muted-foreground">Avg rating</div>
             </div>
           </div>
         </div>

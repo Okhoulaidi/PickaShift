@@ -5,7 +5,7 @@ import { Icon } from '@/components/ui/Icon';
 import { studentNav } from '@/lib/dashboard-nav';
 import { studentDashUser } from '@/lib/dashboard-user';
 import { requireStudentProfile } from '@/lib/guards/student';
-import { getUserNotifications } from '@/lib/queries/notifications';
+import { getUserNotifications, markNotificationsRead } from '@/lib/queries/notifications';
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { unwrapRelation } from '@/lib/types';
 
@@ -17,6 +17,9 @@ export default async function NotificationsPage() {
     getDashboardStats('student', session.userId),
     getUserNotifications(session.userId, 50),
   ]);
+
+  const unreadIds = notifications.filter((n) => !n.read_at).map((n) => n.id);
+  void markNotificationsRead(session.userId, unreadIds);
 
   const profile = unwrapRelation(student.profile);
   const user = studentDashUser(
@@ -36,36 +39,40 @@ export default async function NotificationsPage() {
       topSub="Updates about your applications and shifts"
       notif={stats.unreadNotifications}
     >
-      <div className="content">
+      <div className="space-y-6">
         {notifications.length === 0 ? (
-          <div className="panel">
-            <div className="panel-body">
-              <div className="empty-state" style={{ padding: '64px 24px' }}>
-                <span className="ds-ico" style={{ width: 56, height: 56, borderRadius: 16, marginBottom: 16 }}>
+          <div className="bg-card border border-line rounded-2xl overflow-hidden">
+            <div className="p-6">
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
                   <Icon name="bell" size={26} />
-                </span>
-                <h3>No notifications yet</h3>
-                <p style={{ marginTop: 8 }}>When something happens on your applications, you&apos;ll see it here.</p>
-                <Link href="/browse" className="btn btn-primary" style={{ marginTop: 20 }}>
+                </div>
+                <h3 className="font-black text-lg mb-2">No notifications yet</h3>
+                <p className="text-sm text-muted-foreground mb-5">
+                  When something happens on your applications, you&apos;ll see it here.
+                </p>
+                <Link
+                  href="/browse"
+                  className="bg-brand text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors"
+                >
                   Browse shifts
                 </Link>
               </div>
             </div>
           </div>
         ) : (
-          <div className="panel">
-            <div className="up-list" style={{ padding: '0 22px' }}>
+          <div className="bg-card border border-line rounded-2xl overflow-hidden">
+            <div className="divide-y divide-line px-6">
               {notifications.map((n) => (
                 <Link
                   key={n.id}
                   href={n.link ?? '#'}
-                  className={`up-item notif-row${n.read_at ? '' : ' unread'}`}
-                  style={{ textDecoration: 'none', color: 'inherit' }}
+                  className={`flex py-4 no-underline text-inherit ${n.read_at ? '' : 'bg-brand/5 -mx-6 px-6'}`}
                 >
-                  <div className="up-info">
-                    <div className="u-title">{n.title}</div>
-                    <div className="u-meta" style={{ marginTop: 4 }}>{n.body}</div>
-                    <div style={{ fontSize: 12.5, color: 'var(--muted)', marginTop: 6 }}>
+                  <div className="min-w-0 flex-1">
+                    <div className="font-semibold text-sm text-ink">{n.title}</div>
+                    <div className="text-sm text-muted-foreground mt-1">{n.body}</div>
+                    <div className="text-xs text-muted-foreground mt-1.5">
                       {formatDistanceToNow(new Date(n.created_at), { addSuffix: true })}
                     </div>
                   </div>

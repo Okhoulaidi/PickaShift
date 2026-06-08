@@ -1,13 +1,6 @@
 import { SITE } from '@/lib/site';
 import type { ContactFormInput } from '@/lib/actions/contact';
-
-function escapeHtml(text: string) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
+import { escapeHtml } from '@/lib/email/utils';
 
 export async function notifyContactSubmission(input: ContactFormInput) {
   const apiKey = process.env.RESEND_API_KEY;
