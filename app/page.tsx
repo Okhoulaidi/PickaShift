@@ -46,25 +46,25 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative w-full lg:w-1/2 bg-navy flex flex-col justify-center px-8 sm:px-12 lg:px-20 py-20 text-white">
+        <div className="relative w-full lg:w-1/2 bg-brand flex flex-col justify-center px-8 sm:px-12 lg:px-20 py-20 text-white">
           <div className="max-w-md animate-reveal [animation-delay:200ms]">
-            <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-white/60 mb-4 block">
+            <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-white/70 mb-4 block">
               For Business
             </span>
             <h2 className="font-sora text-5xl md:text-6xl xl:text-7xl font-extrabold leading-[0.9] tracking-tighter mb-8 text-balance">
               SCALE ON <br />
               DEMAND.
             </h2>
-            <p className="text-lg text-white/75 mb-10 text-pretty">
+            <p className="text-lg text-white/85 mb-10 text-pretty">
               Instantly connect with Madrid&apos;s best student talent. Fill last-minute gaps in
               minutes, not days.
             </p>
             <Link
               href="/sign-up?role=business"
-              className="group inline-flex items-center gap-3 bg-white !text-ink px-7 py-4 rounded-xl font-sora font-bold text-sm uppercase tracking-widest hover:bg-canvas transition-colors"
+              className="group inline-flex items-center gap-3 bg-navy !text-white px-7 py-4 rounded-xl font-sora font-bold text-sm uppercase tracking-widest hover:bg-navy-mid transition-colors"
             >
               Post a Shift
-              <ArrowRight className="size-4 !text-ink group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="size-4 !text-white group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/sign-up?role=business"
-              className="block w-full text-center bg-navy !text-white py-4 rounded-xl font-sora font-bold text-xs uppercase tracking-widest hover:bg-brand transition-colors"
+              className="block w-full text-center bg-brand !text-white py-4 rounded-xl font-sora font-bold text-xs uppercase tracking-widest hover:bg-brand-dark transition-colors"
             >
               Get Started
             </Link>
@@ -262,7 +262,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/sign-up?role=business"
-              className="bg-white/10 hover:bg-white/20 border border-white/20 !text-white px-8 py-5 rounded-2xl font-sora font-bold text-sm uppercase tracking-widest transition-colors"
+              className="bg-navy hover:bg-navy-mid border border-white/20 !text-white px-8 py-5 rounded-2xl font-sora font-bold text-sm uppercase tracking-widest transition-colors"
             >
               I&apos;m a Business
             </Link>
