@@ -104,7 +104,7 @@ export default function StudentOnboardingPage() {
       return;
     }
     setCvUploading(true);
-    const url = await uploadFile(STUDENT_CV_BUCKET, `${userId}/cv.pdf`, file);
+    const url = await uploadFile(STUDENT_CV_BUCKET, `cvs/${userId}.pdf`, file);
     setCvUploading(false);
     if (!url) {
       show('CV upload failed. You can continue without one.');
