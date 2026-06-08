@@ -3,7 +3,7 @@
 import { requireActionAuth } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { createConversation } from '@/lib/actions/messages';
-import { createNotification } from '@/lib/actions/notifications';
+import { createNotification } from '@/lib/notifications/create-notification';
 import { shiftHours } from '@/lib/utils';
 import type { ActionResult } from '@/lib/types';
 import { unwrapRelation } from '@/lib/types';
@@ -40,12 +40,13 @@ export async function applyToShift(shiftId: string): Promise<ActionResult<{ id: 
 
   if (error) return { error: error.message };
 
-  await createNotification({
+  const { error: notifyError } = await createNotification({
     userId: shift.business_id,
     title: 'New application',
     body: `A student applied to "${shift.title}".`,
     link: '/biz/applicants',
   });
+  if (notifyError) console.error('createNotification failed:', notifyError);
 
   return { success: true, data: { id: data.id } };
 }
@@ -83,14 +84,16 @@ export async function acceptApplication(applicationId: string): Promise<ActionRe
 
   if (error) return { error: error.message };
 
-  await createConversation(shift.id, application.student_id, shift.business_id);
+  const { error: convError } = await createConversation(shift.id, application.student_id, shift.business_id);
+  if (convError) return { error: convError };
 
-  await createNotification({
+  const { error: notifyError } = await createNotification({
     userId: application.student_id,
     title: 'Application accepted',
     body: `You were accepted for "${shift.title}".`,
     link: '/dashboard/applications',
   });
+  if (notifyError) console.error('createNotification failed:', notifyError);
 
   return { success: true };
 }
@@ -124,12 +127,13 @@ export async function rejectApplication(applicationId: string): Promise<ActionRe
 
   if (error) return { error: error.message };
 
-  await createNotification({
+  const { error: notifyError } = await createNotification({
     userId: application.student_id,
     title: 'Application declined',
     body: `Your application for "${shift.title}" was not accepted.`,
     link: '/dashboard/applications',
   });
+  if (notifyError) console.error('createNotification failed:', notifyError);
 
   return { success: true };
 }
@@ -201,12 +205,13 @@ export async function completeApplication(applicationId: string): Promise<Action
     await supabase.from('shifts').update({ status: 'completed' }).eq('id', shift.id);
   }
 
-  await createNotification({
+  const { error: notifyError } = await createNotification({
     userId: application.student_id,
     title: 'Shift completed',
     body: `"${shift.title}" has been marked complete.`,
     link: '/dashboard/applications',
   });
+  if (notifyError) console.error('createNotification failed:', notifyError);
 
   return { success: true };
 }

@@ -3,16 +3,41 @@
 import { requireActionAuth } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { ActionResult } from '@/lib/types';
+import { unwrapRelation } from '@/lib/types';
 
 export async function createConversation(
   shiftId: string,
   studentId: string,
   businessId: string
 ): Promise<ActionResult<{ id: string }>> {
-  const session = await requireActionAuth();
+  const session = await requireActionAuth(['student', 'business']);
   if (session.error) return { error: session.error };
 
   const supabase = createAdminClient();
+
+  const { data: application } = await supabase
+    .from('applications')
+    .select(`
+      id,
+      student_id,
+      status,
+      shift:shifts!inner(id, business_id)
+    `)
+    .eq('shift_id', shiftId)
+    .eq('student_id', studentId)
+    .eq('status', 'accepted')
+    .maybeSingle();
+
+  if (!application) return { error: 'Unauthorized' };
+
+  const shift = unwrapRelation(application.shift);
+  if (!shift || shift.business_id !== businessId) return { error: 'Unauthorized' };
+
+  const role = session.meta!.role;
+  const isBusinessOwner = role === 'business' && session.userId === shift.business_id;
+  const isAcceptedStudent = role === 'student' && session.userId === studentId;
+
+  if (!isBusinessOwner && !isAcceptedStudent) return { error: 'Unauthorized' };
 
   const { data: existing } = await supabase
     .from('conversations')

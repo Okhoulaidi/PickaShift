@@ -24,6 +24,7 @@ type FormState = {
   email: string;
   subject: string;
   message: string;
+  website: string;
 };
 
 export default function ContactPage() {
@@ -32,6 +33,7 @@ export default function ContactPage() {
     email: '',
     subject: SUBJECTS[0]!,
     message: '',
+    website: '',
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -167,7 +169,7 @@ export default function ContactPage() {
                   <button
                     onClick={() => {
                       setSubmitted(false);
-                      setForm({ name: '', email: '', subject: SUBJECTS[0]!, message: '' });
+                      setForm({ name: '', email: '', subject: SUBJECTS[0]!, message: '', website: '' });
                     }}
                     className="mt-6 text-sm text-brand hover:underline"
                   >
@@ -176,6 +178,16 @@ export default function ContactPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  <input
+                    type="text"
+                    name="website"
+                    value={form.website}
+                    onChange={handleChange}
+                    style={{ display: 'none' }}
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                  />
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
                       <label

@@ -12,12 +12,16 @@ export interface StudentOnboardingInput {
   university: string;
   degree: string;
   yearOfStudy: number;
+  nationality: string;
+  avatarUrl?: string;
+  languages: string[];
+  jobTypes: string[];
+  availability: string[];
   bio?: string;
-  skills: string[];
-  languages?: Record<string, string>;
-  availability?: Record<string, string[]>;
   district: string;
   cvUrl?: string;
+  pastExperience?: string;
+  visaType?: string;
 }
 
 export interface BusinessOnboardingInput {
@@ -82,7 +86,7 @@ export async function completeStudentOnboarding(input: StudentOnboardingInput): 
     email: user.emailAddresses[0]?.emailAddress ?? '',
     first_name: input.firstName.trim() || user.firstName || null,
     last_name: input.lastName.trim() || user.lastName || null,
-    avatar_url: user.imageUrl ?? null,
+    avatar_url: input.avatarUrl ?? user.imageUrl ?? null,
     onboarding_complete: true,
   });
   if (profileError) return { error: profileError.message };
@@ -92,10 +96,12 @@ export async function completeStudentOnboarding(input: StudentOnboardingInput): 
     university: input.university,
     degree: input.degree,
     year_of_study: input.yearOfStudy,
-    bio: input.bio ?? null,
-    skills: input.skills,
-    languages: input.languages ?? { es: 'native' },
-    availability: input.availability ?? {},
+    nationality: input.nationality,
+    job_types: input.jobTypes,
+    languages: input.languages,
+    availability: input.availability,
+    visa_type: input.visaType ?? null,
+    bio: input.pastExperience ?? null,
     district: input.district,
     cv_url: input.cvUrl ?? null,
   });

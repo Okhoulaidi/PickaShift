@@ -25,12 +25,18 @@ export const BUSINESS_TYPES = [
   'Restaurant', 'Café', 'Retail', 'Events', 'Hotel', 'Other',
 ] as const;
 
-export const SPANISH_LEVELS = [
-  { value: 'none', label: 'None' },
-  { value: 'basic', label: 'Basic' },
-  { value: 'intermediate', label: 'Intermediate' },
-  { value: 'fluent', label: 'Fluent' },
-  { value: 'native', label: 'Native' },
+export const LANGUAGES = ['English', 'Spanish', 'French', 'Arabic', 'Other'] as const;
+
+export const JOB_TYPES = ['Waiter', 'Barista', 'Event Staff', 'Kitchen Help', 'Retail', 'Other'] as const;
+
+export const AVAILABILITY_SLOTS = ['Mornings', 'Afternoons', 'Evenings', 'Weekends'] as const;
+
+export const VISA_TYPES = ['EU student', 'Non-EU student', 'Other'] as const;
+
+export const NATIONALITIES = [
+  'Spanish', 'Italian', 'French', 'German', 'Portuguese', 'British',
+  'American', 'Chinese', 'Indian', 'Brazilian', 'Mexican', 'Colombian',
+  'Moroccan', 'Romanian', 'Ukrainian', 'Other',
 ] as const;
 
 export const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const;

@@ -1,6 +1,8 @@
 'use server';
 
+import { headers } from 'next/headers';
 import { z } from 'zod';
+import { contactRatelimit } from '@/lib/ratelimit';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { notifyContactSubmission } from '@/lib/email/notify-contact';
 import type { ActionResult } from '@/lib/types';
@@ -10,6 +12,7 @@ const contactSchema = z.object({
   email: z.string().trim().email('Valid email is required').max(254),
   subject: z.string().trim().min(1, 'Subject is required').max(120),
   message: z.string().trim().min(10, 'Message must be at least 10 characters').max(5000),
+  website: z.string().optional(),
 });
 
 export type ContactFormInput = z.infer<typeof contactSchema>;
@@ -18,6 +21,16 @@ export async function submitContactForm(input: ContactFormInput): Promise<Action
   const parsed = contactSchema.safeParse(input);
   if (!parsed.success) {
     return { error: parsed.error.issues[0]?.message ?? 'Invalid form data' };
+  }
+
+  if (parsed.data.website?.trim()) {
+    return { success: true };
+  }
+
+  const ip = (await headers()).get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'anonymous';
+  const { success: withinLimit } = await contactRatelimit.limit(ip);
+  if (!withinLimit) {
+    return { error: 'Too many requests. Please try again later.' };
   }
 
   const supabase = createAdminClient();

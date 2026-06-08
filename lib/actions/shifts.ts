@@ -3,7 +3,7 @@
 import { requireActionAuth } from '@/lib/auth';
 import { getDistrictCoords } from '@/lib/geo';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { createNotification } from '@/lib/actions/notifications';
+import { createNotification } from '@/lib/notifications/create-notification';
 import type { ActionResult } from '@/lib/types';
 
 export interface ShiftInput {
@@ -136,15 +136,24 @@ export async function cancelShift(shiftId: string): Promise<ActionResult> {
   const { error } = await supabase.from('shifts').update({ status: 'cancelled' }).eq('id', shiftId);
   if (error) return { error: error.message };
 
+  const { error: appsError } = await supabase
+    .from('applications')
+    .update({ status: 'cancelled' })
+    .eq('shift_id', shiftId)
+    .in('status', ['pending', 'accepted']);
+
+  if (appsError) return { error: appsError.message };
+
   await Promise.all(
-    (applications ?? []).map((app) =>
-      createNotification({
+    (applications ?? []).map(async (app) => {
+      const { error: notifyError } = await createNotification({
         userId: app.student_id,
         title: 'Shift cancelled',
-        body: `"${shift.title}" has been cancelled by the business.`,
+        body: 'A shift you applied to has been cancelled.',
         link: '/dashboard/applications',
-      })
-    )
+      });
+      if (notifyError) console.error('createNotification failed:', notifyError);
+    }),
   );
 
   return { success: true };

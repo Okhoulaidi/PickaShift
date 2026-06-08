@@ -11,6 +11,8 @@
   "dependencies": {
     "@clerk/nextjs": "^7.4.3",
     "@supabase/supabase-js": "^2.107.0",
+    "@upstash/ratelimit": "^2.0.8",
+    "@upstash/redis": "^1.38.0",
     "date-fns": "^4.4.0",
     "lucide-react": "^1.17.0",
     "mapbox-gl": "^3.24.0",

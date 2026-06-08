@@ -2,79 +2,138 @@
 
 import Link from 'next/link';
 import { useSession } from '@clerk/nextjs';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Logo } from '@/components/ui/Logo';
 import { useToast } from '@/components/ui/Toast';
 import { completeStudentOnboarding } from '@/lib/actions/onboarding';
 import {
-  DAYS,
-  DAY_LABELS,
+  AVAILABILITY_SLOTS,
+  JOB_TYPES,
+  LANGUAGES,
   MADRID_DISTRICTS,
-  SKILLS,
-  SLOTS,
-  SLOT_LABELS,
-  SPANISH_LEVELS,
+  NATIONALITIES,
+  STUDENT_CV_BUCKET,
   UNIVERSITIES,
+  VISA_TYPES,
 } from '@/lib/constants';
+import { createClient } from '@/lib/supabase/client';
 
-const STEPS = ['Basics', 'Skills', 'Availability'];
+const STEPS = ['Basics', 'Profile', 'Experience'];
 
 const inputClass =
   'w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm text-ink focus:outline-none focus:border-brand transition-colors';
 const labelClass = 'block text-sm font-semibold text-ink mb-1.5';
 const chipClass = (active: boolean) =>
-  `px-3 py-1.5 rounded-full text-sm font-medium border transition-colors ${
+  `px-4 py-2 rounded-full text-sm font-medium border transition-colors cursor-pointer ${
     active
       ? 'bg-brand text-white border-brand'
       : 'border-line bg-canvas text-ink hover:border-brand'
   }`;
+const uploadBoxClass =
+  'border-2 border-dashed border-line rounded-xl p-6 text-center text-sm text-muted-foreground cursor-pointer hover:border-brand transition-colors';
+
+async function uploadFile(bucket: string, path: string, file: File): Promise<string | null> {
+  const supabase = createClient();
+  const { error } = await supabase.storage.from(bucket).upload(path, file, { upsert: true });
+  if (error) return null;
+  const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+  return data.publicUrl;
+}
 
 export default function StudentOnboardingPage() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const { session } = useSession();
   const { show } = useToast();
+  const userId = session?.user?.id;
+
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const cvInputRef = useRef<HTMLInputElement>(null);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [university, setUniversity] = useState<string>(UNIVERSITIES[0]);
   const [degree, setDegree] = useState('');
   const [yearOfStudy, setYearOfStudy] = useState(2);
-  const [bio, setBio] = useState('');
+  const [nationality, setNationality] = useState<string>(NATIONALITIES[0]);
+
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [languages, setLanguages] = useState<string[]>([]);
+  const [jobTypes, setJobTypes] = useState<string[]>([]);
+  const [availability, setAvailability] = useState<string[]>([]);
   const [district, setDistrict] = useState<string>(MADRID_DISTRICTS[0]);
-  const [skills, setSkills] = useState<string[]>(['Customer service']);
-  const [availability, setAvailability] = useState<Record<string, string[]>>({});
 
-  function toggleSkill(skill: string) {
-    setSkills((prev) =>
-      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill],
-    );
+  const [cvUrl, setCvUrl] = useState<string | null>(null);
+  const [cvFileName, setCvFileName] = useState<string | null>(null);
+  const [cvUploading, setCvUploading] = useState(false);
+  const [pastExperience, setPastExperience] = useState('');
+  const [visaType, setVisaType] = useState<string | null>(null);
+
+  function toggleMulti(value: string, list: string[], setList: (next: string[]) => void) {
+    setList(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
   }
 
-  function toggleAvail(day: string, slot: string) {
-    setAvailability((prev) => {
-      const current = prev[day] ?? [];
-      const next = current.includes(slot)
-        ? current.filter((s) => s !== slot)
-        : [...current, slot];
-      return { ...prev, [day]: next };
-    });
+  function toggleVisa(value: string) {
+    setVisaType((prev) => (prev === value ? null : value));
   }
 
-  async function submit() {
+  async function handleAvatarFile(file: File) {
+    if (!userId) {
+      show('Please sign in again to upload a photo.');
+      return;
+    }
+    setAvatarUploading(true);
+    const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const url = await uploadFile('avatars', `${userId}/avatar.${ext}`, file);
+    setAvatarUploading(false);
+    if (!url) {
+      show('Photo upload failed. You can continue without one.');
+      return;
+    }
+    setAvatarUrl(url);
+  }
+
+  async function handleCvFile(file: File) {
+    if (!userId) {
+      show('Please sign in again to upload your CV.');
+      return;
+    }
+    if (file.type !== 'application/pdf') {
+      show('Only PDF files are accepted.');
+      return;
+    }
+    setCvUploading(true);
+    const url = await uploadFile(STUDENT_CV_BUCKET, `${userId}/cv.pdf`, file);
+    setCvUploading(false);
+    if (!url) {
+      show('CV upload failed. You can continue without one.');
+      return;
+    }
+    setCvUrl(url);
+    setCvFileName(file.name);
+  }
+
+  function validateStep1(): boolean {
     if (!firstName.trim() || !lastName.trim()) {
       show('Please enter your first and last name');
-      setStep(0);
-      return;
+      return false;
     }
     if (!degree.trim()) {
       show('Please enter your degree programme');
-      setStep(0);
-      return;
+      return false;
     }
-    if (skills.length === 0) {
-      show('Select at least one skill');
-      setStep(1);
+    return true;
+  }
+
+  function goNext() {
+    if (step === 0 && !validateStep1()) return;
+    setStep((s) => s + 1);
+  }
+
+  async function submit() {
+    if (!validateStep1()) {
+      setStep(0);
       return;
     }
 
@@ -85,11 +144,15 @@ export default function StudentOnboardingPage() {
       university,
       degree: degree.trim(),
       yearOfStudy,
-      bio: bio.trim() || undefined,
-      skills,
-      languages: { es: SPANISH_LEVELS[4].value },
+      nationality,
+      avatarUrl: avatarUrl ?? undefined,
+      languages,
+      jobTypes,
       availability,
       district,
+      cvUrl: cvUrl ?? undefined,
+      pastExperience: pastExperience.trim() || undefined,
+      visaType: visaType ?? undefined,
     });
     setLoading(false);
 
@@ -110,20 +173,26 @@ export default function StudentOnboardingPage() {
         </Link>
 
         <div className="bg-card border border-line rounded-2xl p-6 sm:p-8">
-          <h1 className="text-2xl font-black mb-1.5">Set up your student profile</h1>
-          <p className="text-muted-foreground text-sm mb-5">
-            Step {step + 1} of {STEPS.length} — {STEPS[step]}
+          <p className="text-brand text-xs font-bold tracking-widest uppercase mb-2">
+            Join as a student
           </p>
+          <h1 className="text-2xl font-black mb-1.5">Create your free profile</h1>
+          <p className="text-muted-foreground text-sm mb-5">Takes 3 minutes. Free forever.</p>
 
-          <div className="flex gap-2 mb-8">
-            {STEPS.map((_, i) => (
-              <div
-                key={i}
-                className={`h-1.5 flex-1 rounded-full transition-colors ${
-                  i <= step ? 'bg-brand' : 'bg-line'
-                }`}
-              />
-            ))}
+          <div className="flex items-center gap-3 mb-8">
+            <div className="flex gap-2 flex-1">
+              {STEPS.map((_, i) => (
+                <div
+                  key={i}
+                  className={`h-1.5 flex-1 rounded-full transition-colors ${
+                    i <= step ? 'bg-brand' : 'bg-line'
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-xs text-muted-foreground whitespace-nowrap">
+              Step {step + 1} of {STEPS.length}
+            </span>
           </div>
 
           {step === 0 && (
@@ -174,7 +243,7 @@ export default function StudentOnboardingPage() {
                   className={inputClass}
                   value={degree}
                   onChange={(e) => setDegree(e.target.value)}
-                  placeholder="e.g. Economics, Computer Science"
+                  placeholder="e.g. Business Administration"
                 />
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -193,104 +262,221 @@ export default function StudentOnboardingPage() {
                   </select>
                 </div>
                 <div>
-                  <label className={labelClass}>Home district</label>
+                  <label className={labelClass}>Nationality</label>
                   <select
                     className={inputClass}
-                    value={district}
-                    onChange={(e) => setDistrict(e.target.value)}
+                    value={nationality}
+                    onChange={(e) => setNationality(e.target.value)}
                   >
-                    {MADRID_DISTRICTS.map((d) => (
-                      <option key={d} value={d}>
-                        {d}
+                    {NATIONALITIES.map((n) => (
+                      <option key={n} value={n}>
+                        {n}
                       </option>
                     ))}
                   </select>
                 </div>
               </div>
-              <div>
-                <label className={labelClass}>Short bio</label>
-                <textarea
-                  className={`${inputClass} resize-none min-h-[100px]`}
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  placeholder="Tell businesses a bit about yourself…"
-                />
-              </div>
             </div>
           )}
 
           {step === 1 && (
-            <div>
-              <label className={labelClass}>Your skills</label>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {SKILLS.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    className={chipClass(skills.includes(s))}
-                    onClick={() => toggleSkill(s)}
-                  >
-                    {s}
-                  </button>
-                ))}
+            <div className="space-y-5">
+              <div>
+                <label className={labelClass}>Profile photo</label>
+                <input
+                  ref={avatarInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) void handleAvatarFile(file);
+                  }}
+                />
+                <div
+                  className={uploadBoxClass}
+                  onClick={() => avatarInputRef.current?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const file = e.dataTransfer.files?.[0];
+                    if (file) void handleAvatarFile(file);
+                  }}
+                >
+                  {avatarUploading ? (
+                    <p>Uploading…</p>
+                  ) : avatarUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={avatarUrl}
+                      alt="Profile preview"
+                      className="mx-auto h-24 w-24 rounded-full object-cover"
+                    />
+                  ) : (
+                    <p>Drag a photo or click to upload</p>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className={labelClass}>Languages you speak</label>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang}
+                      type="button"
+                      className={chipClass(languages.includes(lang))}
+                      onClick={() => toggleMulti(lang, languages, setLanguages)}
+                    >
+                      {lang}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className={labelClass}>Job types you&apos;re interested in</label>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {JOB_TYPES.map((job) => (
+                    <button
+                      key={job}
+                      type="button"
+                      className={chipClass(jobTypes.includes(job))}
+                      onClick={() => toggleMulti(job, jobTypes, setJobTypes)}
+                    >
+                      {job}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className={labelClass}>Availability</label>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {AVAILABILITY_SLOTS.map((slot) => (
+                    <button
+                      key={slot}
+                      type="button"
+                      className={chipClass(availability.includes(slot))}
+                      onClick={() => toggleMulti(slot, availability, setAvailability)}
+                    >
+                      {slot}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className={labelClass}>Home district</label>
+                <select
+                  className={inputClass}
+                  value={district}
+                  onChange={(e) => setDistrict(e.target.value)}
+                >
+                  {MADRID_DISTRICTS.map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           )}
 
           {step === 2 && (
-            <div>
-              <label className={labelClass}>When are you usually free?</label>
-              <p className="text-xs text-muted-foreground mb-3">
-                Tap slots you&apos;re typically available. You can always change this later.
-              </p>
-              {DAYS.map((day) => (
-                <div key={day} className="mb-4">
-                  <div className="font-bold text-sm mb-2">{DAY_LABELS[day]}</div>
-                  <div className="flex flex-wrap gap-2">
-                    {SLOTS.map((slot) => (
-                      <button
-                        key={slot}
-                        type="button"
-                        className={chipClass((availability[day] ?? []).includes(slot))}
-                        onClick={() => toggleAvail(day, slot)}
-                      >
-                        {SLOT_LABELS[slot]}
-                      </button>
-                    ))}
-                  </div>
+            <div className="space-y-5">
+              <div>
+                <label className={labelClass}>CV</label>
+                <input
+                  ref={cvInputRef}
+                  type="file"
+                  accept="application/pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) void handleCvFile(file);
+                  }}
+                />
+                <div
+                  className={uploadBoxClass}
+                  onClick={() => cvInputRef.current?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const file = e.dataTransfer.files?.[0];
+                    if (file) void handleCvFile(file);
+                  }}
+                >
+                  {cvUploading ? (
+                    <p>Uploading…</p>
+                  ) : cvFileName ? (
+                    <p className="text-ink font-medium">✓ {cvFileName} uploaded</p>
+                  ) : (
+                    <p>Upload PDF if you have one</p>
+                  )}
                 </div>
-              ))}
+              </div>
+
+              <div>
+                <label className={labelClass}>Past experience</label>
+                <textarea
+                  className={`${inputClass} resize-none min-h-[100px]`}
+                  value={pastExperience}
+                  onChange={(e) => setPastExperience(e.target.value)}
+                  placeholder="e.g. 6 months as barista at Costa Coffee"
+                />
+              </div>
+
+              <div>
+                <label className={labelClass}>Visa type</label>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {VISA_TYPES.map((visa) => (
+                    <button
+                      key={visa}
+                      type="button"
+                      className={chipClass(visaType === visa)}
+                      onClick={() => toggleVisa(visa)}
+                    >
+                      {visa}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
-          <div className="flex gap-2.5 mt-6 justify-end">
-            {step > 0 && (
-              <button
-                type="button"
-                className="px-5 py-2.5 rounded-xl border border-line text-sm font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
-                onClick={() => setStep((s) => s - 1)}
-              >
-                Back
-              </button>
-            )}
-            {step < STEPS.length - 1 ? (
-              <button
-                type="button"
-                className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors"
-                onClick={() => setStep((s) => s + 1)}
-              >
-                Continue
-              </button>
-            ) : (
-              <button
-                type="button"
-                className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors disabled:opacity-60"
-                disabled={loading}
-                onClick={submit}
-              >
-                {loading ? 'Saving…' : 'Complete profile'}
-              </button>
-            )}
+          <div className="flex gap-2.5 mt-6 justify-between">
+            <div>
+              {step > 0 && (
+                <button
+                  type="button"
+                  className="px-5 py-2.5 rounded-xl border border-line text-sm font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
+                  onClick={() => setStep((s) => s - 1)}
+                >
+                  Back
+                </button>
+              )}
+            </div>
+            <div>
+              {step < STEPS.length - 1 ? (
+                <button
+                  type="button"
+                  className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors"
+                  onClick={goNext}
+                >
+                  Continue →
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors disabled:opacity-60"
+                  disabled={loading}
+                  onClick={submit}
+                >
+                  {loading ? 'Saving…' : 'Create my profile →'}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

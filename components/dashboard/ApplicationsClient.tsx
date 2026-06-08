@@ -17,6 +17,12 @@ import {
 } from '@/lib/utils';
 import { format, parseISO } from 'date-fns';
 
+function applicationStatusLabel(status: string): string {
+  if (status === 'cancelled') return 'Cancelled';
+  if (status === 'no_show') return 'No show';
+  return status.charAt(0).toUpperCase() + status.slice(1);
+}
+
 type Tab = 'pending' | 'confirmed' | 'completed';
 
 export function ApplicationsClient({
@@ -110,7 +116,7 @@ export function ApplicationsClient({
                     <span
                       className={`badge ${tab === 'pending' ? 'badge-soft' : tab === 'confirmed' ? 'badge-open' : 'badge-filled'}`}
                     >
-                      {app.status}
+                      {applicationStatusLabel(app.status)}
                     </span>
                   </div>
                 );

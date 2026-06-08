@@ -2,7 +2,7 @@
 
 import { requireActionAuth, syncClerkMetadata } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { createNotification } from '@/lib/actions/notifications';
+import { createNotification } from '@/lib/notifications/create-notification';
 import type { ActionResult } from '@/lib/types';
 
 export async function verifyBusiness(businessId: string): Promise<ActionResult> {
@@ -32,12 +32,13 @@ export async function verifyBusiness(businessId: string): Promise<ActionResult> 
 
   await syncClerkMetadata(businessId, { verified: true });
 
-  await createNotification({
+  const { error: notifyError } = await createNotification({
     userId: businessId,
     title: 'Business verified',
     body: `${business.business_name} has been verified. You can now post shifts.`,
     link: '/biz/dashboard',
   });
+  if (notifyError) console.error('createNotification failed:', notifyError);
 
   return { success: true };
 }
@@ -62,12 +63,13 @@ export async function suspendUser(userId: string, suspended = true): Promise<Act
   await syncClerkMetadata(userId, { suspended });
 
   if (suspended) {
-    await createNotification({
+    const { error: notifyError } = await createNotification({
       userId,
       title: 'Account suspended',
       body: 'Your account has been suspended. Contact support for assistance.',
       link: '/suspended',
     });
+    if (notifyError) console.error('createNotification failed:', notifyError);
   }
 
   return { success: true };

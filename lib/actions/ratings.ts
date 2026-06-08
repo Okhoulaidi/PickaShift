@@ -2,7 +2,7 @@
 
 import { requireActionAuth } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { createNotification } from '@/lib/actions/notifications';
+import { createNotification } from '@/lib/notifications/create-notification';
 import type { ActionResult } from '@/lib/types';
 
 export interface RatingInput {
@@ -67,12 +67,13 @@ export async function submitRating(input: RatingInput): Promise<ActionResult> {
     return { error: error.message };
   }
 
-  await createNotification({
+  const { error: notifyError } = await createNotification({
     userId: input.ratedId,
     title: 'New rating received',
     body: `You received a ${input.score}-star rating.`,
     link: session.meta!.role === 'student' ? '/dashboard/profile' : '/biz/dashboard',
   });
+  if (notifyError) console.error('createNotification failed:', notifyError);
 
   return { success: true };
 }

@@ -5,7 +5,13 @@ export type ActionResult<T = undefined> = T extends undefined
   : { success?: boolean; error?: string; data?: T };
 
 export type ShiftStatus = 'open' | 'filled' | 'completed' | 'cancelled';
-export type ApplicationStatus = 'pending' | 'accepted' | 'rejected' | 'completed' | 'no_show';
+export type ApplicationStatus =
+  | 'pending'
+  | 'accepted'
+  | 'rejected'
+  | 'completed'
+  | 'no_show'
+  | 'cancelled';
 
 export interface ShiftFilters {
   district?: string;
