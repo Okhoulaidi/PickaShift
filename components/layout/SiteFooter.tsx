@@ -1,46 +1,49 @@
+'use client';
+
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Icon } from '@/components/ui/Icon';
 import { Logo } from '@/components/ui/Logo';
 
-const FOOTER_COLS: [string, { label: string; href: string }[]][] = [
-  [
-    'Platform',
-    [
-      { label: 'Browse Shifts', href: '/browse' },
-      { label: 'Post a Shift', href: '/sign-up?role=business' },
-      { label: 'How it Works', href: '/#how' },
-      { label: 'FAQ', href: '/faq' },
-    ],
-  ],
-  [
-    'Support',
-    [
-      { label: 'Help Center', href: '/help' },
-      { label: 'Contact', href: '/contact' },
-      { label: 'Privacy Policy', href: '/privacy' },
-      { label: 'Terms of Service', href: '/terms' },
-    ],
-  ],
-];
-
 export function SiteFooter() {
+  const t = useTranslations('footer');
+
+  const FOOTER_COLS: [string, { label: string; href: string }[]][] = [
+    [
+      t('platform'),
+      [
+        { label: t('browseShifts'), href: '/browse' },
+        { label: t('postShift'), href: '/sign-up?role=business' },
+        { label: t('howItWorks'), href: '/#how' },
+        { label: t('faq'), href: '/faq' },
+      ],
+    ],
+    [
+      t('support'),
+      [
+        { label: t('helpCenter'), href: '/help' },
+        { label: t('contact'), href: '/contact' },
+        { label: t('privacyPolicy'), href: '/privacy' },
+        { label: t('termsOfService'), href: '/terms' },
+      ],
+    ],
+  ];
+
   return (
     <footer className="site-footer">
       <div className="wrap">
         <div className="footer-grid">
           <div className="footer-brand">
             <Logo className="logo" />
-            <p>
-              Flexible short-term shifts for students in Madrid. Pick one. Work it. Get paid.
-            </p>
+            <p>{t('tagline')}</p>
             <div className="socials">
-              <a href="#" aria-label="Instagram">
+              <a href="#" aria-label={t('instagram')}>
                 <Icon name="insta" size={19} />
               </a>
-              <a href="#" aria-label="X">
+              <a href="#" aria-label={t('x')}>
                 <Icon name="x_social" size={19} />
               </a>
-              <a href="#" aria-label="LinkedIn">
+              <a href="#" aria-label={t('linkedin')}>
                 <Icon name="linkedin" size={19} />
               </a>
             </div>
@@ -57,11 +60,11 @@ export function SiteFooter() {
           ))}
         </div>
         <div className="footer-bottom">
-          <span>© 2026 Pick a Shift · Madrid, España</span>
+          <span>{t('copyright')}</span>
           <span className="footer-made">
-            Hecho con
+            {t('madeWith')}
             <Icon name="heart" size={14} fill style={{ color: 'var(--primary)' }} />
-            para estudiantes
+            {t('forStudents')}
           </span>
         </div>
       </div>

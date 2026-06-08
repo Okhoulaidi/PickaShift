@@ -3,21 +3,11 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Mail, Clock, MapPin, CheckCircle2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { LandingNav } from '@/components/landing/LandingNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { submitContactForm } from '@/lib/actions/contact';
 import { SITE } from '@/lib/site';
-
-const SUBJECTS = [
-  'General Enquiry',
-  'Technical Issue',
-  'Business Enquiry',
-  'Payment Dispute',
-  'Report a User',
-  'Account Deletion Request',
-  'Press & Media',
-  'Other',
-];
 
 type FormState = {
   name: string;
@@ -28,10 +18,14 @@ type FormState = {
 };
 
 export default function ContactPage() {
+  const t = useTranslations('contact');
+  const subjectKeys = ['general', 'technical', 'business', 'payment', 'report', 'deletion', 'press', 'other'] as const;
+  const SUBJECTS = subjectKeys.map((key) => ({ key, label: t(`subjects.${key}`) }));
+
   const [form, setForm] = useState<FormState>({
     name: '',
     email: '',
-    subject: SUBJECTS[0]!,
+    subject: SUBJECTS[0]!.label,
     message: '',
     website: '',
   });
@@ -61,33 +55,40 @@ export default function ContactPage() {
     setSubmitted(true);
   }
 
+  const quickLinks = [
+    { label: t('faqLink'), href: '/faq' },
+    { label: t('helpLink'), href: '/help' },
+    { label: t('privacyLink'), href: '/privacy' },
+    { label: t('termsLink'), href: '/terms' },
+  ];
+
   return (
     <div className="bg-canvas min-h-screen font-manrope text-ink">
       <LandingNav />
 
       <main className="max-w-5xl mx-auto px-6 py-16">
-        {/* Header */}
         <div className="text-center mb-14">
           <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand mb-3 block">
-            Get in Touch
+            {t('eyebrow')}
           </span>
-          <h1 className="font-sora text-4xl font-extrabold tracking-tight mb-4">Contact Us</h1>
+          <h1 className="font-sora text-4xl font-extrabold tracking-tight mb-4">{t('title')}</h1>
           <p className="text-muted-foreground max-w-xl mx-auto">
-            We read every message and respond within 24–48 hours on business days. For quick
-            answers, check the{' '}
-            <Link href="/faq" className="text-brand hover:underline">
-              FAQ
-            </Link>{' '}
-            or{' '}
-            <Link href="/help" className="text-brand hover:underline">
-              Help Center
-            </Link>{' '}
-            first.
+            {t.rich('intro', {
+              faq: (chunks) => (
+                <Link href="/faq" className="text-brand hover:underline">
+                  {chunks}
+                </Link>
+              ),
+              help: (chunks) => (
+                <Link href="/help" className="text-brand hover:underline">
+                  {chunks}
+                </Link>
+              ),
+            })}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-5 gap-10">
-          {/* Contact info */}
           <aside className="lg:col-span-2 space-y-6">
             <div className="bg-card border border-line rounded-2xl p-6 space-y-5">
               <div className="flex gap-4">
@@ -95,7 +96,7 @@ export default function ContactPage() {
                   <Mail className="size-5 text-brand" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Email</h3>
+                  <h3 className="font-semibold text-sm">{t('email')}</h3>
                   <a
                     href={`mailto:${SITE.emails.hello}`}
                     className="text-sm text-brand hover:underline mt-0.5 block"
@@ -110,11 +111,9 @@ export default function ContactPage() {
                   <Clock className="size-5 text-brand" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Response Time</h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">
-                    Within 24–48 hours
-                    <br />
-                    Monday–Friday, 9am–6pm CET
+                  <h3 className="font-semibold text-sm">{t('responseTime')}</h3>
+                  <p className="text-sm text-muted-foreground mt-0.5 whitespace-pre-line">
+                    {t('responseDetail')}
                   </p>
                 </div>
               </div>
@@ -124,22 +123,16 @@ export default function ContactPage() {
                   <MapPin className="size-5 text-brand" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm">Based in</h3>
-                  <p className="text-sm text-muted-foreground mt-0.5">Madrid, España</p>
+                  <h3 className="font-semibold text-sm">{t('basedIn')}</h3>
+                  <p className="text-sm text-muted-foreground mt-0.5">{t('location')}</p>
                 </div>
               </div>
             </div>
 
-            {/* Quick links */}
             <div className="bg-card border border-line rounded-2xl p-6">
-              <h3 className="font-semibold text-sm mb-4">Quick Links</h3>
+              <h3 className="font-semibold text-sm mb-4">{t('quickLinks')}</h3>
               <ul className="space-y-2">
-                {[
-                  { label: 'Frequently Asked Questions', href: '/faq' },
-                  { label: 'Help Center', href: '/help' },
-                  { label: 'Privacy Policy', href: '/privacy' },
-                  { label: 'Terms of Service', href: '/terms' },
-                ].map(({ label, href }) => (
+                {quickLinks.map(({ label, href }) => (
                   <li key={href}>
                     <Link
                       href={href}
@@ -153,7 +146,6 @@ export default function ContactPage() {
             </div>
           </aside>
 
-          {/* Form */}
           <div className="lg:col-span-3">
             <div className="bg-card border border-line rounded-2xl p-8">
               {submitted ? (
@@ -161,19 +153,18 @@ export default function ContactPage() {
                   <div className="size-16 rounded-full bg-success/10 flex items-center justify-center mb-5">
                     <CheckCircle2 className="size-8 text-success" />
                   </div>
-                  <h2 className="font-sora font-bold text-xl mb-2">Message sent!</h2>
+                  <h2 className="font-sora font-bold text-xl mb-2">{t('successTitle')}</h2>
                   <p className="text-muted-foreground max-w-sm">
-                    Thanks for reaching out. We'll get back to you at{' '}
-                    <strong>{form.email}</strong> within 24–48 hours.
+                    {t('successBody', { email: form.email })}
                   </p>
                   <button
                     onClick={() => {
                       setSubmitted(false);
-                      setForm({ name: '', email: '', subject: SUBJECTS[0]!, message: '', website: '' });
+                      setForm({ name: '', email: '', subject: SUBJECTS[0]!.label, message: '', website: '' });
                     }}
                     className="mt-6 text-sm text-brand hover:underline"
                   >
-                    Send another message
+                    {t('sendAnother')}
                   </button>
                 </div>
               ) : (
@@ -190,11 +181,8 @@ export default function ContactPage() {
                   />
                   <div className="grid sm:grid-cols-2 gap-5">
                     <div>
-                      <label
-                        htmlFor="name"
-                        className="block text-sm font-semibold mb-1.5"
-                      >
-                        Full Name <span className="text-brand">*</span>
+                      <label htmlFor="name" className="block text-sm font-semibold mb-1.5">
+                        {t('fullName')} <span className="text-brand">*</span>
                       </label>
                       <input
                         id="name"
@@ -203,16 +191,13 @@ export default function ContactPage() {
                         required
                         value={form.name}
                         onChange={handleChange}
-                        placeholder="Your name"
+                        placeholder={t('namePlaceholder')}
                         className="w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm focus:outline-none focus:border-brand transition-colors"
                       />
                     </div>
                     <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-sm font-semibold mb-1.5"
-                      >
-                        Email Address <span className="text-brand">*</span>
+                      <label htmlFor="email" className="block text-sm font-semibold mb-1.5">
+                        {t('emailAddress')} <span className="text-brand">*</span>
                       </label>
                       <input
                         id="email"
@@ -221,18 +206,15 @@ export default function ContactPage() {
                         required
                         value={form.email}
                         onChange={handleChange}
-                        placeholder="your@email.com"
+                        placeholder={t('emailPlaceholder')}
                         className="w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm focus:outline-none focus:border-brand transition-colors"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="subject"
-                      className="block text-sm font-semibold mb-1.5"
-                    >
-                      Subject <span className="text-brand">*</span>
+                    <label htmlFor="subject" className="block text-sm font-semibold mb-1.5">
+                      {t('subject')} <span className="text-brand">*</span>
                     </label>
                     <select
                       id="subject"
@@ -243,19 +225,16 @@ export default function ContactPage() {
                       className="w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm focus:outline-none focus:border-brand transition-colors"
                     >
                       {SUBJECTS.map((s) => (
-                        <option key={s} value={s}>
-                          {s}
+                        <option key={s.key} value={s.label}>
+                          {s.label}
                         </option>
                       ))}
                     </select>
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="message"
-                      className="block text-sm font-semibold mb-1.5"
-                    >
-                      Message <span className="text-brand">*</span>
+                    <label htmlFor="message" className="block text-sm font-semibold mb-1.5">
+                      {t('message')} <span className="text-brand">*</span>
                     </label>
                     <textarea
                       id="message"
@@ -264,17 +243,19 @@ export default function ContactPage() {
                       rows={6}
                       value={form.message}
                       onChange={handleChange}
-                      placeholder="Describe your question or issue in as much detail as possible..."
+                      placeholder={t('messagePlaceholder')}
                       className="w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm focus:outline-none focus:border-brand transition-colors resize-none"
                     />
                   </div>
 
                   <p className="text-xs text-muted-foreground">
-                    By submitting this form, you agree to our{' '}
-                    <Link href="/privacy" className="text-brand hover:underline">
-                      Privacy Policy
-                    </Link>
-                    .
+                    {t.rich('privacyNote', {
+                      privacy: (chunks) => (
+                        <Link href="/privacy" className="text-brand hover:underline">
+                          {chunks}
+                        </Link>
+                      ),
+                    })}
                   </p>
 
                   {error && (
@@ -288,7 +269,7 @@ export default function ContactPage() {
                     disabled={loading}
                     className="w-full bg-brand !text-white py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors disabled:opacity-60"
                   >
-                    {loading ? 'Sending…' : 'Send Message'}
+                    {loading ? t('sending') : t('sendMessage')}
                   </button>
                 </form>
               )}

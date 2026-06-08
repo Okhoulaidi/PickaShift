@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { MessageThreadClient } from '@/components/messages/MessagesClient';
 import { studentNav } from '@/lib/dashboard-nav';
 import { studentDashUser } from '@/lib/dashboard-user';
@@ -15,6 +16,7 @@ export default async function StudentMessageThreadPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const tNav = await getTranslations('nav.student');
   const { session, profile: student } = await requireStudentProfile();
 
   const conversation = await getConversationById(id, session.userId, 'student');
@@ -51,8 +53,8 @@ export default async function StudentMessageThreadPage({
 
   return (
     <MessageThreadClient
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="Messages"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('messages')}
       user={user}
       conversationId={id}
       partnerName={biz?.business_name ?? 'Business'}

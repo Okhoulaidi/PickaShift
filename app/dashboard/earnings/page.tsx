@@ -7,10 +7,13 @@ import { requireStudentProfile } from '@/lib/guards/student';
 import { getDashboardStats, getStudentApplications } from '@/lib/queries/shifts';
 import { formatPay, shiftHours } from '@/lib/utils';
 import { unwrapRelation } from '@/lib/types';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function EarningsPage() {
+  const t = await getTranslations('dashboard.earnings');
+  const tNav = await getTranslations('nav.student');
   const { session, profile: student } = await requireStudentProfile();
   const [stats, completedApps] = await Promise.all([
     getDashboardStats('student', session.userId),
@@ -34,11 +37,11 @@ export default async function EarningsPage() {
 
   return (
     <DashShell
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="Earnings"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('earnings')}
       user={user}
-      topTitle="Earnings"
-      topSub="Your shift income on Pick a Shift"
+      topTitle={t('title')}
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
@@ -48,39 +51,40 @@ export default async function EarningsPage() {
               <Icon name="euro" size={20} />
             </div>
             <div className="text-2xl font-black text-ink">{formatPay(stats.totalEarnedCents ?? 0)}</div>
-            <div className="text-xs text-muted-foreground mt-0.5">Total earned</div>
+            <div className="text-xs text-muted-foreground mt-0.5">{t('totalEarned')}</div>
           </div>
           <div className="bg-card border border-line rounded-2xl p-5">
             <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
               <Icon name="check" size={20} />
             </div>
             <div className="text-2xl font-black text-ink">{stats.completedShifts ?? 0}</div>
-            <div className="text-xs text-muted-foreground mt-0.5">Completed shifts</div>
+            <div className="text-xs text-muted-foreground mt-0.5">{t('completedShifts')}</div>
           </div>
           <div className="bg-card border border-line rounded-2xl p-5">
             <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
               <Icon name="clock" size={20} />
             </div>
             <div className="text-2xl font-black text-ink">{Math.round(totalHours)}h</div>
-            <div className="text-xs text-muted-foreground mt-0.5">Hours worked</div>
+            <div className="text-xs text-muted-foreground mt-0.5">{t('hoursWorked')}</div>
           </div>
           <div className="bg-card border border-line rounded-2xl p-5">
             <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
               <Icon name="gauge" size={20} />
             </div>
             <div className="text-2xl font-black text-ink">{Number(student.reliability_score ?? 5).toFixed(1)}</div>
-            <div className="text-xs text-muted-foreground mt-0.5">Reliability score</div>
+            <div className="text-xs text-muted-foreground mt-0.5">{t('reliabilityScore')}</div>
           </div>
         </div>
 
         <div className="bg-card border border-line rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-line">
-            <h3 className="font-black text-ink">Recent completed shifts</h3>
+            <h3 className="font-black text-ink">{t('recentShifts')}</h3>
           </div>
           <div className="p-6">
             {completedApps.length === 0 ? (
               <p className="text-muted-foreground text-center text-sm">
-                No completed shifts yet. <Link href="/browse" className="text-brand font-semibold">Find your first shift</Link>
+                {t('noShifts')}{' '}
+                <Link href="/browse" className="text-brand font-semibold">{t('findFirst')}</Link>
               </p>
             ) : (
               <div className="divide-y divide-line">

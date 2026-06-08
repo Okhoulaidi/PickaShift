@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import { MessagesListClient } from '@/components/messages/MessagesClient';
 import { studentNav } from '@/lib/dashboard-nav';
 import { studentDashUser } from '@/lib/dashboard-user';
@@ -9,6 +10,8 @@ import { unwrapRelation } from '@/lib/types';
 export const dynamic = 'force-dynamic';
 
 export default async function StudentMessagesPage() {
+  const t = await getTranslations('dashboard.messages');
+  const tNav = await getTranslations('nav.student');
   const { session, profile: student } = await requireStudentProfile();
   const [stats, conversations] = await Promise.all([
     getDashboardStats('student', session.userId),
@@ -40,10 +43,10 @@ export default async function StudentMessagesPage() {
 
   return (
     <MessagesListClient
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="Messages"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('messages')}
       user={user}
-      topTitle="Messages"
+      topTitle={t('title')}
       conversations={items}
       basePath="/dashboard/messages"
       notif={stats.unreadNotifications}

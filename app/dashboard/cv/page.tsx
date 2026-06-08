@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import { DashShell } from '@/components/layout/DashShell';
 import { CvUploadClient } from '@/components/dashboard/CvUploadClient';
 import { studentNav } from '@/lib/dashboard-nav';
@@ -8,6 +9,8 @@ import { unwrapRelation } from '@/lib/types';
 export const dynamic = 'force-dynamic';
 
 export default async function CvPage() {
+  const t = await getTranslations('dashboard.cv');
+  const tNav = await getTranslations('nav.student');
   const { session, profile: student } = await requireStudentProfile();
   const profile = unwrapRelation(student.profile);
 
@@ -20,7 +23,7 @@ export default async function CvPage() {
   );
 
   return (
-    <DashShell nav={studentNav()} active="My CV" user={user} topTitle="My CV" topSub="Upload your CV — businesses can view it when reviewing your applications">
+    <DashShell nav={studentNav(tNav)} active={tNav('myCv')} user={user} topTitle={t('title')} topSub={t('subtitle')}>
       <div className="content">
         <CvUploadClient currentCvUrl={student.cv_url ?? null} />
       </div>

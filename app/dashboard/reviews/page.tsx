@@ -6,6 +6,7 @@ import { requireStudentProfile } from '@/lib/guards/student';
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { createAdminClient } from '@/lib/supabase/admin';
 import { unwrapRelation } from '@/lib/types';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,6 +23,8 @@ function StarRating({ score }: { score: number }) {
 }
 
 export default async function ReviewsPage() {
+  const t = await getTranslations('dashboard.reviews');
+  const tNav = await getTranslations('nav.student');
   const { session, profile: student } = await requireStudentProfile();
   const stats = await getDashboardStats('student', session.userId);
   const supabase = createAdminClient();
@@ -47,11 +50,11 @@ export default async function ReviewsPage() {
 
   return (
     <DashShell
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="My Reviews"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('myReviews')}
       user={user}
-      topTitle="My Reviews"
-      topSub="Ratings left by businesses after completed shifts"
+      topTitle={t('title')}
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
@@ -62,14 +65,14 @@ export default async function ReviewsPage() {
                 <Icon name="star" size={18} />
               </div>
               <div className="text-2xl font-black text-ink">{avgScore}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">Average rating</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{t('avgRating')}</div>
             </div>
             <div className="bg-card border border-line rounded-2xl p-5">
               <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
                 <Icon name="clipboard" size={18} />
               </div>
               <div className="text-2xl font-black text-ink">{ratings?.length ?? 0}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">Total reviews</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{t('totalReviews')}</div>
             </div>
             <div className="bg-card border border-line rounded-2xl p-5">
               <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
@@ -78,7 +81,7 @@ export default async function ReviewsPage() {
               <div className="text-2xl font-black text-ink">
                 {ratings?.filter((r) => (r.score ?? 0) >= 4).length ?? 0}
               </div>
-              <div className="text-xs text-muted-foreground mt-0.5">5★ or 4★ reviews</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{t('highReviews')}</div>
             </div>
           </div>
         )}
@@ -87,7 +90,7 @@ export default async function ReviewsPage() {
           {ratings && ratings.length > 0 ? (
             <>
               <div className="flex items-center justify-between px-6 py-4 border-b border-line">
-                <h3 className="font-black text-ink">All reviews</h3>
+                <h3 className="font-black text-ink">{t('allReviews')}</h3>
               </div>
               <div className="divide-y divide-line">
                 {ratings.map((r) => {
@@ -120,10 +123,8 @@ export default async function ReviewsPage() {
                 <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
                   <Icon name="star" size={26} />
                 </div>
-                <h3 className="font-black text-lg mb-2">No reviews yet</h3>
-                <p className="text-sm text-muted-foreground max-w-xs">
-                  After you complete a shift, businesses can leave you a review. Great shifts earn great scores.
-                </p>
+                <h3 className="font-black text-lg mb-2">{t('emptyTitle')}</h3>
+                <p className="text-sm text-muted-foreground max-w-xs">{t('emptyBody')}</p>
               </div>
             </div>
           )}

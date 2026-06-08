@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { auth } from '@clerk/nextjs/server';
+import { getTranslations } from 'next-intl/server';
 import { BrowseClient } from '@/components/browse/BrowseClient';
 import { getClerkMetadata } from '@/lib/auth';
 import { studentDashUser } from '@/lib/dashboard-user';
@@ -12,6 +13,7 @@ import type { ShiftWithBusiness } from '@/lib/types';
 export const dynamic = 'force-dynamic';
 
 export default async function BrowsePage() {
+  const tNav = await getTranslations('nav.student');
   const { userId, sessionClaims } = await auth();
   const meta = getClerkMetadata(sessionClaims as Record<string, unknown> | null | undefined);
 
@@ -38,7 +40,7 @@ export default async function BrowsePage() {
         },
         student,
       ),
-      nav: studentNav(stats.pendingApplications ?? 0),
+      nav: studentNav(tNav, stats.pendingApplications ?? 0),
       notif: stats.unreadNotifications ?? 0,
     };
   }

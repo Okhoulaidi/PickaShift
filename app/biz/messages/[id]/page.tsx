@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { MessageThreadClient } from '@/components/messages/MessagesClient';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
@@ -11,6 +12,7 @@ export const dynamic = 'force-dynamic';
 
 export default async function BizMessageThreadPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const tNav = await getTranslations('nav.business');
   const { session, profile: business } = await requireBusinessProfile();
 
   const conversation = await getConversationById(id, session.userId, 'business');
@@ -41,8 +43,8 @@ export default async function BizMessageThreadPage({ params }: { params: Promise
 
   return (
     <MessageThreadClient
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Messages"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('messages')}
       user={businessDashUser(business)}
       conversationId={id}
       partnerName={partnerName}

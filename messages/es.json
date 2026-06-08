@@ -1,0 +1,947 @@
+{
+  "nav": {
+    "landing": {
+      "howItWorks": "Cómo funciona",
+      "pricing": "Precios",
+      "browse": "Explorar",
+      "logIn": "Iniciar sesión",
+      "join": "Unirse"
+    },
+    "shell": {
+      "signOut": "Cerrar sesión",
+      "openMenu": "Abrir menú"
+    },
+    "student": {
+      "home": "Inicio",
+      "homeShort": "Inicio",
+      "browseShifts": "Ver turnos",
+      "browseShort": "Explorar",
+      "myApplications": "Mis solicitudes",
+      "appliedShort": "Solicitudes",
+      "messages": "Mensajes",
+      "chatShort": "Chat",
+      "myProfile": "Mi perfil",
+      "profileShort": "Perfil",
+      "myCv": "Mi CV",
+      "cvShort": "CV",
+      "earnings": "Ganancias",
+      "earnShort": "Ganar",
+      "myReviews": "Mis valoraciones",
+      "reviewsShort": "Valoraciones"
+    },
+    "business": {
+      "overview": "Resumen",
+      "homeShort": "Inicio",
+      "postShift": "Publicar turno",
+      "postShort": "Publicar",
+      "manageShifts": "Gestionar turnos",
+      "shiftsShort": "Turnos",
+      "applicants": "Candidatos",
+      "applyShort": "Candidatos",
+      "workerPool": "Pool de trabajadores",
+      "poolShort": "Pool",
+      "messages": "Mensajes",
+      "chatShort": "Chat",
+      "analytics": "Estadísticas",
+      "statsShort": "Stats",
+      "reviews": "Valoraciones",
+      "reviewsShort": "Valoraciones",
+      "companyProfile": "Perfil de empresa",
+      "profileShort": "Perfil"
+    },
+    "admin": {
+      "overview": "Resumen",
+      "homeShort": "Inicio",
+      "businesses": "Empresas",
+      "bizShort": "Empresas",
+      "users": "Usuarios",
+      "usersShort": "Usuarios",
+      "contact": "Contacto",
+      "inboxShort": "Bandeja"
+    }
+  },
+  "landing": {
+    "studentEyebrow": "Para estudiantes",
+    "studentHeadline1": "TÚ ELIGES",
+    "studentHeadline2": "TU HORARIO.",
+    "studentBody": "Encuentra turnos de hostelería y comercio en Madrid. Solicita con un toque y controla lo que ganas al completar cada turno.",
+    "findShift": "Buscar turno",
+    "businessEyebrow": "Para empresas",
+    "businessHeadline1": "ESCALA",
+    "businessHeadline2": "A DEMANDA.",
+    "businessBody": "Conecta al instante con el mejor talento estudiantil de Madrid. Cubre huecos de última hora en minutos, no en días.",
+    "postShift": "Publicar turno",
+    "trustReviewed": "Empresas verificadas",
+    "trustEarnings": "Controla tus ganancias",
+    "trustRatings": "Valoraciones tras cada turno",
+    "trustFlexible": "Turnos flexibles para estudiantes",
+    "promiseEyebrow": "La promesa de Pick a Shift",
+    "promiseHeadline1": "Trabaja cuando",
+    "promiseHeadline2": "quieras.",
+    "promiseBody": "Sin contratos. Sin desplazamientos que no hayas elegido. Solo turnos abiertos que encajan en tu semana.",
+    "howTitle": "CÓMO FUNCIONA.",
+    "howStudentsEyebrow": "Para estudiantes",
+    "howBusinessEyebrow": "Para empresas",
+    "studentSteps": {
+      "step1Title": "Crea tu perfil",
+      "step1Body": "Indica tu disponibilidad, habilidades y zonas preferidas. Menos de 2 minutos.",
+      "step2Title": "Explora y solicita de un toque",
+      "step2Body": "Ve los turnos disponibles cerca de ti. Sube tu CV (opcional) para destacar.",
+      "step3Title": "Trabaja y controla tus ganancias",
+      "step3Body": "Completa el turno. Tu total de ganancias se actualiza en tu panel."
+    },
+    "businessSteps": {
+      "step1Title": "Publica tu turno",
+      "step1Body": "Define el puesto, fecha y tarifa. En línea en segundos.",
+      "step2Title": "Revisa los perfiles",
+      "step2Body": "Consulta valoraciones, experiencia, puntuaciones y CVs opcionales.",
+      "step3Title": "Cubre el turno en minutos",
+      "step3Body": "Acepta con un toque. Mensajería integrada para coordinar el turno."
+    },
+    "pricingTitle": "ECONOMÍA TRANSPARENTE.",
+    "pricingBody": "Solo ganamos cuando se cubren los turnos. Sin suscripciones, sin costes de alta.",
+    "pricingStudentTitle": "Gratis para estudiantes",
+    "pricingStudentBody": "Lo que ganas es tuyo.",
+    "pricingBusinessTitle": "Tarifa plana para empresas",
+    "pricingBusinessBody": "Una comisión fija por turno cubierto.",
+    "partnerPlan": "Plan Partner",
+    "perShift": "/ por turno",
+    "getStarted": "Empezar",
+    "testimonial1": "Encontré un turno en un café de Malasaña en menos de una hora. El proceso fue muy sencillo y pude ver mis ganancias acumularse tras el turno.",
+    "testimonial1Name": "Lucía G.",
+    "testimonial1Role": "Estudiante UCM",
+    "testimonial2": "Cubrir el personal de fin de semana era un quebradero de cabeza. Ahora publicamos y los estudiantes solicitan — con perfiles y valoraciones para elegir mejor.",
+    "testimonial2Name": "Carlos M.",
+    "testimonial2Role": "Manager · Restaurante Sol",
+    "readyToJoin": "¿Listo para unirte?",
+    "createProfile": "Crear perfil",
+    "footerLive": "Activo en Madrid",
+    "footerHeadline1": "MADRID",
+    "footerHeadline2": "TRABAJA.",
+    "imStudent": "Soy estudiante",
+    "imBusiness": "Soy empresa",
+    "copyright": "© 2026 Pick a Shift S.L.",
+    "footerLogIn": "Iniciar sesión",
+    "footerBrowse": "Ver turnos",
+    "footerHelp": "Ayuda",
+    "footerFaq": "FAQ",
+    "footerContact": "Contacto",
+    "footerPrivacy": "Privacidad",
+    "footerTerms": "Términos"
+  },
+  "browse": {
+    "title": "Explorar turnos",
+    "openShifts": "{count, plural, one {# turno disponible en Madrid} other {# turnos disponibles en Madrid}}",
+    "filters": "Filtros",
+    "district": "Distrito",
+    "allDistricts": "Todos los distritos",
+    "minPay": "Pago mínimo (€/h)",
+    "any": "Cualquiera",
+    "skill": "Habilidad",
+    "anySkill": "Cualquier habilidad",
+    "urgentOnly": "Solo turnos urgentes",
+    "noResultsTitle": "Ningún turno coincide con tus filtros",
+    "noResultsBody": "Prueba a ajustar los filtros o vuelve más tarde.",
+    "appliedToast": "¡Solicitud enviada a {business}!",
+    "shellTitle": "Explorar turnos",
+    "shellSub": "{count} turnos disponibles en Madrid"
+  },
+  "onboarding": {
+    "eyebrow": "Únete como estudiante",
+    "title": "Crea tu perfil gratis",
+    "subtitle": "3 minutos. Gratis para siempre.",
+    "steps": {
+      "basics": "Datos básicos",
+      "profile": "Perfil",
+      "experience": "Experiencia"
+    },
+    "stepOf": "Paso {current} de {total}",
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "firstNamePlaceholder": "p. ej. María",
+    "lastNamePlaceholder": "p. ej. García",
+    "university": "Universidad",
+    "degree": "Carrera",
+    "degreePlaceholder": "p. ej. Administración de Empresas",
+    "yearOfStudy": "Año de estudio",
+    "year": "Año {year}",
+    "nationality": "Nacionalidad",
+    "nationalityPlaceholder": "p. ej. Española, Italiana…",
+    "profilePhoto": "Foto de perfil",
+    "uploading": "Subiendo…",
+    "profilePreviewAlt": "Vista previa del perfil",
+    "dragPhoto": "Arrastra una foto o haz clic para subir",
+    "languages": "Idiomas que hablas",
+    "jobTypes": "Tipos de trabajo que te interesan",
+    "availability": "Disponibilidad",
+    "homeDistrict": "Distrito de residencia",
+    "cv": "CV",
+    "cvUploaded": "✓ {fileName} subido",
+    "uploadPdf": "Sube un PDF si tienes uno",
+    "pastExperience": "Experiencia previa",
+    "pastExperiencePlaceholder": "p. ej. 6 meses como barista en Costa Coffee",
+    "visaType": "Tipo de visado",
+    "back": "Atrás",
+    "continue": "Continuar →",
+    "saving": "Guardando…",
+    "createProfile": "Crear mi perfil →",
+    "errors": {
+      "signInPhoto": "Inicia sesión de nuevo para subir una foto.",
+      "photoFailed": "Error al subir la foto. Puedes continuar sin ella.",
+      "signInCv": "Inicia sesión de nuevo para subir tu CV.",
+      "pdfOnly": "Solo se aceptan archivos PDF.",
+      "cvFailed": "Error al subir el CV. Puedes continuar sin él.",
+      "nameRequired": "Por favor, introduce tu nombre y apellidos",
+      "degreeRequired": "Por favor, introduce tu carrera"
+    }
+  },
+  "auth": {
+    "roleSelection": {
+      "settingUp": "Configurando tu cuenta…",
+      "title": "¿Cómo vas a usar Pick a Shift?",
+      "subtitle": "Elige tu tipo de cuenta. No se puede cambiar más adelante.",
+      "autoError": "Por favor, elige tu tipo de cuenta a continuación.",
+      "studentTitle": "Busco turnos",
+      "studentBody": "Encuentra trabajo flexible entre clases",
+      "businessTitle": "Contrato para turnos",
+      "businessBody": "Publica turnos y contrata a estudiantes"
+    }
+  },
+  "dashboard": {
+    "home": {
+      "title": "Panel",
+      "subtitle": "Tu centro de turnos"
+    },
+    "applications": {
+      "title": "Mis solicitudes",
+      "subtitle": "Sigue el estado de tus solicitudes pendientes, confirmadas, completadas y cerradas",
+      "tabs": {
+        "pending": "Pendientes",
+        "confirmed": "Confirmadas",
+        "completed": "Completadas",
+        "closed": "Cerradas"
+      },
+      "status": {
+        "cancelled": "Cancelada",
+        "noShow": "No presentado"
+      },
+      "empty": {
+        "pendingTitle": "Sin solicitudes pendientes",
+        "pendingBodySuffix": "para empezar a solicitar.",
+        "browseLink": "Ver turnos",
+        "confirmedTitle": "Sin solicitudes confirmadas",
+        "completedTitle": "Sin turnos completados aún",
+        "closedTitle": "Sin solicitudes cerradas",
+        "nothingYet": "Nada por aquí todavía."
+      },
+      "applied": "Solicitado el {date}",
+      "withdrawing": "Retirando…",
+      "withdraw": "Retirar"
+    },
+    "earnings": {
+      "title": "Ganancias",
+      "subtitle": "Tus ingresos por turnos en Pick a Shift",
+      "totalEarned": "Total ganado",
+      "completedShifts": "Turnos completados",
+      "hoursWorked": "Horas trabajadas",
+      "reliabilityScore": "Puntuación de fiabilidad",
+      "recentShifts": "Turnos completados recientes",
+      "noShifts": "Todavía no has completado ningún turno.",
+      "findFirst": "Encuentra tu primer turno"
+    },
+    "reviews": {
+      "title": "Mis valoraciones",
+      "subtitle": "Puntuaciones dejadas por empresas tras turnos completados",
+      "avgRating": "Valoración media",
+      "totalReviews": "Total de valoraciones",
+      "highReviews": "Valoraciones de 5★ o 4★",
+      "allReviews": "Todas las valoraciones",
+      "emptyTitle": "Sin valoraciones aún",
+      "emptyBody": "Después de completar un turno, las empresas pueden valorarte. Los buenos turnos consiguen buenas puntuaciones."
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "subtitle": "Novedades sobre tus solicitudes y turnos",
+      "emptyTitle": "Sin notificaciones aún",
+      "emptyBody": "Cuando haya novedades en tus solicitudes, las verás aquí.",
+      "browseShifts": "Ver turnos"
+    },
+    "cv": {
+      "title": "Mi CV",
+      "subtitle": "Sube tu CV — las empresas podrán verlo al revisar tus solicitudes"
+    },
+    "messages": {
+      "title": "Mensajes"
+    }
+  },
+  "biz": {
+    "dashboard": {
+      "subtitle": "Cubre turnos en minutos — tu centro de mando",
+      "openShifts": "Turnos abiertos",
+      "applicantsToReview": "Candidatos por revisar",
+      "filledShifts": "Turnos cubiertos",
+      "yourRating": "Tu valoración",
+      "activeListings": "Publicaciones activas",
+      "viewAll": "Ver todos",
+      "postShift": "Publicar turno",
+      "noListings": "Sin turnos activos",
+      "noListingsBody": "Publica tu primer turno para empezar a recibir solicitudes.",
+      "applicants": "{count} candidato{count, plural, one {} other {s}}",
+      "pending": "{count} pendiente{count, plural, one {} other {s}}"
+    },
+    "analytics": {
+      "title": "Estadísticas",
+      "subtitle": "Resumen de rendimiento de tu empresa",
+      "totalShifts": "Turnos publicados",
+      "completedShifts": "Turnos completados",
+      "totalApplications": "Total de solicitudes",
+      "pendingReview": "Pendientes de revisión",
+      "acceptedWorkers": "Trabajadores aceptados",
+      "savedWorkers": "Trabajadores guardados",
+      "breakdown": "Desglose de turnos",
+      "open": "Abiertos",
+      "filled": "Cubiertos",
+      "completed": "Completados",
+      "avgRating": "Valoración media"
+    },
+    "applicants": {
+      "title": "Candidatos",
+      "subtitle": "Todas las solicitudes de tus turnos",
+      "emptyTitle": "Sin candidatos aún",
+      "emptyBody": "Publica un turno para empezar a recibir solicitudes de estudiantes.",
+      "postShift": "Publicar turno",
+      "pending": "Pendiente",
+      "accepted": "Aceptado",
+      "declined": "Rechazado",
+      "viewCv": "Ver CV",
+      "accept": "Aceptar",
+      "decline": "Rechazar"
+    },
+    "notifications": {
+      "title": "Notificaciones",
+      "subtitle": "Novedades sobre candidatos y turnos",
+      "emptyTitle": "Sin notificaciones aún",
+      "emptyBody": "Las actualizaciones de candidatos y actividad de turnos aparecerán aquí.",
+      "postShift": "Publicar turno"
+    },
+    "reviews": {
+      "title": "Valoraciones",
+      "subtitle": "Puntuaciones que has dado a trabajadores y recibido de ellos",
+      "avgFromWorkers": "Tu valoración media de trabajadores",
+      "reviewsGiven": "Valoraciones dadas",
+      "reviewsReceived": "Valoraciones recibidas",
+      "givenTitle": "Valoraciones que has dado",
+      "receivedTitle": "Valoraciones de trabajadores",
+      "reviewsYouveGiven": "Valoraciones que has dado",
+      "emptyGiven": "Sin valoraciones dadas aún",
+      "emptyReceived": "Sin valoraciones recibidas aún",
+      "emptyReceivedDetail": "Todavía no has recibido valoraciones de trabajadores.",
+      "emptyGivenDetail": "Todavía no has valorado a ningún trabajador. Las valoraciones aparecen tras completar un turno."
+    },
+    "shifts": {
+      "title": "Gestionar turnos",
+      "subtitle": "{count} turnos publicados en total",
+      "allShifts": "Todos los turnos",
+      "postShift": "Publicar turno",
+      "empty": "Todavía no has publicado ningún turno.",
+      "postFirst": "Publica tu primer turno",
+      "applicants": "{count} candidatos",
+      "view": "Ver"
+    },
+    "talentPool": {
+      "title": "Pool de talento",
+      "subtitle": "Trabajadores que has guardado para futuros turnos",
+      "emptyTitle": "Sin trabajadores guardados aún",
+      "emptyBody": "Guarda a los mejores trabajadores de turnos completados para contratarlos más rápido en el futuro.",
+      "shifts": "{count} turnos",
+      "score": "Puntuación"
+    }
+  },
+  "messages": {
+    "emptyTitle": "Sin conversaciones aún",
+    "emptyStudent": "Cuando una empresa acepte tu solicitud, podrás escribirle aquí.",
+    "emptyBusiness": "Acepta la solicitud de un estudiante para empezar a chatear.",
+    "backToAll": "← Todos los mensajes",
+    "noMessages": "Sin mensajes aún. ¡Di hola!",
+    "placeholder": "Escribe un mensaje…",
+    "send": "Enviar"
+  },
+  "shiftDetail": {
+    "backToBrowse": "Volver a explorar",
+    "urgent": "Urgente",
+    "aboutShift": "Sobre este turno",
+    "skillsNeeded": "Habilidades necesarias",
+    "perHour": "/h",
+    "estimated": "≈ {amount} estimado",
+    "applied": "Solicitado",
+    "notAvailable": "No disponible",
+    "applyNow": "Solicitar ahora",
+    "verifiedBusiness": "Empresa verificada",
+    "applicationSubmitted": "¡Solicitud enviada!"
+  },
+  "common": {
+    "required": "*",
+    "loading": "Cargando…",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "worker": "Trabajador",
+    "madrid": "Madrid"
+  },
+  "footer": {
+    "tagline": "Turnos flexibles para estudiantes en Madrid. Elige uno. Trabájalo. Cobra.",
+    "instagram": "Instagram",
+    "x": "X",
+    "linkedin": "LinkedIn",
+    "platform": "Plataforma",
+    "browseShifts": "Ver turnos",
+    "postShift": "Publicar turno",
+    "howItWorks": "Cómo funciona",
+    "faq": "FAQ",
+    "support": "Soporte",
+    "helpCenter": "Centro de ayuda",
+    "contact": "Contacto",
+    "privacyPolicy": "Política de privacidad",
+    "termsOfService": "Términos de uso",
+    "copyright": "© 2026 Pick a Shift · Madrid, España",
+    "madeWith": "Hecho con",
+    "forStudents": "para estudiantes"
+  },
+  "contact": {
+    "eyebrow": "Contáctanos",
+    "title": "Contacto",
+    "intro": "Leemos cada mensaje y respondemos en 24–48 horas en días laborables. Para respuestas rápidas, consulta antes el <faq>FAQ</faq> o el <help>Centro de ayuda</help>.",
+    "faq": "FAQ",
+    "help": "Centro de ayuda",
+    "email": "Email",
+    "responseTime": "Tiempo de respuesta",
+    "responseDetail": "En 24–48 horas\nLunes–Viernes, 9h–18h CET",
+    "basedIn": "Con base en",
+    "location": "Madrid, España",
+    "quickLinks": "Enlaces rápidos",
+    "faqLink": "Preguntas frecuentes",
+    "helpLink": "Centro de ayuda",
+    "privacyLink": "Política de privacidad",
+    "termsLink": "Términos de uso",
+    "successTitle": "¡Mensaje enviado!",
+    "successBody": "Gracias por contactarnos. Te responderemos en {email} en 24–48 horas.",
+    "sendAnother": "Enviar otro mensaje",
+    "fullName": "Nombre completo",
+    "emailAddress": "Correo electrónico",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "namePlaceholder": "Tu nombre",
+    "emailPlaceholder": "tu@email.com",
+    "messagePlaceholder": "Describe tu pregunta o problema con el mayor detalle posible...",
+    "privacyNote": "Al enviar este formulario, aceptas nuestra <privacy>Política de privacidad</privacy>.",
+    "privacy": "Política de privacidad",
+    "sending": "Enviando…",
+    "sendMessage": "Enviar mensaje",
+    "subjects": {
+      "general": "Consulta general",
+      "technical": "Problema técnico",
+      "business": "Consulta empresarial",
+      "payment": "Disputa de pago",
+      "report": "Reportar usuario",
+      "deletion": "Solicitud de eliminación de cuenta",
+      "press": "Prensa y medios",
+      "other": "Otro"
+    }
+  },
+  "help": {
+    "eyebrow": "Soporte",
+    "title": "Centro de ayuda",
+    "intro": "Todo lo que necesitas saber sobre Pick a Shift. ¿No encuentras lo que buscas? <contact>Contáctanos</contact>.",
+    "contact": "Contáctanos",
+    "articles": "{count} artículos",
+    "stillNeedHelp": "¿Necesitas más ayuda?",
+    "teamResponse": "Nuestro equipo está en Madrid y responde en 24 horas en días laborables.",
+    "contactSupport": "Contactar con soporte",
+    "categories": {
+      "gettingStarted": {
+        "title": "Primeros pasos",
+        "articles": {
+          "whatIs": {
+            "q": "¿Qué es Pick a Shift?",
+            "a": "Pick a Shift es un marketplace que conecta a estudiantes en Madrid con empresas que ofrecen turnos de trabajo flexibles y a corto plazo en hostelería, comercio, eventos y más. Los estudiantes exploran turnos abiertos, solicitan con un toque y controlan sus ganancias. Las empresas publican turnos y gestionan candidatos, todo en un mismo lugar."
+          },
+          "whoCan": {
+            "q": "¿Quién puede usar Pick a Shift?",
+            "a": "Los estudiantes mayores de 18 años con derecho legal a trabajar en España pueden registrarse como estudiantes. Cualquier empresa legalmente constituida en Madrid puede registrarse para publicar turnos. Ambos roles requieren completar un perfil de incorporación antes de acceder a la plataforma."
+          },
+          "free": {
+            "q": "¿Es gratuito usar Pick a Shift?",
+            "a": "Explorar turnos y crear un perfil de estudiante es gratuito. Los detalles de precios para empresas están disponibles en nuestra página de precios. Nunca cobramos comisiones a los estudiantes sobre sus ganancias."
+          },
+          "createAccount": {
+            "q": "¿Cómo creo una cuenta?",
+            "a": "Haz clic en «Empezar» en la página de inicio y elige tu rol — Estudiante o Empresa. Te registrarás con tu correo electrónico y completarás un breve perfil de incorporación. Todo el proceso dura menos de 5 minutos."
+          }
+        }
+      },
+      "forStudents": {
+        "title": "Para estudiantes",
+        "articles": {
+          "findApply": {
+            "q": "¿Cómo encuentro y solicito turnos?",
+            "a": "Una vez que tu perfil esté completo, ve a «Ver turnos». Puedes filtrar por distrito, fecha, tarifa y habilidades. Haz clic en cualquier turno para ver todos los detalles y luego pulsa «Solicitar» para enviar tu candidatura. La empresa revisará tu perfil y aceptará o rechazará tu solicitud."
+          },
+          "afterApply": {
+            "q": "¿Qué ocurre después de solicitar un turno?",
+            "a": "El estado de tu solicitud aparecerá como «Pendiente» en tu pestaña de Solicitudes. Una vez que la empresa la revise, recibirás una notificación indicando si has sido aceptado o no. Si eres aceptado, podrás escribirle directamente para consultar cualquier detalle del turno."
+          },
+          "cancel": {
+            "q": "¿Puedo cancelar una solicitud o un turno aceptado?",
+            "a": "Si has solicitado un turno pero aún no has sido aceptado, puedes retirar tu solicitud directamente desde la pestaña de Solicitudes. Si ya has sido aceptado, contacta con la empresa a través de la mensajería de la plataforma lo antes posible — idealmente con al menos 24 horas de antelación. Las cancelaciones de última hora afectan a tu reputación con las empresas."
+          },
+          "reliability": {
+            "q": "¿Qué es la puntuación de fiabilidad?",
+            "a": "Tu puntuación de fiabilidad es una valoración sobre 5 que las empresas te dan tras un turno completado. Es visible en tu perfil cuando las empresas revisan las solicitudes. Una puntuación más alta te ayuda a destacar y aumenta tus posibilidades de ser aceptado en turnos más competitivos."
+          },
+          "cv": {
+            "q": "¿Cómo subo mi CV?",
+            "a": "Ve a tu Panel y haz clic en «CV» en la barra lateral. Puedes subir un PDF. Las empresas pueden ver tu CV al revisar tu solicitud si has subido uno. Es opcional pero recomendable para turnos más competitivos."
+          },
+          "earnings": {
+            "q": "¿Cómo se registran las ganancias?",
+            "a": "Una vez que una empresa marca un turno como completado, el pago de ese turno se añade a tu total de ganancias en la sección de Ganancias de tu panel. Este es un registro acumulado — Pick a Shift actualmente no procesa pagos directos. La empresa te paga directamente según lo acordado."
+          }
+        }
+      },
+      "forBusinesses": {
+        "title": "Para empresas",
+        "articles": {
+          "postShift": {
+            "q": "¿Cómo publico un turno?",
+            "a": "Desde tu panel de empresa, haz clic en «Publicar turno». Rellena los detalles: puesto, fecha, hora de inicio y fin, ubicación, tarifa, habilidades requeridas y cualquier requisito específico. También puedes marcarlo como urgente. Una vez publicado, aparece en Explorar de inmediato."
+          },
+          "reviewApplicants": {
+            "q": "¿Cómo reviso los candidatos?",
+            "a": "Ve a la sección de Candidatos o abre un turno específico desde tu página de Turnos. Verás todas las solicitudes con el perfil de cada estudiante, universidad, habilidades, puntuación de fiabilidad y CV si lo han subido. Acepta o rechaza solicitudes desde ahí."
+          },
+          "message": {
+            "q": "¿Puedo enviar mensajes a los estudiantes?",
+            "a": "Sí. Una vez que aceptas la solicitud de un estudiante, se abre automáticamente un hilo de conversación. Puedes usarlo para compartir puntos de encuentro, instrucciones específicas del turno o confirmar detalles."
+          },
+          "talentPool": {
+            "q": "¿Qué es el Pool de talento?",
+            "a": "El Pool de talento te permite guardar a los estudiantes con los que has trabajado y quieres volver a contratar. Añade estudiantes directamente desde su perfil. Puedes consultar tu pool guardado y contactarlos proactivamente para futuros turnos."
+          },
+          "complete": {
+            "q": "¿Cómo marco un turno como completado?",
+            "a": "Una vez pasada la fecha del turno, ábrelo desde tu panel y márcalo como completado. Esto actualiza el registro de ganancias del estudiante y activa el flujo de valoraciones para ambas partes."
+          }
+        }
+      },
+      "payments": {
+        "title": "Pagos y ganancias",
+        "articles": {
+          "howPayment": {
+            "q": "¿Cómo funciona el pago?",
+            "a": "El pago se gestiona directamente entre tú y la empresa — Pick a Shift no procesa ni retiene pagos. La tarifa se acuerda en el anuncio del turno. Una vez que el turno está completado y marcado como tal por la empresa, aparece en tu registro de ganancias."
+          },
+          "notPaid": {
+            "q": "¿Qué pasa si una empresa no me ha pagado?",
+            "a": "Si una empresa no te ha pagado por un turno completado, contacta primero con ella directamente a través de la mensajería de la plataforma. Si el problema no se resuelve, repórtalo a través de la página de Contacto incluyendo el ID de tu turno. Tomamos las disputas de pago muy en serio y podemos investigar y retirar a la empresa de la plataforma."
+          },
+          "fees": {
+            "q": "¿Hay comisiones para los estudiantes?",
+            "a": "No. Los estudiantes no pagan nada por usar Pick a Shift. Nunca nos quedamos con una parte de tus ganancias."
+          }
+        }
+      },
+      "accountSecurity": {
+        "title": "Cuenta y seguridad",
+        "articles": {
+          "updateProfile": {
+            "q": "¿Cómo actualizo mi perfil?",
+            "a": "Ve a tu Panel y haz clic en «Perfil» en la barra lateral. Los estudiantes pueden actualizar su bio, habilidades, distrito, disponibilidad y nombre. Las empresas pueden actualizar su descripción, logo, información de contacto y dirección."
+          },
+          "forgotPassword": {
+            "q": "He olvidado mi contraseña. ¿Qué hago?",
+            "a": "En la página de inicio de sesión, haz clic en «Olvidé mi contraseña» e introduce tu correo electrónico. Recibirás un enlace de restablecimiento en unos minutos. Revisa tu carpeta de spam si no llega."
+          },
+          "deleteAccount": {
+            "q": "¿Cómo elimino mi cuenta?",
+            "a": "Para eliminar tu cuenta, contáctanos en {email} con el asunto «Solicitud de eliminación de cuenta». Procesaremos la solicitud en 7 días. Ten en cuenta que la eliminación es permanente — tu perfil, historial de turnos y mensajes serán borrados."
+          },
+          "suspended": {
+            "q": "Mi cuenta ha sido suspendida. ¿Qué hago?",
+            "a": "Si tu cuenta ha sido suspendida, verás un aviso al iniciar sesión. La suspensión suele deberse a una infracción grave de nuestros Términos de uso. Contáctanos en {email} para apelar. Revisamos todas las apelaciones en 5 días hábiles."
+          }
+        }
+      },
+      "reporting": {
+        "title": "Reportar incidencias",
+        "articles": {
+          "reportUser": {
+            "q": "¿Cómo reporto a una empresa o estudiante?",
+            "a": "Si has tenido un problema con otro usuario — conducta poco profesional, no presentación, impago o acoso — contáctanos a través de la página de Contacto. Incluye el nombre de usuario o de la empresa, la fecha del turno y una breve descripción. Investigamos todos los reportes."
+          },
+          "bug": {
+            "q": "He encontrado un error técnico. ¿Cómo lo reporto?",
+            "a": "Usa la página de Contacto y selecciona «Problema técnico» como asunto. Describe qué estabas haciendo, qué esperabas que ocurriera y qué ocurrió. Las capturas de pantalla son de gran ayuda. Intentamos responder en 24 horas."
+          },
+          "disputeReview": {
+            "q": "¿Puedo disputar una valoración que me han dejado?",
+            "a": "Las valoraciones no pueden editarse una vez enviadas. Si crees que una valoración es factualmente incorrecta, abusiva o viola nuestros Términos, contáctanos e investigaremos. Podemos eliminar valoraciones que incumplan nuestras normas, pero no eliminamos valoraciones simplemente porque no estés de acuerdo con la opinión."
+          }
+        }
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Soporte",
+    "title": "Preguntas frecuentes",
+    "intro": "Respuestas rápidas a las preguntas más habituales. ¿Necesitas más detalle? <help>Visita el Centro de ayuda</help>.",
+    "help": "Visita el Centro de ayuda",
+    "tags": {
+      "all": "Todas",
+      "general": "General",
+      "students": "Estudiantes",
+      "businesses": "Empresas",
+      "payments": "Pagos",
+      "safety": "Seguridad"
+    },
+    "stillHaveQuestion": "¿Tienes más preguntas?",
+    "browseHelp": "Ver Centro de ayuda",
+    "contactUs": "Contactarnos",
+    "items": {
+      "whatIs": {
+        "q": "¿Qué es Pick a Shift?",
+        "a": "Pick a Shift es un marketplace de trabajo por turnos flexible y a corto plazo en Madrid. Los estudiantes exploran y solicitan turnos publicados por empresas locales — en hostelería, comercio, eventos y más. Sin contratos a largo plazo, sin CV obligatorio."
+      },
+      "freeSignup": {
+        "q": "¿Es gratis registrarse?",
+        "a": "Sí. Crear una cuenta de estudiante y explorar turnos es completamente gratuito. Nunca nos quedamos con un porcentaje de tus ganancias."
+      },
+      "shiftTypes": {
+        "q": "¿Qué tipo de turnos hay disponibles?",
+        "a": "La mayoría de los turnos son en hostelería (camarero, barra, cocina), comercio, eventos y promociones por todo Madrid. Los turnos suelen durar entre 4 y 10 horas y frecuentemente son por las tardes y fines de semana — diseñados para encajar con tu horario universitario."
+      },
+      "cities": {
+        "q": "¿En qué ciudades opera Pick a Shift?",
+        "a": "Actualmente operamos exclusivamente en Madrid. Planeamos expandirnos a otras ciudades españolas en el futuro."
+      },
+      "experience": {
+        "q": "¿Necesito experiencia laboral para solicitar?",
+        "a": "No. Muchos turnos son de nivel básico. Cada anuncio especifica qué habilidades o experiencia se prefieren. Tu perfil, puntuación de fiabilidad y actitud importan más que un CV extenso."
+      },
+      "hearBack": {
+        "q": "¿Cuánto tardaré en recibir respuesta tras solicitar?",
+        "a": "Depende de la empresa. La mayoría responde en 24–48 horas. Recibirás una notificación en cuanto tu solicitud sea aceptada o rechazada."
+      },
+      "multipleShifts": {
+        "q": "¿Puedo trabajar varios turnos a la vez?",
+        "a": "Sí, siempre que los turnos no se solapen. Puedes tener varias solicitudes aceptadas al mismo tiempo."
+      },
+      "cantMake": {
+        "q": "¿Qué pasa si no puedo ir a un turno que acepté?",
+        "a": "Contacta con la empresa inmediatamente a través de la mensajería de la plataforma y avísales con la mayor antelación posible. Avisar pronto es lo más profesional y protege tu reputación con las empresas en la plataforma."
+      },
+      "reliability": {
+        "q": "¿Cómo funciona mi puntuación de fiabilidad?",
+        "a": "Tras cada turno completado, la empresa puede dejarte una valoración sobre 5. Tu puntuación de fiabilidad es la media de todas las valoraciones recibidas. Es visible para las empresas cuando revisan tu solicitud — cuanto más alta, más competitivo te ves."
+      },
+      "fillShift": {
+        "q": "¿Con qué rapidez puedo cubrir un turno?",
+        "a": "Muchos turnos reciben solicitudes a las pocas horas de publicarse. Para turnos urgentes, márcalos como urgentes — aparecen destacados en los resultados. Puedes aceptar a un candidato de inmediato una vez que su perfil cumpla tus requisitos."
+      },
+      "rehire": {
+        "q": "¿Puedo volver a contratar a estudiantes con los que ya trabajé?",
+        "a": "Sí. Añade estudiantes a tu Pool de talento tras un turno completado y podrás consultarlos en cualquier momento para invitarlos a futuros turnos."
+      },
+      "noShow": {
+        "q": "¿Qué pasa si un estudiante no se presenta?",
+        "a": "Reporta el incidente a través de la página de Contacto con los detalles del turno e investigaremos. Las no presentaciones confirmadas pueden resultar en la suspensión de la cuenta del estudiante. Tomamos la fiabilidad muy en serio en ambos lados."
+      },
+      "rightToWork": {
+        "q": "¿Cómo verifico el derecho a trabajar de un estudiante?",
+        "a": "Es responsabilidad de la empresa verificar que cualquier trabajador tenga derecho legal a trabajar en España antes de comenzar un turno, de acuerdo con la legislación laboral española. Pick a Shift no verifica documentación de derecho a trabajar."
+      },
+      "paymentWork": {
+        "q": "¿Cómo funciona el pago?",
+        "a": "El pago se acuerda entre el estudiante y la empresa a la tarifa indicada en el anuncio del turno. Pick a Shift actualmente no procesa pagos — las empresas pagan a los estudiantes directamente tras el turno."
+      },
+      "whenPaid": {
+        "q": "¿Cuándo debo esperar que me paguen?",
+        "a": "Las condiciones de pago las establece cada empresa. Habla con la empresa sobre los plazos de pago antes del turno si no están especificados en el anuncio."
+      },
+      "paymentDispute": {
+        "q": "¿Qué hago si tengo una disputa de pago?",
+        "a": "Primero, contacta con la empresa a través de la mensajería de la plataforma. Si no se resuelve, contáctanos con los detalles de tu turno e investigaremos. Las empresas que reiteradamente no paguen pueden ser retiradas de la plataforma."
+      },
+      "vetting": {
+        "q": "¿Cómo se verifican las empresas?",
+        "a": "Las empresas completan un perfil con sus datos empresariales registrados. Revisamos las nuevas cuentas de empresa antes de que puedan publicar turnos. Los estudiantes también pueden dejar valoraciones tras cada turno — hacemos seguimiento de las empresas con mala reputación."
+      },
+      "unsafe": {
+        "q": "¿Qué debo hacer si me siento inseguro durante un turno?",
+        "a": "Abandona la situación si sientes que tu seguridad está en riesgo. Contacta con los servicios de emergencia (112 en España) si es necesario. Una vez que estés a salvo, reporta el incidente a través de la página de Contacto. Tomamos los reportes de seguridad muy en serio e investigaremos de inmediato."
+      },
+      "inappropriate": {
+        "q": "¿Cómo reporto conducta inapropiada?",
+        "a": "Usa nuestra página de Contacto para reportar cualquier conducta que viole nuestros Términos de uso — acoso, discriminación, impago o cualquier comportamiento que te haya hecho sentir inseguro. Incluye fechas y cualquier detalle relevante."
+      }
+    }
+  },
+  "legal": {
+    "privacy": {
+      "eyebrow": "Legal",
+      "title": "Política de privacidad",
+      "lastUpdated": "Última actualización:",
+      "lastUpdatedDate": "Junio 2026",
+      "intro": "Esta política explica qué datos personales recoge Pick a Shift, por qué los recogemos y qué derechos tienes sobre ellos. Se aplica a todos los usuarios de la plataforma — estudiantes, empresas y visitantes.",
+      "contents": "Contenido",
+      "ctaTitle": "¿Tienes alguna pregunta sobre privacidad?",
+      "ctaBody": "Estamos encantados de ayudar. Contáctanos y responderemos en 30 días.",
+      "ctaButton": "Contactarnos",
+      "sections": {
+        "whoWeAre": {
+          "title": "1. Quiénes somos",
+          "paragraphs": [
+            "Pick a Shift («nosotros», «nos», «nuestro») es una plataforma marketplace que conecta a estudiantes con empresas que ofrecen turnos a corto plazo en Madrid, España. Nuestra razón social es Pick a Shift S.L., operando bajo la legislación española.",
+            "A efectos del Reglamento General de Protección de Datos (UE) 2016/679 («RGPD»), actuamos como responsables del tratamiento de los datos personales procesados a través de esta plataforma.",
+            "Contáctanos sobre asuntos de privacidad en: privacy@pick-a-shift.com"
+          ]
+        },
+        "dataWeCollect": {
+          "title": "2. Datos que recogemos",
+          "paragraphs": [
+            "Recogemos las siguientes categorías de datos personales:"
+          ],
+          "subsections": {
+            "account": {
+              "title": "Datos de cuenta e identidad",
+              "paragraphs": ["Nombre, dirección de correo electrónico, foto de perfil y credenciales de cuenta. Recogidos al registrarse."]
+            },
+            "studentProfile": {
+              "title": "Datos de perfil (Estudiantes)",
+              "paragraphs": ["Universidad, carrera, año de estudio, habilidades, idiomas, preferencias de disponibilidad, distrito de Madrid, bio y opcionalmente un CV."]
+            },
+            "businessProfile": {
+              "title": "Datos de perfil (Empresas)",
+              "paragraphs": ["Nombre de la empresa, tipo, NIF/CIF, distrito registrado, dirección, teléfono, correo público, web y descripción."]
+            },
+            "activity": {
+              "title": "Datos de actividad",
+              "paragraphs": ["Solicitudes de turno, turnos aceptados y completados, mensajes intercambiados en la plataforma, valoraciones dejadas o recibidas, y notificaciones."]
+            },
+            "technical": {
+              "title": "Datos de uso y técnicos",
+              "paragraphs": ["Dirección IP, tipo de navegador, información del dispositivo y páginas visitadas. Recogidos automáticamente al usar la plataforma."]
+            }
+          }
+        },
+        "legalBasis": {
+          "title": "3. Base legal del tratamiento",
+          "paragraphs": [
+            "Tratamos tus datos bajo las siguientes bases legales (Artículo 6 RGPD):"
+          ],
+          "listItems": [
+            "Ejecución de contrato (Art. 6(1)(b)): Tratamiento necesario para prestar el servicio de marketplace — crear tu cuenta, relacionarte con turnos, procesar solicitudes y facilitar la mensajería.",
+            "Intereses legítimos (Art. 6(1)(f)): Seguridad de la plataforma, prevención del fraude, mejora del servicio y envío de comunicaciones operativas sobre la actividad de tu cuenta.",
+            "Consentimiento (Art. 6(1)(a)): Comunicaciones de marketing y cookies no esenciales. Puedes retirar el consentimiento en cualquier momento.",
+            "Obligación legal (Art. 6(1)(c)): Conservación de registros exigida por la legislación mercantil y fiscal española."
+          ]
+        },
+        "howWeUse": {
+          "title": "4. Cómo usamos tus datos",
+          "paragraphs": ["Usamos tus datos personales para:"],
+          "listItems": [
+            "Crear y gestionar tu cuenta",
+            "Relacionar a estudiantes con turnos abiertos relevantes",
+            "Permitir a las empresas revisar perfiles de candidatos",
+            "Facilitar la mensajería entre estudiantes y empresas",
+            "Calcular y mostrar ganancias e historial de turnos",
+            "Enviar notificaciones sobre tus solicitudes, turnos y cuenta",
+            "Mostrar valoraciones públicas y puntuaciones de fiabilidad",
+            "Detectar y prevenir fraudes o usos indebidos de la plataforma",
+            "Cumplir con las obligaciones legales y reglamentarias en España"
+          ]
+        },
+        "thirdParties": {
+          "title": "5. Proveedores externos",
+          "paragraphs": [
+            "Compartimos datos con proveedores externos de confianza que actúan bajo nuestras instrucciones y están sujetos a acuerdos de tratamiento de datos:",
+            "Clerk — Autenticación de usuarios y gestión de sesiones — EE.UU. (CCE)",
+            "Supabase — Almacenamiento de bases de datos y archivos — UE",
+            "Vercel — Alojamiento de la plataforma y distribución edge — EE.UU. (CCE)",
+            "Cuando los datos se transfieren fuera de la UE, garantizamos salvaguardias adecuadas mediante Cláusulas Contractuales Estándar (CCE) aprobadas por la Comisión Europea."
+          ]
+        },
+        "retention": {
+          "title": "6. Conservación de datos",
+          "paragraphs": ["Conservamos tus datos durante los siguientes periodos:"],
+          "listItems": [
+            "Datos de cuenta activa: mientras tu cuenta esté abierta.",
+            "Historial de turnos y solicitudes: 3 años desde la fecha del turno, a efectos de resolución de disputas.",
+            "Mensajes: 2 años desde la fecha de la conversación.",
+            "Tras la eliminación de la cuenta: pueden conservarse datos agregados anonimizados para análisis; los datos identificables se eliminan en 30 días.",
+            "Registros financieros: 7 años según exige la legislación fiscal española (Ley General Tributaria)."
+          ]
+        },
+        "yourRights": {
+          "title": "7. Tus derechos según el RGPD",
+          "paragraphs": [
+            "Como interesado en la UE/EEE, tienes los siguientes derechos según el RGPD:",
+            "Derecho de acceso (Art. 15): Solicitar una copia de los datos personales que conservamos sobre ti.",
+            "Derecho de rectificación (Art. 16): Corregir datos inexactos o incompletos.",
+            "Derecho de supresión (Art. 17): Solicitar la eliminación de tus datos, sujeto a obligaciones legales de conservación.",
+            "Derecho a la limitación del tratamiento (Art. 18): Limitar cómo tratamos tus datos en determinadas circunstancias.",
+            "Derecho a la portabilidad (Art. 20): Recibir tus datos en un formato estructurado y legible por máquina.",
+            "Derecho de oposición (Art. 21): Oponerte al tratamiento basado en intereses legítimos o para marketing directo.",
+            "Para ejercer cualquiera de estos derechos, escríbenos a privacy@pick-a-shift.com. Responderemos en 30 días. También tienes derecho a presentar una reclamación ante la autoridad española de protección de datos, la Agencia Española de Protección de Datos (AEPD)."
+          ]
+        },
+        "cookies": {
+          "title": "8. Cookies",
+          "paragraphs": [
+            "Usamos únicamente las cookies estrictamente necesarias para operar la plataforma:"
+          ],
+          "listItems": [
+            "Cookies de sesión de autenticación (mediante Clerk) — mantienen tu sesión iniciada.",
+            "Cookies de seguridad — protegen contra ataques CSRF."
+          ],
+          "footer": "No usamos cookies publicitarias, píxeles de seguimiento ni cookies de analítica de terceros."
+        },
+        "changes": {
+          "title": "9. Cambios en esta política",
+          "paragraphs": [
+            "Podemos actualizar esta Política de privacidad de vez en cuando. Cuando lo hagamos, actualizaremos la fecha de «Última actualización» en la parte superior de esta página y, cuando los cambios sean sustanciales, te notificaremos por correo electrónico. El uso continuado de la plataforma tras cualquier cambio supone la aceptación de la política actualizada."
+          ]
+        }
+      }
+    },
+    "terms": {
+      "eyebrow": "Legal",
+      "title": "Términos de uso",
+      "lastUpdated": "Última actualización:",
+      "lastUpdatedDate": "Junio 2026",
+      "intro": "Lee estos Términos detenidamente antes de usar Pick a Shift. Establecen tus derechos y obligaciones como estudiante, empresa o visitante en la Plataforma.",
+      "contents": "Contenido",
+      "privacyLink": "Política de privacidad →",
+      "contactLink": "¿Preguntas? Contáctanos →",
+      "sections": {
+        "acceptance": {
+          "title": "1. Aceptación de los términos",
+          "paragraphs": [
+            "Al crear una cuenta o usar la plataforma Pick a Shift («Plataforma»), aceptas quedar vinculado por estos Términos de uso («Términos»). Si no estás de acuerdo, no uses la Plataforma. Podemos actualizar estos Términos en cualquier momento; el uso continuado tras la publicación de cambios constituye su aceptación. Los cambios sustanciales se notificarán por correo electrónico."
+          ]
+        },
+        "description": {
+          "title": "2. Qué hace Pick a Shift",
+          "paragraphs": [
+            "Pick a Shift es un marketplace en línea que conecta a estudiantes en Madrid con empresas que ofrecen trabajo por turnos flexible y a corto plazo. Facilitamos la conexión — no somos empleador, empresa de trabajo temporal ni parte de ningún contrato laboral formado a través de la Plataforma.",
+            "Cualquier acuerdo de turno es directamente entre el estudiante y la empresa. Pick a Shift no se responsabiliza del cumplimiento de ninguna de las partes en virtud de ese acuerdo."
+          ]
+        },
+        "eligibility": {
+          "title": "3. Requisitos",
+          "paragraphs": ["Para usar la Plataforma debes:"],
+          "listItems": [
+            "Tener al menos 18 años, o la edad mínima legal para trabajar en España, la que sea mayor.",
+            "Tener derecho legal a trabajar en España.",
+            "Proporcionar información precisa, actualizada y completa al registrarte.",
+            "No haber sido previamente suspendido o expulsado de la Plataforma."
+          ],
+          "footer": "Las empresas deben ser entidades legalmente registradas que operen en España y estén autorizadas para contratar o emplear trabajadores."
+        },
+        "accounts": {
+          "title": "4. Cuentas",
+          "paragraphs": [
+            "Eres responsable de mantener tus credenciales de cuenta seguras. No debes compartir tu cuenta ni permitir que otros la usen. Notifícanos inmediatamente en hello@pick-a-shift.com si sospechas de acceso no autorizado.",
+            "Cada persona solo puede tener una cuenta por rol (estudiante o empresa). Crear cuentas duplicadas para eludir una suspensión está prohibido."
+          ]
+        },
+        "studentObligations": {
+          "title": "5. Obligaciones del estudiante",
+          "paragraphs": ["Como estudiante en la Plataforma, aceptas:"],
+          "listItems": [
+            "Proporcionar información de perfil precisa, incluyendo tu matrícula universitaria, habilidades y disponibilidad.",
+            "Solicitar solo turnos que realmente tengas intención y posibilidad de trabajar.",
+            "Llegar a tiempo y cumplir el turno según lo acordado con la empresa.",
+            "Comportarte de manera profesional y tratar al personal de la empresa y a los clientes con respeto.",
+            "Notificar a la empresa lo antes posible si no puedes asistir a un turno aceptado.",
+            "No compartir ninguna información confidencial de la empresa obtenida durante un turno."
+          ],
+          "footer": "Las no presentaciones o cancelaciones repetidas pueden resultar en la suspensión de la cuenta."
+        },
+        "businessObligations": {
+          "title": "6. Obligaciones de la empresa",
+          "paragraphs": ["Como empresa en la Plataforma, aceptas:"],
+          "listItems": [
+            "Publicar descripciones de turno precisas, incluyendo puesto, horas, tarifa, ubicación y requisitos.",
+            "Pagar la tarifa acordada por las horas trabajadas, puntualmente tras la finalización del turno.",
+            "No discriminar a los candidatos por razón de raza, género, religión, discapacidad o cualquier otra característica protegida por la legislación española.",
+            "Garantizar un entorno de trabajo seguro que cumpla la normativa aplicable de salud y seguridad.",
+            "Contactar con los estudiantes únicamente a través de la Plataforma para comunicaciones relacionadas con el turno.",
+            "No solicitar trabajo fuera del horario de turno acordado sin compensación adicional."
+          ]
+        },
+        "prohibited": {
+          "title": "7. Conductas prohibidas",
+          "paragraphs": ["No debes usar la Plataforma para:"],
+          "listItems": [
+            "Publicar información falsa, engañosa o fraudulenta.",
+            "Acosar, amenazar o intimidar a otros usuarios.",
+            "Eludir la Plataforma acordando pagos o trabajo futuro directamente con usuarios emparejados fuera de Pick a Shift.",
+            "Subir código malicioso, spam o comunicaciones comerciales no solicitadas.",
+            "Extraer o recopilar datos de la Plataforma sin nuestro consentimiento por escrito.",
+            "Suplantar la identidad de otra persona o entidad.",
+            "Violar cualquier ley aplicable, incluida la legislación española laboral y de protección de datos."
+          ]
+        },
+        "payments": {
+          "title": "8. Pagos y ganancias",
+          "paragraphs": [
+            "Pick a Shift muestra tarifas y registra las ganancias de turnos completados como registro informativo. El pago por el trabajo es responsabilidad directa de la empresa y debe realizarse al estudiante conforme a la tarifa acordada y la legislación laboral española aplicable.",
+            "Actualmente no procesamos pagos en nombre de ninguna parte. Cualquier disputa de pago es entre el estudiante y la empresa. Recomendamos a ambas partes conservar registros de los turnos completados."
+          ]
+        },
+        "reviews": {
+          "title": "9. Valoraciones y puntuaciones",
+          "paragraphs": [
+            "Tras completar un turno, tanto el estudiante como la empresa pueden dejar una valoración. Las valoraciones deben ser honestas y basadas en la experiencia directa del turno. Nos reservamos el derecho de eliminar valoraciones que contengan información falsa, ataques personales o contenido que viole estos Términos. Las valoraciones no pueden ser modificadas ni eliminadas por quien las ha dejado tras su envío — contáctanos si crees que una valoración es inexacta o abusiva."
+          ]
+        },
+        "ip": {
+          "title": "10. Propiedad intelectual",
+          "paragraphs": [
+            "Todo el contenido, marcas registradas, logotipos y software de la Plataforma son propiedad de Pick a Shift o sus licenciantes. No puedes reproducir, distribuir ni crear obras derivadas sin nuestro permiso expreso por escrito. Nos otorgas una licencia no exclusiva para usar el contenido que subas (como fotos de perfil y documentos CV) únicamente con el fin de operar la Plataforma."
+          ]
+        },
+        "liability": {
+          "title": "11. Limitación de responsabilidad",
+          "paragraphs": ["En la máxima medida permitida por la legislación española, Pick a Shift no es responsable de:"],
+          "listItems": [
+            "Cualquier pérdida derivada de que un estudiante no se presente o no cumpla un turno.",
+            "Cualquier pérdida derivada de que una empresa no pague por un turno completado.",
+            "Daños indirectos, incidentales o consecuentes de cualquier tipo.",
+            "Interrupciones de la Plataforma debidas a mantenimiento, fallos técnicos o eventos fuera de nuestro control."
+          ],
+          "footer": "Nada en estos Términos limita nuestra responsabilidad por muerte o lesiones personales causadas por nuestra negligencia, ni ninguna otra responsabilidad que no pueda excluirse según la legislación aplicable."
+        },
+        "termination": {
+          "title": "12. Terminación",
+          "paragraphs": [
+            "Puedes eliminar tu cuenta en cualquier momento. Nos reservamos el derecho de suspender o cancelar tu acceso si incumples estos Términos, participas en conductas que perjudiquen a otros usuarios, o si estamos obligados a hacerlo por ley.",
+            "Tras la cancelación, tu perfil será desactivado y eliminado de la vista pública. Los datos se conservarán y eliminarán de acuerdo con nuestra Política de privacidad."
+          ]
+        },
+        "governingLaw": {
+          "title": "13. Legislación aplicable",
+          "paragraphs": [
+            "Estos Términos se rigen por las leyes de España. Cualquier disputa derivada de o relacionada con estos Términos estará sujeta a la jurisdicción exclusiva de los tribunales de Madrid, España, sin perjuicio de tus derechos como consumidor según la legislación de la UE aplicable."
+          ]
+        },
+        "contact": {
+          "title": "14. Contacto",
+          "paragraphs": [
+            "Para cualquier pregunta sobre estos Términos, contáctanos en legal@pick-a-shift.com o visita nuestra página de contacto."
+          ]
+        }
+      }
+    }
+  }
+}

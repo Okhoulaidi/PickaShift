@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { useToast } from '@/components/ui/Toast';
@@ -19,6 +20,7 @@ export function AdminUsersClient({
   stats: DashboardStats;
   users: Profile[];
 }) {
+  const tNav = useTranslations('nav.admin');
   const [users, setUsers] = useState(initialUsers);
   const [loading, setLoading] = useState<string | null>(null);
   const { show } = useToast();
@@ -37,8 +39,8 @@ export function AdminUsersClient({
 
   return (
     <DashShell
-      nav={adminNav(stats.contactSubmissions ?? 0)}
-      active="Users"
+      nav={adminNav(tNav, stats.contactSubmissions ?? 0)}
+      active={tNav('users')}
       user={user}
       topTitle="Users"
       topSub={`${users.length} registered accounts`}

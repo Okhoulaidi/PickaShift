@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import { MessagesListClient } from '@/components/messages/MessagesClient';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
@@ -9,6 +10,8 @@ import { unwrapRelation } from '@/lib/types';
 export const dynamic = 'force-dynamic';
 
 export default async function BizMessagesPage() {
+  const t = await getTranslations('dashboard.messages');
+  const tNav = await getTranslations('nav.business');
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, conversations] = await Promise.all([
     getDashboardStats('business', session.userId),
@@ -34,10 +37,10 @@ export default async function BizMessagesPage() {
 
   return (
     <MessagesListClient
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Messages"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('messages')}
       user={user}
-      topTitle="Messages"
+      topTitle={t('title')}
       conversations={items}
       basePath="/biz/messages"
       notif={stats.unreadNotifications}

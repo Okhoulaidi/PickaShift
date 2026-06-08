@@ -3,8 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SignOutButton } from '@clerk/nextjs';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Logo } from '@/components/ui/Logo';
+import { LocaleSwitcher } from '@/components/ui/LocaleSwitcher';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
 import { NotifBell } from '@/components/layout/NotifBell';
 import { navIcon } from '@/lib/nav-icons';
@@ -47,6 +49,7 @@ export function DashShell({
   variant = 'student',
 }: DashShellProps) {
   const pathname = usePathname();
+  const t = useTranslations('nav.shell');
   const [open, setOpen] = useState(false);
   const isBusiness = variant === 'business';
   const notificationsHref = isBusiness ? '/biz/notifications' : '/dashboard/notifications';
@@ -144,7 +147,7 @@ export function DashShell({
               <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
               </svg>
-              Sign out
+              {t('signOut')}
             </button>
           </SignOutButton>
         </div>
@@ -165,7 +168,7 @@ export function DashShell({
               type="button"
               onClick={() => setOpen(true)}
               className="md:hidden p-2 rounded-lg border border-line bg-card"
-              aria-label="Open menu"
+              aria-label={t('openMenu')}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="3" y1="6" x2="21" y2="6" />
@@ -183,6 +186,7 @@ export function DashShell({
             </div>
           </div>
           <div className="flex items-center gap-3 shrink-0">
+            <LocaleSwitcher />
             <NotifBell unreadCount={notif} allHref={notificationsHref} />
             <div
               className="w-10 h-10 rounded-full hidden sm:flex items-center justify-center text-white font-bold text-sm"

@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import Link from 'next/link';
 import { DashShell } from '@/components/layout/DashShell';
@@ -48,6 +49,7 @@ interface ShiftDetailBizClientProps {
 }
 
 export function ShiftDetailBizClient({ user, stats, shift, applicants }: ShiftDetailBizClientProps) {
+  const tNav = useTranslations('nav.business');
   const [apps, setApps] = useState(applicants);
   const [shiftStatus, setShiftStatus] = useState(shift.status);
   const [loading, setLoading] = useState<string | null>(null);
@@ -118,8 +120,8 @@ export function ShiftDetailBizClient({ user, stats, shift, applicants }: ShiftDe
 
   return (
     <DashShell variant="business"
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Manage Shifts"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('manageShifts')}
       user={user}
       topTitle={shift.title}
       topSub={`${formatShiftDate(shift.shiftDate)} · ${formatTimeRange(shift.startTime, shift.endTime)}`}

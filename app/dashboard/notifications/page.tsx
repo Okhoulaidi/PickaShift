@@ -8,10 +8,13 @@ import { requireStudentProfile } from '@/lib/guards/student';
 import { getUserNotifications, markNotificationsRead } from '@/lib/queries/notifications';
 import { getDashboardStats } from '@/lib/queries/shifts';
 import { unwrapRelation } from '@/lib/types';
+import { getTranslations } from 'next-intl/server';
 
 export const dynamic = 'force-dynamic';
 
 export default async function NotificationsPage() {
+  const t = await getTranslations('dashboard.notifications');
+  const tNav = await getTranslations('nav.student');
   const { session, profile: student } = await requireStudentProfile();
   const [stats, notifications] = await Promise.all([
     getDashboardStats('student', session.userId),
@@ -32,11 +35,11 @@ export default async function NotificationsPage() {
 
   return (
     <DashShell
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="Home"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('home')}
       user={user}
-      topTitle="Notifications"
-      topSub="Updates about your applications and shifts"
+      topTitle={t('title')}
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
@@ -47,15 +50,13 @@ export default async function NotificationsPage() {
                 <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
                   <Icon name="bell" size={26} />
                 </div>
-                <h3 className="font-black text-lg mb-2">No notifications yet</h3>
-                <p className="text-sm text-muted-foreground mb-5">
-                  When something happens on your applications, you&apos;ll see it here.
-                </p>
+                <h3 className="font-black text-lg mb-2">{t('emptyTitle')}</h3>
+                <p className="text-sm text-muted-foreground mb-5">{t('emptyBody')}</p>
                 <Link
                   href="/browse"
                   className="bg-brand text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors"
                 >
-                  Browse shifts
+                  {t('browseShifts')}
                 </Link>
               </div>
             </div>

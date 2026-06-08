@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import { DashShell } from '@/components/layout/DashShell';
@@ -18,12 +19,13 @@ export function AdminContactClient({
   stats: DashboardStats;
   submissions: ContactSubmission[];
 }) {
+  const tNav = useTranslations('nav.admin');
   const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
     <DashShell
-      nav={adminNav(stats.contactSubmissions ?? 0)}
-      active="Contact"
+      nav={adminNav(tNav, stats.contactSubmissions ?? 0)}
+      active={tNav('contact')}
       user={user}
       topTitle="Contact inbox"
       topSub={`${initialSubmissions.length} submission${initialSubmissions.length === 1 ? '' : 's'}`}

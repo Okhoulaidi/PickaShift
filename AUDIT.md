@@ -2,7 +2,7 @@
 
 _Last updated: 2026-06-07_
 
-Live: [pick-a-shift.vercel.app](https://pick-a-shift.vercel.app) · Repo: `main`
+Live: [pickashift.org](https://pickashift.org) · Repo: `main`
 
 ---
 

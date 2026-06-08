@@ -1,0 +1,948 @@
+{
+  "nav": {
+    "landing": {
+      "howItWorks": "How it works",
+      "pricing": "Pricing",
+      "browse": "Browse",
+      "logIn": "Log in",
+      "join": "Join"
+    },
+    "shell": {
+      "signOut": "Sign out",
+      "openMenu": "Open menu"
+    },
+    "student": {
+      "home": "Home",
+      "homeShort": "Home",
+      "browseShifts": "Browse Shifts",
+      "browseShort": "Browse",
+      "myApplications": "My Applications",
+      "appliedShort": "Applied",
+      "messages": "Messages",
+      "chatShort": "Chat",
+      "myProfile": "My Profile",
+      "profileShort": "Profile",
+      "myCv": "My CV",
+      "cvShort": "CV",
+      "earnings": "Earnings",
+      "earnShort": "Earn",
+      "myReviews": "My Reviews",
+      "reviewsShort": "Reviews"
+    },
+    "business": {
+      "overview": "Overview",
+      "homeShort": "Home",
+      "postShift": "Post a Shift",
+      "postShort": "Post",
+      "manageShifts": "Manage Shifts",
+      "shiftsShort": "Shifts",
+      "applicants": "Applicants",
+      "applyShort": "Apply",
+      "workerPool": "Worker Pool",
+      "poolShort": "Pool",
+      "messages": "Messages",
+      "chatShort": "Chat",
+      "analytics": "Analytics",
+      "statsShort": "Stats",
+      "reviews": "Reviews",
+      "reviewsShort": "Reviews",
+      "companyProfile": "Company Profile",
+      "profileShort": "Profile"
+    },
+    "admin": {
+      "overview": "Overview",
+      "homeShort": "Home",
+      "businesses": "Businesses",
+      "bizShort": "Biz",
+      "users": "Users",
+      "usersShort": "Users",
+      "contact": "Contact",
+      "inboxShort": "Inbox"
+    }
+  },
+  "landing": {
+    "studentEyebrow": "For student",
+    "studentHeadline1": "OWN YOUR",
+    "studentHeadline2": "SCHEDULE.",
+    "studentBody": "Pick up hospitality and retail shifts across Madrid. Apply in one tap and track what you earn as you complete shifts.",
+    "findShift": "Find a Shift",
+    "businessEyebrow": "For Business",
+    "businessHeadline1": "SCALE ON",
+    "businessHeadline2": "DEMAND.",
+    "businessBody": "Instantly connect with Madrid's best student talent. Fill last-minute gaps in minutes, not days.",
+    "postShift": "Post a Shift",
+    "trustReviewed": "Reviewed Businesses",
+    "trustEarnings": "Track Your Earnings",
+    "trustRatings": "Ratings After Every Shift",
+    "trustFlexible": "Flexible Student Shifts",
+    "promiseEyebrow": "The Pick a Shift promise",
+    "promiseHeadline1": "Work when",
+    "promiseHeadline2": "you want to.",
+    "promiseBody": "No contracts. No commutes you didn't choose. Just open shifts that fit your week.",
+    "howTitle": "HOW IT WORKS.",
+    "howStudentsEyebrow": "For Students",
+    "howBusinessEyebrow": "For Businesses",
+    "studentSteps": {
+      "step1Title": "Create your profile",
+      "step1Body": "Tell us your availability, skills, and preferred districts. Takes under 2 minutes.",
+      "step2Title": "Browse & apply in one tap",
+      "step2Body": "See open shifts near you. Optional CV upload to stand out to employers.",
+      "step3Title": "Work, then track earnings",
+      "step3Body": "Complete your shift. Your earnings total updates in your dashboard."
+    },
+    "businessSteps": {
+      "step1Title": "Post your shift",
+      "step1Body": "Set role, date, hourly rate. Live in seconds.",
+      "step2Title": "Review student profiles",
+      "step2Body": "See ratings, experience, reliability scores, and optional CVs.",
+      "step3Title": "Staff up in minutes",
+      "step3Body": "Approve with one tap. Messaging built in for shift coordination."
+    },
+    "pricingTitle": "TRANSPARENT ECONOMICS.",
+    "pricingBody": "We only make money when shifts get filled. No subscriptions, no setup fees.",
+    "pricingStudentTitle": "Free for Students",
+    "pricingStudentBody": "What you earn is what you keep.",
+    "pricingBusinessTitle": "Flat rate for Business",
+    "pricingBusinessBody": "One clear platform fee per shift filled.",
+    "partnerPlan": "Partner Plan",
+    "perShift": "/ per shift",
+    "getStarted": "Get Started",
+    "testimonial1": "I found a shift at a cafe in Malasaña within an hour. The apply flow was straightforward and I could see my earnings add up after the shift.",
+    "testimonial1Name": "Lucía G.",
+    "testimonial1Role": "UCM Student",
+    "testimonial2": "Scaling our weekend staff used to be a nightmare. Now we post and students apply — with profiles and ratings to help us choose.",
+    "testimonial2Name": "Carlos M.",
+    "testimonial2Role": "Manager · Restaurante Sol",
+    "readyToJoin": "Ready to join?",
+    "createProfile": "Create Profile",
+    "footerLive": "Live in Madrid",
+    "footerHeadline1": "MADRID IS",
+    "footerHeadline2": "WORKING.",
+    "imStudent": "I'm a Student",
+    "imBusiness": "I'm a Business",
+    "copyright": "© 2026 Pick a Shift S.L.",
+    "footerLogIn": "Log in",
+    "footerBrowse": "Browse shifts",
+    "footerHelp": "Help",
+    "footerFaq": "FAQ",
+    "footerContact": "Contact",
+    "footerPrivacy": "Privacy",
+    "footerTerms": "Terms"
+  },
+  "browse": {
+    "title": "Browse shifts",
+    "openShifts": "{count, plural, one {# open shift in Madrid} other {# open shifts in Madrid}}",
+    "filters": "Filters",
+    "district": "District",
+    "allDistricts": "All districts",
+    "minPay": "Min pay (€/hr)",
+    "any": "Any",
+    "skill": "Skill",
+    "anySkill": "Any skill",
+    "urgentOnly": "Urgent shifts only",
+    "noResultsTitle": "No shifts match your filters",
+    "noResultsBody": "Try adjusting filters or check back later.",
+    "appliedToast": "Applied to {business}!",
+    "shellTitle": "Browse shifts",
+    "shellSub": "{count} open shifts in Madrid"
+  },
+  "onboarding": {
+    "eyebrow": "Join as a student",
+    "title": "Create your free profile",
+    "subtitle": "Takes 3 minutes. Free forever.",
+    "steps": {
+      "basics": "Basics",
+      "profile": "Profile",
+      "experience": "Experience"
+    },
+    "stepOf": "Step {current} of {total}",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "firstNamePlaceholder": "e.g. María",
+    "lastNamePlaceholder": "e.g. García",
+    "university": "University",
+    "degree": "Degree programme",
+    "degreePlaceholder": "e.g. Business Administration",
+    "yearOfStudy": "Year of study",
+    "year": "Year {year}",
+    "nationality": "Nationality",
+    "nationalityPlaceholder": "e.g. Spanish, Italian…",
+    "profilePhoto": "Profile photo",
+    "uploading": "Uploading…",
+    "profilePreviewAlt": "Profile preview",
+    "dragPhoto": "Drag a photo or click to upload",
+    "languages": "Languages you speak",
+    "jobTypes": "Job types you're interested in",
+    "availability": "Availability",
+    "homeDistrict": "Home district",
+    "cv": "CV",
+    "cvUploaded": "✓ {fileName} uploaded",
+    "uploadPdf": "Upload PDF if you have one",
+    "pastExperience": "Past experience",
+    "pastExperiencePlaceholder": "e.g. 6 months as barista at Costa Coffee",
+    "visaType": "Visa type",
+    "back": "Back",
+    "continue": "Continue →",
+    "saving": "Saving…",
+    "createProfile": "Create my profile →",
+    "errors": {
+      "signInPhoto": "Please sign in again to upload a photo.",
+      "photoFailed": "Photo upload failed. You can continue without one.",
+      "signInCv": "Please sign in again to upload your CV.",
+      "pdfOnly": "Only PDF files are accepted.",
+      "cvFailed": "CV upload failed. You can continue without one.",
+      "nameRequired": "Please enter your first and last name",
+      "degreeRequired": "Please enter your degree programme"
+    }
+  },
+  "auth": {
+    "roleSelection": {
+      "settingUp": "Setting up your account…",
+      "title": "How will you use Pick a Shift?",
+      "subtitle": "Choose your account type. This cannot be changed later.",
+      "autoError": "Please choose your account type below.",
+      "studentTitle": "I'm looking for shifts",
+      "studentBody": "Find flexible work between classes",
+      "businessTitle": "I'm hiring for shifts",
+      "businessBody": "Post shifts and hire student workers"
+    }
+  },
+  "dashboard": {
+    "home": {
+      "title": "Dashboard",
+      "subtitle": "Your shift hub"
+    },
+    "applications": {
+      "title": "My applications",
+      "subtitle": "Track pending, confirmed, completed and closed shifts",
+      "tabs": {
+        "pending": "Pending",
+        "confirmed": "Confirmed",
+        "completed": "Completed",
+        "closed": "Closed"
+      },
+      "status": {
+        "cancelled": "Cancelled",
+        "noShow": "No show"
+      },
+      "empty": {
+        "pendingTitle": "No pending applications",
+        "pendingBodySuffix": "to start applying.",
+        "browseLink": "Browse shifts",
+        "confirmedTitle": "No confirmed applications",
+        "completedTitle": "No completed shifts yet",
+        "closedTitle": "No closed applications",
+        "nothingYet": "Nothing here yet."
+      },
+      "applied": "Applied {date}",
+      "withdrawing": "Withdrawing…",
+      "withdraw": "Withdraw"
+    },
+    "earnings": {
+      "title": "Earnings",
+      "subtitle": "Your shift income on Pick a Shift",
+      "totalEarned": "Total earned",
+      "completedShifts": "Completed shifts",
+      "hoursWorked": "Hours worked",
+      "reliabilityScore": "Reliability score",
+      "recentShifts": "Recent completed shifts",
+      "noShifts": "No completed shifts yet.",
+      "findFirst": "Find your first shift"
+    },
+    "reviews": {
+      "title": "My Reviews",
+      "subtitle": "Ratings left by businesses after completed shifts",
+      "avgRating": "Average rating",
+      "totalReviews": "Total reviews",
+      "highReviews": "5★ or 4★ reviews",
+      "allReviews": "All reviews",
+      "emptyTitle": "No reviews yet",
+      "emptyBody": "After you complete a shift, businesses can leave you a review. Great shifts earn great scores."
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Updates about your applications and shifts",
+      "emptyTitle": "No notifications yet",
+      "emptyBody": "When something happens on your applications, you'll see it here.",
+      "browseShifts": "Browse shifts"
+    },
+    "cv": {
+      "title": "My CV",
+      "subtitle": "Upload your CV — businesses can view it when reviewing your applications"
+    },
+    "messages": {
+      "title": "Messages"
+    }
+  },
+  "biz": {
+    "dashboard": {
+      "subtitle": "Staff up in minutes — your command centre",
+      "openShifts": "Open shifts",
+      "applicantsToReview": "Applicants to review",
+      "filledShifts": "Filled shifts",
+      "yourRating": "Your rating",
+      "activeListings": "Active listings",
+      "viewAll": "View all",
+      "postShift": "Post a shift",
+      "noListings": "No active shifts",
+      "noListingsBody": "Post your first shift to start receiving applications.",
+      "applicants": "{count} applicant{count, plural, one {} other {s}}",
+      "pending": "{count} pending"
+    },
+    "analytics": {
+      "title": "Analytics",
+      "subtitle": "Performance overview for your business",
+      "totalShifts": "Total shifts posted",
+      "completedShifts": "Completed shifts",
+      "totalApplications": "Total applications",
+      "pendingReview": "Pending review",
+      "acceptedWorkers": "Accepted workers",
+      "savedWorkers": "Saved workers",
+      "breakdown": "Shift breakdown",
+      "open": "Open",
+      "filled": "Filled",
+      "completed": "Completed",
+      "avgRating": "Avg rating"
+    },
+    "applicants": {
+      "title": "Applicants",
+      "subtitle": "All applications across your shifts",
+      "emptyTitle": "No applicants yet",
+      "emptyBody": "Post a shift to start receiving applications from students.",
+      "postShift": "Post a shift",
+      "pending": "Pending",
+      "accepted": "Accepted",
+      "declined": "Declined",
+      "viewCv": "View CV",
+      "accept": "Accept",
+      "decline": "Decline"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "subtitle": "Updates about applicants and shifts",
+      "emptyTitle": "No notifications yet",
+      "emptyBody": "Applicant updates and shift activity will appear here.",
+      "postShift": "Post a shift"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "subtitle": "Ratings you've given workers and received from them",
+      "avgFromWorkers": "Your avg rating from workers",
+      "reviewsGiven": "Reviews given",
+      "reviewsReceived": "Reviews received",
+      "givenTitle": "Reviews you've given",
+      "receivedTitle": "Reviews from workers",
+      "reviewsReceived": "Reviews received",
+      "reviewsYouveGiven": "Reviews you've given",
+      "emptyGiven": "No reviews given yet",
+      "emptyReceived": "No reviews received yet",
+      "emptyReceivedDetail": "No reviews from workers yet.",
+      "emptyGivenDetail": "You haven't reviewed any workers yet. Reviews appear after a shift is completed."
+    },
+    "shifts": {
+      "title": "Manage shifts",
+      "subtitle": "{count} total shifts posted",
+      "allShifts": "All shifts",
+      "postShift": "Post shift",
+      "empty": "No shifts posted yet.",
+      "postFirst": "Post your first shift",
+      "applicants": "{count} applicants",
+      "view": "View"
+    },
+    "talentPool": {
+      "title": "Talent pool",
+      "subtitle": "Workers you've saved for future shifts",
+      "emptyTitle": "No saved workers yet",
+      "emptyBody": "Save great workers from completed shifts to hire them again faster.",
+      "shifts": "{count} shifts",
+      "score": "Score"
+    }
+  },
+  "messages": {
+    "emptyTitle": "No conversations yet",
+    "emptyStudent": "When a business accepts your application, you can message them here.",
+    "emptyBusiness": "Accept a student application to start messaging.",
+    "backToAll": "← All messages",
+    "noMessages": "No messages yet. Say hello!",
+    "placeholder": "Type a message…",
+    "send": "Send"
+  },
+  "shiftDetail": {
+    "backToBrowse": "Back to browse",
+    "urgent": "Urgent",
+    "aboutShift": "About this shift",
+    "skillsNeeded": "Skills needed",
+    "perHour": "/hr",
+    "estimated": "≈ {amount} estimated",
+    "applied": "Applied",
+    "notAvailable": "Not available",
+    "applyNow": "Apply now",
+    "verifiedBusiness": "Verified business",
+    "applicationSubmitted": "Application submitted!"
+  },
+  "common": {
+    "required": "*",
+    "loading": "Loading…",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "worker": "Worker",
+    "madrid": "Madrid"
+  },
+  "footer": {
+    "tagline": "Flexible short-term shifts for students in Madrid. Pick one. Work it. Get paid.",
+    "instagram": "Instagram",
+    "x": "X",
+    "linkedin": "LinkedIn",
+    "platform": "Platform",
+    "browseShifts": "Browse Shifts",
+    "postShift": "Post a Shift",
+    "howItWorks": "How it Works",
+    "faq": "FAQ",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "copyright": "© 2026 Pick a Shift · Madrid, España",
+    "madeWith": "Hecho con",
+    "forStudents": "para estudiantes"
+  },
+  "contact": {
+    "eyebrow": "Get in Touch",
+    "title": "Contact Us",
+    "intro": "We read every message and respond within 24–48 hours on business days. For quick answers, check the <faq>FAQ</faq> or <help>Help Center</help> first.",
+    "faq": "FAQ",
+    "help": "Help Center",
+    "email": "Email",
+    "responseTime": "Response Time",
+    "responseDetail": "Within 24–48 hours\nMonday–Friday, 9am–6pm CET",
+    "basedIn": "Based in",
+    "location": "Madrid, España",
+    "quickLinks": "Quick Links",
+    "faqLink": "Frequently Asked Questions",
+    "helpLink": "Help Center",
+    "privacyLink": "Privacy Policy",
+    "termsLink": "Terms of Service",
+    "successTitle": "Message sent!",
+    "successBody": "Thanks for reaching out. We'll get back to you at {email} within 24–48 hours.",
+    "sendAnother": "Send another message",
+    "fullName": "Full Name",
+    "emailAddress": "Email Address",
+    "subject": "Subject",
+    "message": "Message",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "messagePlaceholder": "Describe your question or issue in as much detail as possible...",
+    "privacyNote": "By submitting this form, you agree to our <privacy>Privacy Policy</privacy>.",
+    "privacy": "Privacy Policy",
+    "sending": "Sending…",
+    "sendMessage": "Send Message",
+    "subjects": {
+      "general": "General Enquiry",
+      "technical": "Technical Issue",
+      "business": "Business Enquiry",
+      "payment": "Payment Dispute",
+      "report": "Report a User",
+      "deletion": "Account Deletion Request",
+      "press": "Press & Media",
+      "other": "Other"
+    }
+  },
+  "help": {
+    "eyebrow": "Support",
+    "title": "Help Center",
+    "intro": "Everything you need to know about Pick a Shift. Can't find what you're looking for? <contact>Contact us</contact>.",
+    "contact": "Contact us",
+    "articles": "{count} articles",
+    "stillNeedHelp": "Still need help?",
+    "teamResponse": "Our team is based in Madrid and responds within 24 hours on business days.",
+    "contactSupport": "Contact Support",
+    "categories": {
+      "gettingStarted": {
+        "title": "Getting Started",
+        "articles": {
+          "whatIs": {
+            "q": "What is Pick a Shift?",
+            "a": "Pick a Shift is a marketplace that connects students in Madrid with businesses offering short-term, flexible shift work in hospitality, retail, events, and more. Students browse open shifts, apply in one tap, and track their earnings. Businesses post shifts and manage applicants — all in one place."
+          },
+          "whoCan": {
+            "q": "Who can use Pick a Shift?",
+            "a": "Students who are 18 or older and have the legal right to work in Spain can sign up as students. Any legally registered business operating in Madrid can sign up to post shifts. Both roles require completing an onboarding profile before accessing the platform."
+          },
+          "free": {
+            "q": "Is Pick a Shift free to use?",
+            "a": "Browsing shifts and creating a student profile is free. Business pricing details are available on our pricing page. We never charge students a commission on their earnings."
+          },
+          "createAccount": {
+            "q": "How do I create an account?",
+            "a": "Click \"Get Started\" on the homepage and choose your role — Student or Business. You'll sign up with your email and complete a short onboarding profile. The whole process takes under 5 minutes."
+          }
+        }
+      },
+      "forStudents": {
+        "title": "For Students",
+        "articles": {
+          "findApply": {
+            "q": "How do I find and apply for shifts?",
+            "a": "Once your profile is complete, go to Browse Shifts. You can filter by district, date, pay rate, and skills. Click any shift to see full details, then hit \"Apply\" to submit your application. The business will review your profile and accept or decline."
+          },
+          "afterApply": {
+            "q": "What happens after I apply?",
+            "a": "Your application status will show as \"Pending\" in your Applications tab. Once the business reviews it, you'll receive a notification whether you've been accepted or not. If accepted, you'll be able to message the business directly for any shift-specific details."
+          },
+          "cancel": {
+            "q": "Can I cancel an application or accepted shift?",
+            "a": "If you've applied but haven't been accepted yet, contact us via the Contact page and we'll handle the cancellation. If you've already been accepted, reach out to the business directly through the platform messaging as early as possible — ideally at least 24 hours before the shift. Last-minute cancellations affect your standing with businesses."
+          },
+          "reliability": {
+            "q": "What is a reliability score?",
+            "a": "Your reliability score is a rating out of 5 that businesses give you after a completed shift. It's visible on your profile when businesses review applications. A higher score helps you stand out and improves your chances of being accepted for competitive shifts."
+          },
+          "cv": {
+            "q": "How do I upload my CV?",
+            "a": "Go to your Dashboard and click \"CV\" in the sidebar. You can upload a PDF. Businesses can view your CV when reviewing your application if you've uploaded one. It's optional but recommended for more competitive shifts."
+          },
+          "earnings": {
+            "q": "How are earnings tracked?",
+            "a": "Once a business marks a shift as completed, the pay for that shift is added to your earnings total in the Earnings section of your dashboard. This is a running record — Pick a Shift does not currently process direct payments. Your business pays you directly as agreed."
+          }
+        }
+      },
+      "forBusinesses": {
+        "title": "For Businesses",
+        "articles": {
+          "postShift": {
+            "q": "How do I post a shift?",
+            "a": "From your business dashboard, click \"Post a Shift\". Fill in the details — role, date, start and end time, location, pay rate, required skills, and any specific requirements. You can also mark a shift as urgent. Once published, it's live on Browse immediately."
+          },
+          "reviewApplicants": {
+            "q": "How do I review applicants?",
+            "a": "Go to the Applicants section or open a specific shift from your Shifts page. You'll see all applications with each student's profile, university, skills, reliability score, and CV if uploaded. Accept or decline applications from there."
+          },
+          "message": {
+            "q": "Can I message students?",
+            "a": "Yes. Once you accept a student's application, a conversation thread is opened automatically. You can use this to share meeting points, shift-specific instructions, or confirm details."
+          },
+          "talentPool": {
+            "q": "What is the Talent Pool?",
+            "a": "The Talent Pool lets you save students you've worked with and want to hire again. Add students directly from their profile. You can browse your saved pool and reach out proactively for future shifts."
+          },
+          "complete": {
+            "q": "How do I mark a shift as completed?",
+            "a": "After the shift date has passed, open the shift from your dashboard and mark it as completed. This updates the student's earnings record and triggers the review flow for both parties."
+          }
+        }
+      },
+      "payments": {
+        "title": "Payments & Earnings",
+        "articles": {
+          "howPayment": {
+            "q": "How does payment work?",
+            "a": "Payment is handled directly between you and the business — Pick a Shift does not process or hold payments. The pay rate is agreed on the shift listing. Once the shift is completed and marked as such by the business, it appears in your earnings record."
+          },
+          "notPaid": {
+            "q": "What if a business hasn't paid me?",
+            "a": "If a business has not paid you for a completed shift, first contact them directly via the platform messaging. If the issue is not resolved, report it through the Contact page and include your shift ID. We take payment disputes seriously and may investigate and remove the business from the platform."
+          },
+          "fees": {
+            "q": "Are there any fees for students?",
+            "a": "No. Students pay nothing to use Pick a Shift. We never take a cut of your shift earnings."
+          }
+        }
+      },
+      "accountSecurity": {
+        "title": "Account & Security",
+        "articles": {
+          "updateProfile": {
+            "q": "How do I update my profile?",
+            "a": "Go to your Dashboard and click \"Profile\" in the sidebar. Students can update their bio, skills, district, availability, and name. Businesses can update their description, logo, contact info, and address."
+          },
+          "forgotPassword": {
+            "q": "I forgot my password. What do I do?",
+            "a": "On the sign-in page, click \"Forgot password\" and enter your email address. You'll receive a reset link within a few minutes. Check your spam folder if it doesn't arrive."
+          },
+          "deleteAccount": {
+            "q": "How do I delete my account?",
+            "a": "To delete your account, contact us at {email} with the subject \"Account Deletion Request\". We'll process the request within 7 days. Please note that deletion is permanent — your profile, shift history, and messages will be removed."
+          },
+          "suspended": {
+            "q": "My account has been suspended. What now?",
+            "a": "If your account has been suspended, you'll see a notice when you log in. Suspension usually follows a serious breach of our Terms of Service. Contact us at {email} to appeal. We review all appeals within 5 business days."
+          }
+        }
+      },
+      "reporting": {
+        "title": "Reporting Issues",
+        "articles": {
+          "reportUser": {
+            "q": "How do I report a business or student?",
+            "a": "If you've had a problem with another user — unprofessional conduct, no-show, non-payment, or harassment — contact us via the Contact page. Include the username or business name, the shift date, and a brief description. We investigate all reports."
+          },
+          "bug": {
+            "q": "I found a bug or technical problem. How do I report it?",
+            "a": "Use the Contact page and select \"Technical Issue\" as the subject. Describe what you were doing, what you expected to happen, and what happened instead. Screenshots are very helpful. We aim to respond within 24 hours."
+          },
+          "disputeReview": {
+            "q": "Can I dispute a review left about me?",
+            "a": "Reviews cannot be edited once submitted. If you believe a review is factually inaccurate, abusive, or violates our Terms, contact us and we'll investigate. We may remove reviews that breach our guidelines, but we do not remove reviews simply because you disagree with the assessment."
+          }
+        }
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Support",
+    "title": "Frequently Asked Questions",
+    "intro": "Quick answers to the most common questions. Need more detail? <help>Visit the Help Center</help>.",
+    "help": "Visit the Help Center",
+    "tags": {
+      "all": "All",
+      "general": "General",
+      "students": "Students",
+      "businesses": "Businesses",
+      "payments": "Payments",
+      "safety": "Safety"
+    },
+    "stillHaveQuestion": "Still have a question?",
+    "browseHelp": "Browse Help Center",
+    "contactUs": "Contact Us",
+    "items": {
+      "whatIs": {
+        "q": "What is Pick a Shift?",
+        "a": "Pick a Shift is a marketplace for short-term, flexible shift work in Madrid. Students browse and apply for shifts posted by local businesses — in hospitality, retail, events, and more. No long-term contracts, no CVs required."
+      },
+      "freeSignup": {
+        "q": "Is it free to sign up?",
+        "a": "Yes. Creating a student account and browsing shifts is completely free. We never take a percentage of your earnings."
+      },
+      "shiftTypes": {
+        "q": "What kinds of shifts are available?",
+        "a": "Most shifts are in hospitality (waitstaff, bar, kitchen), retail, events, and promotions across Madrid. Shifts typically last 4–10 hours and are often on evenings and weekends — designed to fit around your university schedule."
+      },
+      "cities": {
+        "q": "What cities does Pick a Shift operate in?",
+        "a": "We currently operate exclusively in Madrid. We plan to expand to other Spanish cities in the future."
+      },
+      "experience": {
+        "q": "Do I need work experience to apply?",
+        "a": "No. Many shifts are entry-level. Each listing specifies what skills or experience are preferred. Your profile, reliability score, and attitude matter more than a lengthy CV."
+      },
+      "hearBack": {
+        "q": "How quickly will I hear back after applying?",
+        "a": "It depends on the business. Most respond within 24–48 hours. You'll receive a notification as soon as your application is accepted or declined."
+      },
+      "multipleShifts": {
+        "q": "Can I work multiple shifts at once?",
+        "a": "Yes, as long as the shifts don't overlap. You can have multiple accepted applications at the same time."
+      },
+      "cantMake": {
+        "q": "What happens if I can't make a shift I accepted?",
+        "a": "Contact the business immediately via the platform messaging and let them know as early as possible. Giving notice early is the professional thing to do and protects your standing with businesses on the platform."
+      },
+      "reliability": {
+        "q": "How does my reliability score work?",
+        "a": "After each completed shift, the business can leave a rating out of 5. Your reliability score is the average of all ratings you've received. It's visible to businesses when they review your application — the higher it is, the more competitive you look."
+      },
+      "fillShift": {
+        "q": "How quickly can I fill a shift?",
+        "a": "Many shifts get applications within hours of being posted. For urgent shifts, mark them as urgent — they get highlighted in search results. You can accept an applicant immediately once their profile meets your requirements."
+      },
+      "rehire": {
+        "q": "Can I re-hire students I've worked with before?",
+        "a": "Yes. Add students to your Talent Pool after a completed shift and you can browse them any time to invite them to future shifts."
+      },
+      "noShow": {
+        "q": "What if a student doesn't show up?",
+        "a": "Report the incident via the Contact page with the shift details and we'll investigate. Confirmed no-shows may result in the student's account being suspended. We take reliability seriously on both sides."
+      },
+      "rightToWork": {
+        "q": "How do I verify a student's right to work?",
+        "a": "It is the business's responsibility to verify that any worker has the legal right to work in Spain before they begin a shift, in accordance with Spanish employment law. Pick a Shift does not verify right-to-work documentation."
+      },
+      "paymentWork": {
+        "q": "How does payment work?",
+        "a": "Payment is agreed between the student and the business at the rate shown on the shift listing. Pick a Shift does not currently process payments — businesses pay students directly after the shift."
+      },
+      "whenPaid": {
+        "q": "When should I expect to be paid?",
+        "a": "Payment terms are set by the individual business. Discuss payment timing with the business before the shift if it's not specified on the listing."
+      },
+      "paymentDispute": {
+        "q": "What if I have a payment dispute?",
+        "a": "First, contact the business through the platform messaging. If unresolved, contact us with your shift details and we'll look into it. Businesses that repeatedly fail to pay may be removed from the platform."
+      },
+      "vetting": {
+        "q": "How are businesses vetted?",
+        "a": "Businesses complete a profile with their registered company details. We review new business accounts before they can post shifts. Students can also leave reviews after each shift — businesses with poor feedback are monitored."
+      },
+      "unsafe": {
+        "q": "What should I do if I feel unsafe during a shift?",
+        "a": "Leave the situation if you feel your safety is at risk. Contact emergency services (112 in Spain) if necessary. Once you're safe, report the incident via the Contact page. We take safety reports seriously and will investigate immediately."
+      },
+      "inappropriate": {
+        "q": "How do I report inappropriate conduct?",
+        "a": "Use our Contact page to report any conduct that violates our Terms of Service — harassment, discrimination, non-payment, or any behaviour that made you feel unsafe. Include dates and any relevant details."
+      }
+    }
+  },
+  "legal": {
+    "privacy": {
+      "eyebrow": "Legal",
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated:",
+      "lastUpdatedDate": "June 2026",
+      "intro": "This policy explains what personal data Pick a Shift collects, why we collect it, and what rights you have over it. It applies to all users of the platform — students, businesses, and visitors.",
+      "contents": "Contents",
+      "ctaTitle": "Have a privacy question?",
+      "ctaBody": "We're happy to help. Reach out and we'll respond within 30 days.",
+      "ctaButton": "Contact Us",
+      "sections": {
+        "whoWeAre": {
+          "title": "1. Who We Are",
+          "paragraphs": [
+            "Pick a Shift (\"we\", \"us\", \"our\") is a marketplace platform connecting students with businesses offering short-term shifts in Madrid, Spain. Our registered company name is Pick a Shift S.L., operating under Spanish law.",
+            "For the purposes of the General Data Protection Regulation (EU) 2016/679 (\"GDPR\"), we act as the data controller for personal data processed through this platform.",
+            "Contact us about privacy matters at: privacy@pick-a-shift.com"
+          ]
+        },
+        "dataWeCollect": {
+          "title": "2. Data We Collect",
+          "paragraphs": [
+            "We collect the following categories of personal data:"
+          ],
+          "subsections": {
+            "account": {
+              "title": "Account & Identity Data",
+              "paragraphs": ["Name, email address, profile photo, and account credentials. Collected when you register."]
+            },
+            "studentProfile": {
+              "title": "Profile Data (Students)",
+              "paragraphs": ["University, degree, year of study, skills, languages, availability preferences, Madrid district, bio, and optionally a CV document."]
+            },
+            "businessProfile": {
+              "title": "Profile Data (Businesses)",
+              "paragraphs": ["Business name, type, NIF/CIF, registered district, address, phone number, public email, website, and description."]
+            },
+            "activity": {
+              "title": "Activity Data",
+              "paragraphs": ["Shift applications, accepted and completed shifts, messages exchanged on the platform, reviews and ratings left or received, and notifications."]
+            },
+            "technical": {
+              "title": "Usage & Technical Data",
+              "paragraphs": ["IP address, browser type, device information, and pages visited. Collected automatically when you use the platform."]
+            }
+          }
+        },
+        "legalBasis": {
+          "title": "3. Legal Basis for Processing",
+          "paragraphs": [
+            "We process your data under the following legal bases (GDPR Article 6):"
+          ],
+          "listItems": [
+            "Contract performance (Art. 6(1)(b)): Processing necessary to provide the marketplace service — creating your account, matching you with shifts, processing applications, and facilitating messaging.",
+            "Legitimate interests (Art. 6(1)(f)): Platform security, fraud prevention, improving our service, and sending operational communications about your account activity.",
+            "Consent (Art. 6(1)(a)): Marketing communications and non-essential cookies. You may withdraw consent at any time.",
+            "Legal obligation (Art. 6(1)(c)): Retaining records as required under Spanish commercial and tax law."
+          ]
+        },
+        "howWeUse": {
+          "title": "4. How We Use Your Data",
+          "paragraphs": ["We use your personal data to:"],
+          "listItems": [
+            "Create and manage your account",
+            "Match students with relevant open shifts",
+            "Enable businesses to review applicant profiles",
+            "Facilitate messaging between students and businesses",
+            "Calculate and display earnings and shift history",
+            "Send notifications about your applications, shifts, and account",
+            "Display public reviews and reliability scores",
+            "Detect and prevent fraud or misuse of the platform",
+            "Comply with legal and regulatory obligations in Spain"
+          ]
+        },
+        "thirdParties": {
+          "title": "5. Third-Party Processors",
+          "paragraphs": [
+            "We share data with trusted third-party processors who act under our instructions and are bound by data processing agreements:",
+            "Clerk — User authentication and session management — USA (SCCs)",
+            "Supabase — Database storage and file storage — EU",
+            "Vercel — Platform hosting and edge delivery — USA (SCCs)",
+            "Where data is transferred outside the EU, we ensure adequate safeguards via Standard Contractual Clauses (SCCs) approved by the European Commission."
+          ]
+        },
+        "retention": {
+          "title": "6. Data Retention",
+          "paragraphs": ["We retain your data for the following periods:"],
+          "listItems": [
+            "Active account data: for as long as your account is open.",
+            "Shift and application history: 3 years after the shift date, for dispute resolution purposes.",
+            "Messages: 2 years from the date of the conversation.",
+            "After account deletion: anonymised aggregate data may be retained for analytics; identifiable data is deleted within 30 days.",
+            "Financial records: 7 years as required by Spanish tax law (Ley General Tributaria)."
+          ]
+        },
+        "yourRights": {
+          "title": "7. Your Rights Under GDPR",
+          "paragraphs": [
+            "As a data subject in the EU/EEA, you have the following rights under the GDPR:",
+            "Right of Access (Art. 15): Request a copy of the personal data we hold about you.",
+            "Right to Rectification (Art. 16): Correct inaccurate or incomplete data.",
+            "Right to Erasure (Art. 17): Request deletion of your data, subject to legal retention obligations.",
+            "Right to Restriction (Art. 18): Limit how we process your data in certain circumstances.",
+            "Right to Portability (Art. 20): Receive your data in a structured, machine-readable format.",
+            "Right to Object (Art. 21): Object to processing based on legitimate interests or for direct marketing.",
+            "To exercise any of these rights, email us at privacy@pick-a-shift.com. We will respond within 30 days. You also have the right to lodge a complaint with the Spanish data protection authority, Agencia Española de Protección de Datos (AEPD)."
+          ]
+        },
+        "cookies": {
+          "title": "8. Cookies",
+          "paragraphs": [
+            "We use only the cookies strictly necessary to operate the platform:"
+          ],
+          "listItems": [
+            "Authentication session cookies (via Clerk) — keep you signed in during your session.",
+            "Security cookies — protect against CSRF attacks."
+          ],
+          "footer": "We do not use advertising cookies, tracking pixels, or third-party analytics cookies."
+        },
+        "changes": {
+          "title": "9. Changes to This Policy",
+          "paragraphs": [
+            "We may update this Privacy Policy from time to time. When we do, we will update the \"Last updated\" date at the top of this page and, where changes are material, notify you by email. Your continued use of the platform after any change constitutes acceptance of the updated policy."
+          ]
+        }
+      }
+    },
+    "terms": {
+      "eyebrow": "Legal",
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated:",
+      "lastUpdatedDate": "June 2026",
+      "intro": "Please read these Terms carefully before using Pick a Shift. They set out your rights and obligations as a student, business, or visitor on the Platform.",
+      "contents": "Contents",
+      "privacyLink": "Privacy Policy →",
+      "contactLink": "Questions? Contact Us →",
+      "sections": {
+        "acceptance": {
+          "title": "1. Acceptance of Terms",
+          "paragraphs": [
+            "By creating an account or using the Pick a Shift platform (\"Platform\"), you agree to be bound by these Terms of Service (\"Terms\"). If you do not agree, do not use the Platform. We may update these Terms at any time; continued use after changes are posted constitutes acceptance. Material changes will be notified by email."
+          ]
+        },
+        "description": {
+          "title": "2. What Pick a Shift Does",
+          "paragraphs": [
+            "Pick a Shift is an online marketplace that connects students in Madrid with businesses offering short-term, flexible shift work. We facilitate the connection — we are not an employer, staffing agency, or party to any employment contract formed through the Platform.",
+            "Any shift agreement is directly between the student and the business. Pick a Shift takes no responsibility for the performance of either party under that agreement."
+          ]
+        },
+        "eligibility": {
+          "title": "3. Eligibility",
+          "paragraphs": ["To use the Platform you must:"],
+          "listItems": [
+            "Be at least 18 years old, or the minimum legal working age in Spain, whichever is higher.",
+            "Have the legal right to work in Spain.",
+            "Provide accurate, current, and complete information when registering.",
+            "Not have been previously suspended or banned from the Platform."
+          ],
+          "footer": "Businesses must be legally registered entities operating in Spain and authorised to employ or engage workers."
+        },
+        "accounts": {
+          "title": "4. Accounts",
+          "paragraphs": [
+            "You are responsible for keeping your account credentials secure. You must not share your account or allow others to use it. Notify us immediately at hello@pick-a-shift.com if you suspect unauthorised access.",
+            "Each person may hold only one account per role (student or business). Creating duplicate accounts to circumvent a suspension is prohibited."
+          ]
+        },
+        "studentObligations": {
+          "title": "5. Student Obligations",
+          "paragraphs": ["As a student on the Platform, you agree to:"],
+          "listItems": [
+            "Provide accurate profile information, including your university enrolment, skills, and availability.",
+            "Only apply for shifts you genuinely intend to and are able to work.",
+            "Arrive on time and fulfil the shift as agreed with the business.",
+            "Behave professionally and treat business staff and customers with respect.",
+            "Notify the business as early as possible if you are unable to attend an accepted shift.",
+            "Not share any confidential information of the business obtained during a shift."
+          ],
+          "footer": "Repeated no-shows or cancellations may result in account suspension."
+        },
+        "businessObligations": {
+          "title": "6. Business Obligations",
+          "paragraphs": ["As a business on the Platform, you agree to:"],
+          "listItems": [
+            "Post accurate shift descriptions, including role, hours, pay rate, location, and requirements.",
+            "Pay the agreed rate for hours worked, promptly after shift completion.",
+            "Not discriminate against applicants on the basis of race, gender, religion, disability, or any other protected characteristic under Spanish law.",
+            "Ensure a safe working environment that complies with applicable health and safety regulations.",
+            "Only contact students through the Platform for shift-related communication.",
+            "Not request work outside of the agreed shift hours without additional compensation."
+          ]
+        },
+        "prohibited": {
+          "title": "7. Prohibited Conduct",
+          "paragraphs": ["You must not use the Platform to:"],
+          "listItems": [
+            "Post false, misleading, or fraudulent information.",
+            "Harass, threaten, or intimidate other users.",
+            "Circumvent the Platform by arranging payment or future work directly with matched users outside of Pick a Shift.",
+            "Upload malicious code, spam, or unsolicited commercial communications.",
+            "Scrape, crawl, or extract data from the Platform without our written consent.",
+            "Impersonate another person or entity.",
+            "Violate any applicable law, including Spanish employment and data protection law."
+          ]
+        },
+        "payments": {
+          "title": "8. Payments & Earnings",
+          "paragraphs": [
+            "Pick a Shift displays pay rates and tracks completed shift earnings as an informational record. Payment for work is the direct responsibility of the business and must be made to the student in accordance with the agreed rate and applicable Spanish labour law.",
+            "We currently do not process payments on behalf of either party. Any payment disputes are between the student and the business. We recommend both parties keep records of completed shifts."
+          ]
+        },
+        "reviews": {
+          "title": "9. Reviews & Ratings",
+          "paragraphs": [
+            "After a shift is completed, both the student and the business may leave a review. Reviews must be honest and based on direct experience of the shift. We reserve the right to remove reviews that contain false information, personal attacks, or content that violates these Terms. Reviews cannot be altered or deleted by the reviewer after submission — contact us if you believe a review is inaccurate or abusive."
+          ]
+        },
+        "ip": {
+          "title": "10. Intellectual Property",
+          "paragraphs": [
+            "All content, trademarks, logos, and software on the Platform are the property of Pick a Shift or its licensors. You may not reproduce, distribute, or create derivative works without our express written permission. You grant us a non-exclusive licence to use content you upload (such as profile photos and CV documents) solely for the purpose of operating the Platform."
+          ]
+        },
+        "liability": {
+          "title": "11. Limitation of Liability",
+          "paragraphs": ["To the maximum extent permitted by Spanish law, Pick a Shift is not liable for:"],
+          "listItems": [
+            "Any loss arising from a student failing to attend or perform a shift.",
+            "Any loss arising from a business failing to pay for a completed shift.",
+            "Indirect, incidental, or consequential damages of any kind.",
+            "Interruptions to the Platform due to maintenance, technical failures, or events outside our control."
+          ],
+          "footer": "Nothing in these Terms limits our liability for death or personal injury caused by our negligence, or any other liability that cannot be excluded under applicable law."
+        },
+        "termination": {
+          "title": "12. Termination",
+          "paragraphs": [
+            "You may delete your account at any time. We reserve the right to suspend or terminate your access if you breach these Terms, engage in behaviour that harms other users, or if we are required to do so by law.",
+            "Upon termination, your profile will be deactivated and removed from public view. Data will be retained and deleted in accordance with our Privacy Policy."
+          ]
+        },
+        "governingLaw": {
+          "title": "13. Governing Law",
+          "paragraphs": [
+            "These Terms are governed by the laws of Spain. Any dispute arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Madrid, Spain, without prejudice to your rights as a consumer under applicable EU law."
+          ]
+        },
+        "contact": {
+          "title": "14. Contact",
+          "paragraphs": [
+            "For any questions about these Terms, contact us at legal@pick-a-shift.com or visit our contact page."
+          ]
+        }
+      }
+    }
+  }
+}

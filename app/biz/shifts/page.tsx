@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
@@ -11,6 +12,8 @@ import { formatPayHour, formatShiftDate, formatTimeRange } from '@/lib/utils';
 export const dynamic = 'force-dynamic';
 
 export default async function BizShiftsPage() {
+  const t = await getTranslations('biz.shifts');
+  const tNav = await getTranslations('nav.business');
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, shifts] = await Promise.all([
     getDashboardStats('business', session.userId),
@@ -33,32 +36,32 @@ export default async function BizShiftsPage() {
   return (
     <DashShell
       variant="business"
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Manage Shifts"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('manageShifts')}
       user={user}
-      topTitle="Manage shifts"
-      topSub={`${shifts.length} total shifts posted`}
+      topTitle={t('title')}
+      topSub={t('subtitle', { count: shifts.length })}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="font-black text-xl text-ink">All shifts</h2>
+          <h2 className="font-black text-xl text-ink">{t('allShifts')}</h2>
           <Link
             className="inline-flex items-center gap-2 bg-brand text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors"
             href="/biz/shifts/new"
           >
-            <Icon name="plus" size={17} /> Post shift
+            <Icon name="plus" size={17} /> {t('postShift')}
           </Link>
         </div>
 
         {withCounts.length === 0 ? (
           <div className="bg-card border border-dashed border-line rounded-2xl p-12 text-center">
-            <p className="text-sm text-muted-foreground mb-4">No shifts posted yet.</p>
+            <p className="text-sm text-muted-foreground mb-4">{t('empty')}</p>
             <Link
               href="/biz/shifts/new"
               className="inline-flex items-center gap-2 bg-brand text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors"
             >
-              <Icon name="plus" size={16} /> Post your first shift
+              <Icon name="plus" size={16} /> {t('postFirst')}
             </Link>
           </div>
         ) : (
@@ -86,7 +89,7 @@ export default async function BizShiftsPage() {
                 <div className="flex flex-wrap gap-3 text-sm text-muted-foreground mb-4">
                   <span className="font-semibold text-ink">{formatPayHour(s.pay_per_hour_cents)}/hr</span>
                   <span>{s.district}</span>
-                  <span>{s.totalApps} applications</span>
+                  <span>{t('applicants', { count: s.totalApps })}</span>
                 </div>
                 <div className="flex items-center justify-between pt-4 border-t border-line gap-3">
                   <span className="text-sm text-muted-foreground">
@@ -96,7 +99,7 @@ export default async function BizShiftsPage() {
                     className="border border-line px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-muted/40 transition-colors"
                     href={`/biz/shifts/${s.id}`}
                   >
-                    View
+                    {t('view')}
                   </Link>
                 </div>
               </article>

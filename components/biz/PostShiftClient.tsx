@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
@@ -18,6 +19,7 @@ interface PostShiftClientProps {
 }
 
 export function PostShiftClient({ user, stats, defaultDistrict }: PostShiftClientProps) {
+  const tNav = useTranslations('nav.business');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { show } = useToast();
@@ -67,8 +69,8 @@ export function PostShiftClient({ user, stats, defaultDistrict }: PostShiftClien
 
   return (
     <DashShell variant="business"
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Post a Shift"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('postShift')}
       user={user}
       topTitle="Post a new shift"
       topSub="Goes live instantly to workers near you"

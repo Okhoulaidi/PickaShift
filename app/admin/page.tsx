@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { requireRole } from '@/lib/auth';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
@@ -10,6 +11,7 @@ import { getProfile } from '@/lib/auth';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminPage() {
+  const tNav = await getTranslations('nav.admin');
   const session = await requireRole(['admin']);
   const [stats, platform, profile] = await Promise.all([
     getDashboardStats('admin', session.userId),
@@ -25,8 +27,8 @@ export default async function AdminPage() {
 
   return (
     <DashShell
-      nav={adminNav(stats.contactSubmissions ?? 0)}
-      active="Overview"
+      nav={adminNav(tNav, stats.contactSubmissions ?? 0)}
+      active={tNav('overview')}
       user={user}
       topTitle="Platform overview"
       topSub="Pick a Shift admin dashboard"

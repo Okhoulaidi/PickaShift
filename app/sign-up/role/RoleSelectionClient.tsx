@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Logo } from '@/components/ui/Logo';
 import { Icon } from '@/components/ui/Icon';
@@ -22,6 +23,7 @@ function Spinner() {
 }
 
 export default function RoleSelectionClient({ preselectedRole }: Props) {
+  const t = useTranslations('auth.roleSelection');
   const [loading, setLoading] = useState<'student' | 'business' | null>(null);
   const [autoFailed, setAutoFailed] = useState(false);
   const [autoError, setAutoError] = useState<string | null>(null);
@@ -67,7 +69,7 @@ export default function RoleSelectionClient({ preselectedRole }: Props) {
     return cardShell(
       <div className="py-10 text-center">
         <Spinner />
-        <p className="text-muted-foreground text-sm mt-6">Setting up your account…</p>
+        <p className="text-muted-foreground text-sm mt-6">{t('settingUp')}</p>
       </div>,
     );
   }
@@ -87,14 +89,14 @@ export default function RoleSelectionClient({ preselectedRole }: Props) {
 
   return cardShell(
     <>
-      <h1 className="text-2xl font-black mb-1.5">How will you use Pick a Shift?</h1>
+      <h1 className="text-2xl font-black mb-1.5">{t('title')}</h1>
       <p className="text-muted-foreground text-sm mb-6">
-        Choose your account type. This cannot be changed later.
+        {t('subtitle')}
       </p>
 
       {autoError && (
         <p role="alert" className="text-brand text-sm font-semibold mb-4">
-          {autoError} Please choose your account type below.
+          {autoError} {t('autoError')}
         </p>
       )}
 
@@ -106,8 +108,8 @@ export default function RoleSelectionClient({ preselectedRole }: Props) {
           onClick={() => choose('student')}
         >
           <Icon name="user" size={32} />
-          <h3 className="font-bold text-base text-ink">I&apos;m looking for shifts</h3>
-          <p className="text-sm text-muted-foreground">Find flexible work between classes</p>
+          <h3 className="font-bold text-base text-ink">{t('studentTitle')}</h3>
+          <p className="text-sm text-muted-foreground">{t('studentBody')}</p>
           {loading === 'student' && <Spinner />}
         </button>
         <button
@@ -117,8 +119,8 @@ export default function RoleSelectionClient({ preselectedRole }: Props) {
           onClick={() => choose('business')}
         >
           <Icon name="briefcase" size={32} />
-          <h3 className="font-bold text-base text-ink">I&apos;m hiring for shifts</h3>
-          <p className="text-sm text-muted-foreground">Post shifts and hire student workers</p>
+          <h3 className="font-bold text-base text-ink">{t('businessTitle')}</h3>
+          <p className="text-sm text-muted-foreground">{t('businessBody')}</p>
           {loading === 'business' && <Spinner />}
         </button>
       </div>

@@ -1,3 +1,4 @@
+import { getTranslations } from 'next-intl/server';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
@@ -57,6 +58,8 @@ function ReviewRow({
 }
 
 export default async function BizReviewsPage() {
+  const t = await getTranslations('biz.reviews');
+  const tNav = await getTranslations('nav.business');
   const { session, profile: business } = await requireBusinessProfile();
   const stats = await getDashboardStats('business', session.userId);
 
@@ -82,11 +85,11 @@ export default async function BizReviewsPage() {
   return (
     <DashShell
       variant="business"
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Reviews"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('reviews')}
       user={user}
-      topTitle="Reviews"
-      topSub="Ratings you've given workers and received from them"
+      topTitle={t('title')}
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
@@ -97,28 +100,28 @@ export default async function BizReviewsPage() {
                 <Icon name="star" size={18} />
               </div>
               <div className="text-2xl font-black text-ink">{avgReceived}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">Your avg rating from workers</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{t('avgFromWorkers')}</div>
             </div>
             <div className="bg-card border border-line rounded-2xl p-5">
               <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
                 <Icon name="users" size={18} />
               </div>
               <div className="text-2xl font-black text-ink">{received?.length ?? 0}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">Reviews received</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{t('reviewsReceived')}</div>
             </div>
             <div className="bg-card border border-line rounded-2xl p-5">
               <div className="w-9 h-9 rounded-xl bg-brand/10 flex items-center justify-center text-brand mb-3">
                 <Icon name="clipboard" size={18} />
               </div>
               <div className="text-2xl font-black text-ink">{given?.length ?? 0}</div>
-              <div className="text-xs text-muted-foreground mt-0.5">Reviews you&apos;ve given</div>
+              <div className="text-xs text-muted-foreground mt-0.5">{t('reviewsYouveGiven')}</div>
             </div>
           </div>
         )}
 
         <div className="bg-card border border-line rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-line">
-            <h3 className="font-black text-ink">Reviews from workers</h3>
+            <h3 className="font-black text-ink">{t('receivedTitle')}</h3>
           </div>
           {received && received.length > 0 ? (
             <div className="divide-y divide-line">
@@ -140,14 +143,14 @@ export default async function BizReviewsPage() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-10 text-center px-6">
-              <p className="text-sm text-muted-foreground">No reviews from workers yet.</p>
+              <p className="text-sm text-muted-foreground">{t('emptyReceivedDetail')}</p>
             </div>
           )}
         </div>
 
         <div className="bg-card border border-line rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-line">
-            <h3 className="font-black text-ink">Reviews you&apos;ve given</h3>
+            <h3 className="font-black text-ink">{t('givenTitle')}</h3>
           </div>
           {given && given.length > 0 ? (
             <div className="divide-y divide-line">
@@ -169,9 +172,7 @@ export default async function BizReviewsPage() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-10 text-center px-6">
-              <p className="text-sm text-muted-foreground">
-                You haven&apos;t reviewed any workers yet. Reviews appear after a shift is completed.
-              </p>
+              <p className="text-sm text-muted-foreground">{t('emptyGivenDetail')}</p>
             </div>
           )}
         </div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { useToast } from '@/components/ui/Toast';
@@ -34,6 +35,7 @@ interface ProfileClientProps {
 }
 
 export function StudentProfileClient({ user, stats, initial }: ProfileClientProps) {
+  const tNav = useTranslations('nav.student');
   const [loading, setLoading] = useState(false);
   const { show } = useToast();
   const [form, setForm] = useState(initial);
@@ -73,8 +75,8 @@ export function StudentProfileClient({ user, stats, initial }: ProfileClientProp
 
   return (
     <DashShell
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="My Profile"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('myProfile')}
       user={user}
       topTitle="My profile"
       topSub="Keep your info up to date for better matches"

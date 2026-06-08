@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useCallback, useMemo, useState, useTransition } from 'react';
 import { DashShell, type DashNavItem, type DashUser } from '@/components/layout/DashShell';
 import { LandingNav } from '@/components/landing/LandingNav';
@@ -32,6 +33,7 @@ function BrowseContent({
   appliedIds: string[];
   embedded: boolean;
 }) {
+  const t = useTranslations('browse');
   const searchParams = useSearchParams();
   const router = useRouter();
   const { show } = useToast();
@@ -84,7 +86,7 @@ function BrowseContent({
     }
 
     setApplied((prev) => new Set(prev).add(shift.id));
-    show(`Applied to ${shift.business.business_name}!`);
+    show(t('appliedToast', { business: shift.business.business_name }));
   }
 
   return (
@@ -92,21 +94,21 @@ function BrowseContent({
       {!embedded && (
         <>
           <h1 style={{ fontWeight: 900, fontSize: 32, margin: '0 0 8px', letterSpacing: '-.02em' }}>
-            Browse shifts
+            {t('title')}
           </h1>
           <p style={{ color: 'var(--muted)', margin: '0 0 28px' }}>
-            {filtered.length} open shift{filtered.length !== 1 ? 's' : ''} in Madrid
+            {t('openShifts', { count: filtered.length })}
           </p>
         </>
       )}
 
       <div className="browse-layout">
         <aside className="filters-bar">
-          <h3>Filters</h3>
+          <h3>{t('filters')}</h3>
           <div className="field">
-            <label>District</label>
+            <label>{t('district')}</label>
             <select value={district} onChange={(e) => updateFilter('district', e.target.value)}>
-              <option value="">All districts</option>
+              <option value="">{t('allDistricts')}</option>
               {MADRID_DISTRICTS.map((d) => (
                 <option key={d} value={d}>
                   {d}
@@ -115,20 +117,20 @@ function BrowseContent({
             </select>
           </div>
           <div className="field">
-            <label>Min pay (€/hr)</label>
+            <label>{t('minPay')}</label>
             <input
               type="number"
               min="0"
               step="0.5"
               value={minPay}
               onChange={(e) => updateFilter('minPay', e.target.value)}
-              placeholder="Any"
+              placeholder={t('any')}
             />
           </div>
           <div className="field">
-            <label>Skill</label>
+            <label>{t('skill')}</label>
             <select value={skillFilter} onChange={(e) => updateFilter('skill', e.target.value)}>
-              <option value="">Any skill</option>
+              <option value="">{t('anySkill')}</option>
               {SKILLS.map((s) => (
                 <option key={s} value={s}>
                   {s}
@@ -143,7 +145,7 @@ function BrowseContent({
                 checked={urgentOnly}
                 onChange={(e) => updateFilter('urgent', e.target.checked ? '1' : '')}
               />
-              <span>Urgent shifts only</span>
+              <span>{t('urgentOnly')}</span>
             </label>
           </div>
         </aside>
@@ -168,8 +170,8 @@ function BrowseContent({
           </div>
           {filtered.length === 0 && (
             <div className="empty-state">
-              <h3>No shifts match your filters</h3>
-              <p>Try adjusting filters or check back later.</p>
+              <h3>{t('noResultsTitle')}</h3>
+              <p>{t('noResultsBody')}</p>
             </div>
           )}
         </div>
@@ -179,6 +181,9 @@ function BrowseContent({
 }
 
 export function BrowseClient({ shifts, appliedIds, shell }: BrowseClientProps) {
+  const t = useTranslations('browse');
+  const tNav = useTranslations('nav.student');
+
   const content = (
     <BrowseContent shifts={shifts} appliedIds={appliedIds} embedded={!!shell} />
   );
@@ -187,10 +192,10 @@ export function BrowseClient({ shifts, appliedIds, shell }: BrowseClientProps) {
     return (
       <DashShell
         nav={shell.nav}
-        active="Browse Shifts"
+        active={tNav('browseShifts')}
         user={shell.user}
-        topTitle="Browse shifts"
-        topSub={`${shifts.length} open shifts in Madrid`}
+        topTitle={t('shellTitle')}
+        topSub={t('shellSub', { count: shifts.length })}
         notif={shell.notif}
       >
         {content}

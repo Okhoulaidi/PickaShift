@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { formatDistanceToNow } from 'date-fns';
+import { getTranslations } from 'next-intl/server';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
@@ -11,6 +12,8 @@ import { getDashboardStats } from '@/lib/queries/shifts';
 export const dynamic = 'force-dynamic';
 
 export default async function BizNotificationsPage() {
+  const t = await getTranslations('biz.notifications');
+  const tNav = await getTranslations('nav.business');
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, notifications] = await Promise.all([
     getDashboardStats('business', session.userId),
@@ -26,11 +29,11 @@ export default async function BizNotificationsPage() {
   return (
     <DashShell
       variant="business"
-      nav={businessNav(stats.openShifts ?? 0, pending)}
-      active="Overview"
+      nav={businessNav(tNav, stats.openShifts ?? 0, pending)}
+      active={tNav('overview')}
       user={user}
-      topTitle="Notifications"
-      topSub="Updates about applicants and shifts"
+      topTitle={t('title')}
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
@@ -41,15 +44,13 @@ export default async function BizNotificationsPage() {
                 <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
                   <Icon name="bell" size={26} />
                 </div>
-                <h3 className="font-black text-lg mb-2">No notifications yet</h3>
-                <p className="text-sm text-muted-foreground mb-5">
-                  Applicant updates and shift activity will appear here.
-                </p>
+                <h3 className="font-black text-lg mb-2">{t('emptyTitle')}</h3>
+                <p className="text-sm text-muted-foreground mb-5">{t('emptyBody')}</p>
                 <Link
                   href="/biz/shifts/new"
                   className="bg-brand text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors"
                 >
-                  Post a shift
+                  {t('postShift')}
                 </Link>
               </div>
             </div>

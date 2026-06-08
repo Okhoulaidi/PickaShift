@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { useToast } from '@/components/ui/Toast';
@@ -27,6 +28,7 @@ interface BizProfileClientProps {
 }
 
 export function BizProfileClient({ user, stats, initial }: BizProfileClientProps) {
+  const tNav = useTranslations('nav.business');
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(initial);
   const { show } = useToast();
@@ -51,8 +53,8 @@ export function BizProfileClient({ user, stats, initial }: BizProfileClientProps
 
   return (
     <DashShell variant="business"
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Profile"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('companyProfile')}
       user={user}
       topTitle="Business profile"
       topSub={form.verified ? 'Verified business' : 'Pending verification'}

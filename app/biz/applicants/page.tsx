@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
 import { businessNav } from '@/lib/dashboard-nav';
@@ -13,6 +14,8 @@ import { bizColor, initials, formatShiftDate } from '@/lib/utils';
 export const dynamic = 'force-dynamic';
 
 export default async function BizApplicantsPage() {
+  const t = await getTranslations('biz.applicants');
+  const tNav = await getTranslations('nav.business');
   const { session, profile: business } = await requireBusinessProfile();
   const stats = await getDashboardStats('business', session.userId);
 
@@ -62,11 +65,11 @@ export default async function BizApplicantsPage() {
   return (
     <DashShell
       variant="business"
-      nav={businessNav(stats.openShifts ?? 0, pending)}
-      active="Applicants"
+      nav={businessNav(tNav, stats.openShifts ?? 0, pending)}
+      active={tNav('applicants')}
       user={user}
-      topTitle="Applicants"
-      topSub="All applications across your shifts"
+      topTitle={t('title')}
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
@@ -77,13 +80,13 @@ export default async function BizApplicantsPage() {
                 <div className="w-14 h-14 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
                   <Icon name="clipboard" size={26} />
                 </div>
-                <h3 className="font-black text-lg mb-2">No applicants yet</h3>
-                <p className="text-sm text-muted-foreground mb-5">Post a shift to start receiving applications.</p>
+                <h3 className="font-black text-lg mb-2">{t('emptyTitle')}</h3>
+                <p className="text-sm text-muted-foreground mb-5">{t('emptyBody')}</p>
                 <Link
                   href="/biz/shifts/new"
                   className="inline-flex items-center gap-2 bg-brand text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-brand-dark transition-colors"
                 >
-                  <Icon name="plus" size={16} /> Post a Shift
+                  <Icon name="plus" size={16} /> {t('postShift')}
                 </Link>
               </div>
             </div>

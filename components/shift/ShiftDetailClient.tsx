@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { LandingNav } from '@/components/landing/LandingNav';
 import { SiteFooter } from '@/components/layout/SiteFooter';
@@ -25,6 +26,7 @@ export function ShiftDetailClient({
   shift: ShiftWithBusiness;
   alreadyApplied: boolean;
 }) {
+  const t = useTranslations('shiftDetail');
   const [applied, setApplied] = useState(alreadyApplied);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -48,7 +50,7 @@ export function ShiftDetailClient({
     }
 
     setApplied(true);
-    show('Application submitted!');
+    show(t('applicationSubmitted'));
   }
 
   return (
@@ -56,7 +58,7 @@ export function ShiftDetailClient({
       <LandingNav />
       <div className="wrap" style={{ paddingTop: 32, paddingBottom: 48 }}>
         <Link href="/browse" className="link-btn" style={{ marginBottom: 20, display: 'inline-flex' }}>
-          <Icon name="chevleft" size={15} /> Back to browse
+          <Icon name="chevleft" size={15} /> {t('backToBrowse')}
         </Link>
 
         <div className="shift-detail-grid">
@@ -74,7 +76,7 @@ export function ShiftDetailClient({
                 </div>
                 {shift.is_urgent && (
                   <span className="badge badge-urgent">
-                    <Icon name="flame" size={12} fill /> Urgent
+                    <Icon name="flame" size={12} fill /> {t('urgent')}
                   </span>
                 )}
               </div>
@@ -89,11 +91,11 @@ export function ShiftDetailClient({
                     {shift.address && ` · ${shift.address}`}
                   </div>
                 </div>
-                <h4 style={{ fontWeight: 800, margin: '0 0 10px' }}>About this shift</h4>
+                <h4 style={{ fontWeight: 800, margin: '0 0 10px' }}>{t('aboutShift')}</h4>
                 <p style={{ color: 'var(--muted)', lineHeight: 1.6, margin: 0 }}>{shift.description}</p>
                 {shift.skills_needed.length > 0 && (
                   <>
-                    <h4 style={{ fontWeight: 800, margin: '24px 0 10px' }}>Skills needed</h4>
+                    <h4 style={{ fontWeight: 800, margin: '24px 0 10px' }}>{t('skillsNeeded')}</h4>
                     <div className="chips">
                       {shift.skills_needed.map((s) => (
                         <span key={s} className="chip on">
@@ -113,10 +115,12 @@ export function ShiftDetailClient({
                 <div className="pay" style={{ marginBottom: 20 }}>
                   <span className="amt">
                     {formatPayHour(shift.pay_per_hour_cents)}
-                    <span className="per">/hr</span>
+                    <span className="per">{t('perHour')}</span>
                   </span>
                   <span className="pay-lbl">
-                    ≈ {estimatedTotal(shift.pay_per_hour_cents, shift.start_time, shift.end_time)} estimated
+                    {t('estimated', {
+                      amount: estimatedTotal(shift.pay_per_hour_cents, shift.start_time, shift.end_time),
+                    })}
                   </span>
                 </div>
                 <button
@@ -127,17 +131,17 @@ export function ShiftDetailClient({
                 >
                   {applied ? (
                     <>
-                      <Icon name="check" size={16} /> Applied
+                      <Icon name="check" size={16} /> {t('applied')}
                     </>
                   ) : shift.status !== 'open' ? (
-                    'Not available'
+                    t('notAvailable')
                   ) : (
-                    'Apply now'
+                    t('applyNow')
                   )}
                 </button>
                 {biz.verified && (
                   <p style={{ fontSize: 13, color: 'var(--green)', fontWeight: 600, marginTop: 14, marginBottom: 0 }}>
-                    <Icon name="check" size={14} /> Verified business
+                    <Icon name="check" size={14} /> {t('verifiedBusiness')}
                   </p>
                 )}
               </div>

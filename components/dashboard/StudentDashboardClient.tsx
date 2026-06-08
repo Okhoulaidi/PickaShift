@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import {
   ArrowRight,
@@ -53,6 +54,7 @@ export function StudentDashboardClient({
   hasCv = false,
   skillsCount = 0,
 }: StudentDashboardClientProps) {
+  const tNav = useTranslations('nav.student');
   const [applied, setApplied] = useState<Set<string>>(new Set(appliedIds));
   const [loading, setLoading] = useState<string | null>(null);
   const { show } = useToast();
@@ -81,8 +83,8 @@ export function StudentDashboardClient({
 
   return (
     <DashShell
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="Home"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('home')}
       user={user}
       topTitle={`Hey ${firstName} 👋`}
       topSub={`${nearbyShifts.length} open shifts near ${district || 'you'} today`}

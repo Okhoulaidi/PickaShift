@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState, type ReactNode } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
@@ -20,40 +21,7 @@ import {
 } from '@/lib/utils';
 import { format, parseISO } from 'date-fns';
 
-function applicationStatusLabel(status: string): string {
-  if (status === 'cancelled') return 'Cancelled';
-  if (status === 'no_show') return 'No show';
-  return status.charAt(0).toUpperCase() + status.slice(1);
-}
-
 type Tab = 'pending' | 'confirmed' | 'completed' | 'closed';
-
-const TAB_LABELS: Record<Tab, string> = {
-  pending: 'Pending',
-  confirmed: 'Confirmed',
-  completed: 'Completed',
-  closed: 'Closed',
-};
-
-function emptyStateCopy(tab: Tab): { title: string; body: ReactNode } {
-  switch (tab) {
-    case 'pending':
-      return {
-        title: 'No pending applications',
-        body: (
-          <>
-            <Link href="/browse">Browse shifts</Link> to start applying.
-          </>
-        ),
-      };
-    case 'confirmed':
-      return { title: 'No confirmed applications', body: 'Nothing here yet.' };
-    case 'completed':
-      return { title: 'No completed shifts yet', body: 'Nothing here yet.' };
-    case 'closed':
-      return { title: 'No closed applications', body: 'Nothing here yet.' };
-  }
-}
 
 export function ApplicationsClient({
   user,
@@ -70,6 +38,8 @@ export function ApplicationsClient({
   completed: ApplicationRow[];
   closed: ApplicationRow[];
 }) {
+  const t = useTranslations('dashboard.applications');
+  const tNav = useTranslations('nav.student');
   const [tab, setTab] = useState<Tab>('pending');
   const [pending, setPending] = useState(initialPending);
   const [withdrawingId, setWithdrawingId] = useState<string | null>(null);
@@ -78,7 +48,41 @@ export function ApplicationsClient({
 
   const lists = { pending, confirmed, completed, closed };
   const items = lists[tab];
-  const empty = emptyStateCopy(tab);
+
+  function applicationStatusLabel(status: string): string {
+    if (status === 'cancelled') return t('status.cancelled');
+    if (status === 'no_show') return t('status.noShow');
+    return status.charAt(0).toUpperCase() + status.slice(1);
+  }
+
+  function getEmptyState(tabKey: Tab): { title: string; body: ReactNode } {
+    switch (tabKey) {
+      case 'pending':
+        return {
+          title: t('empty.pendingTitle'),
+          body: (
+            <>
+              <Link href="/browse">{t('empty.browseLink')}</Link> {t('empty.pendingBodySuffix')}
+            </>
+          ),
+        };
+      case 'confirmed':
+        return { title: t('empty.confirmedTitle'), body: t('empty.nothingYet') };
+      case 'completed':
+        return { title: t('empty.completedTitle'), body: t('empty.nothingYet') };
+      case 'closed':
+        return { title: t('empty.closedTitle'), body: t('empty.nothingYet') };
+    }
+  }
+
+  const empty = getEmptyState(tab);
+
+  const TAB_LABELS: Record<Tab, string> = {
+    pending: t('tabs.pending'),
+    confirmed: t('tabs.confirmed'),
+    completed: t('tabs.completed'),
+    closed: t('tabs.closed'),
+  };
 
   async function handleWithdraw(applicationId: string) {
     setWithdrawingId(applicationId);
@@ -96,23 +100,23 @@ export function ApplicationsClient({
 
   return (
     <DashShell
-      nav={studentNav(stats.pendingApplications ?? 0)}
-      active="My Applications"
+      nav={studentNav(tNav, stats.pendingApplications ?? 0)}
+      active={tNav('myApplications')}
       user={user}
-      topTitle="My applications"
-      topSub="Track pending, confirmed, completed and closed shifts"
+      topTitle={t('title')}
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="content">
         <div className="tabs">
-          {(['pending', 'confirmed', 'completed', 'closed'] as Tab[]).map((t) => (
+          {(['pending', 'confirmed', 'completed', 'closed'] as Tab[]).map((tabKey) => (
             <button
-              key={t}
+              key={tabKey}
               type="button"
-              className={tab === t ? 'active' : ''}
-              onClick={() => setTab(t)}
+              className={tab === tabKey ? 'active' : ''}
+              onClick={() => setTab(tabKey)}
             >
-              {TAB_LABELS[t]} ({lists[t].length})
+              {TAB_LABELS[tabKey]} ({lists[tabKey].length})
             </button>
           ))}
         </div>
@@ -152,7 +156,7 @@ export function ApplicationsClient({
                         </span>
                         {appliedLabel && (
                           <span>
-                            <Icon name="clock" size={14} /> Applied {appliedLabel}
+                            <Icon name="clock" size={14} /> {t('applied', { date: appliedLabel })}
                           </span>
                         )}
                       </div>
@@ -165,7 +169,7 @@ export function ApplicationsClient({
                           disabled={withdrawingId === app.id}
                           onClick={() => void handleWithdraw(app.id)}
                         >
-                          {withdrawingId === app.id ? 'Withdrawing…' : 'Withdraw'}
+                          {withdrawingId === app.id ? t('withdrawing') : t('withdraw')}
                         </button>
                       )}
                       <span

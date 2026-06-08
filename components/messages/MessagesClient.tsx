@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { useToast } from '@/components/ui/Toast';
@@ -47,16 +48,16 @@ export function MessagesListClient({
   notif,
   variant,
 }: MessagesListClientProps) {
+  const t = useTranslations('messages');
+
   return (
     <DashShell nav={nav} active={active} user={user} topTitle={topTitle} notif={notif} variant={variant}>
       <div className="content">
         {conversations.length === 0 ? (
           <div className="empty-state panel">
-            <h3>No conversations yet</h3>
+            <h3>{t('emptyTitle')}</h3>
             <p>
-              {variant === 'business'
-                ? 'Accept a student application to start messaging.'
-                : 'When a business accepts your application, you can message them here.'}
+              {variant === 'business' ? t('emptyBusiness') : t('emptyStudent')}
             </p>
           </div>
         ) : (
@@ -110,6 +111,7 @@ export function MessageThreadClient({
   notif,
   variant,
 }: MessageThreadClientProps) {
+  const t = useTranslations('messages');
   const [messages, setMessages] = useState(initialMessages);
   const [body, setBody] = useState('');
   const [loading, setLoading] = useState(false);
@@ -154,13 +156,13 @@ export function MessageThreadClient({
     >
       <div className="content">
         <Link href={basePath} className="link-btn" style={{ marginBottom: 12, display: 'inline-flex' }}>
-          ← All messages
+          {t('backToAll')}
         </Link>
         <div className="msg-layout">
           <div className="msg-thread" style={{ gridColumn: '1 / -1' }}>
             <div className="msg-messages">
               {messages.length === 0 ? (
-                <p style={{ textAlign: 'center', color: 'var(--muted)' }}>No messages yet. Say hello!</p>
+                <p style={{ textAlign: 'center', color: 'var(--muted)' }}>{t('noMessages')}</p>
               ) : (
                 messages.map((m) => (
                   <div key={m.id} className={`msg-bubble${m.isMine ? ' mine' : ' theirs'}`}>
@@ -178,11 +180,11 @@ export function MessageThreadClient({
               <input
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                placeholder="Type a message…"
+                placeholder={t('placeholder')}
                 disabled={loading}
               />
               <button type="submit" className="btn btn-primary btn-sm" disabled={loading || !body.trim()}>
-                Send
+                {t('send')}
               </button>
             </form>
           </div>

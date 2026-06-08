@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { DashShell } from '@/components/layout/DashShell';
 import { Icon } from '@/components/ui/Icon';
@@ -32,6 +33,7 @@ export function AdminBusinessesClient({
   stats: DashboardStats;
   businesses: BusinessRow[];
 }) {
+  const tNav = useTranslations('nav.admin');
   const [list, setList] = useState(businesses);
   const [loading, setLoading] = useState<string | null>(null);
   const { show } = useToast();
@@ -52,8 +54,8 @@ export function AdminBusinessesClient({
 
   return (
     <DashShell
-      nav={adminNav(stats.contactSubmissions ?? 0)}
-      active="Businesses"
+      nav={adminNav(tNav, stats.contactSubmissions ?? 0)}
+      active={tNav('businesses')}
       user={user}
       topTitle="Business directory"
       topSub={`${list.length} pending manual review (auto-verified at signup)`}

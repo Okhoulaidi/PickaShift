@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useSession } from '@clerk/nextjs';
+import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 import { Logo } from '@/components/ui/Logo';
 import { useToast } from '@/components/ui/Toast';
@@ -16,8 +17,6 @@ import {
   VISA_TYPES,
 } from '@/lib/constants';
 import { createClient } from '@/lib/supabase/client';
-
-const STEPS = ['Basics', 'Profile', 'Experience'];
 
 const inputClass =
   'w-full px-4 py-2.5 rounded-xl border border-line bg-canvas text-sm text-ink focus:outline-none focus:border-brand transition-colors';
@@ -40,6 +39,8 @@ async function uploadFile(bucket: string, path: string, file: File): Promise<str
 }
 
 export default function StudentOnboardingPage() {
+  const t = useTranslations('onboarding');
+  const STEPS = [t('steps.basics'), t('steps.profile'), t('steps.experience')];
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const { session } = useSession();
@@ -79,7 +80,7 @@ export default function StudentOnboardingPage() {
 
   async function handleAvatarFile(file: File) {
     if (!userId) {
-      show('Please sign in again to upload a photo.');
+      show(t('errors.signInPhoto'));
       return;
     }
     setAvatarUploading(true);
@@ -87,7 +88,7 @@ export default function StudentOnboardingPage() {
     const url = await uploadFile('avatars', `${userId}/avatar.${ext}`, file);
     setAvatarUploading(false);
     if (!url) {
-      show('Photo upload failed. You can continue without one.');
+      show(t('errors.photoFailed'));
       return;
     }
     setAvatarUrl(url);
@@ -95,18 +96,18 @@ export default function StudentOnboardingPage() {
 
   async function handleCvFile(file: File) {
     if (!userId) {
-      show('Please sign in again to upload your CV.');
+      show(t('errors.signInCv'));
       return;
     }
     if (file.type !== 'application/pdf') {
-      show('Only PDF files are accepted.');
+      show(t('errors.pdfOnly'));
       return;
     }
     setCvUploading(true);
     const url = await uploadFile(STUDENT_CV_BUCKET, `cvs/${userId}.pdf`, file);
     setCvUploading(false);
     if (!url) {
-      show('CV upload failed. You can continue without one.');
+      show(t('errors.cvFailed'));
       return;
     }
     setCvUrl(url);
@@ -115,11 +116,11 @@ export default function StudentOnboardingPage() {
 
   function validateStep1(): boolean {
     if (!firstName.trim() || !lastName.trim()) {
-      show('Please enter your first and last name');
+      show(t('errors.nameRequired'));
       return false;
     }
     if (!degree.trim()) {
-      show('Please enter your degree programme');
+      show(t('errors.degreeRequired'));
       return false;
     }
     return true;
@@ -173,10 +174,10 @@ export default function StudentOnboardingPage() {
 
         <div className="bg-card border border-line rounded-2xl p-6 sm:p-8">
           <p className="text-brand text-xs font-bold tracking-widest uppercase mb-2">
-            Join as a student
+            {t('eyebrow')}
           </p>
-          <h1 className="text-2xl font-black mb-1.5">Create your free profile</h1>
-          <p className="text-muted-foreground text-sm mb-5">Takes 3 minutes. Free forever.</p>
+          <h1 className="text-2xl font-black mb-1.5">{t('title')}</h1>
+          <p className="text-muted-foreground text-sm mb-5">{t('subtitle')}</p>
 
           <div className="flex items-center gap-3 mb-8">
             <div className="flex gap-2 flex-1">
@@ -190,7 +191,7 @@ export default function StudentOnboardingPage() {
               ))}
             </div>
             <span className="text-xs text-muted-foreground whitespace-nowrap">
-              Step {step + 1} of {STEPS.length}
+              {t('stepOf', { current: step + 1, total: STEPS.length })}
             </span>
           </div>
 
@@ -199,29 +200,29 @@ export default function StudentOnboardingPage() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className={labelClass}>
-                    First name <span className="text-brand">*</span>
+                    {t('firstName')} <span className="text-brand">*</span>
                   </label>
                   <input
                     className={inputClass}
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="e.g. María"
+                    placeholder={t('firstNamePlaceholder')}
                   />
                 </div>
                 <div>
                   <label className={labelClass}>
-                    Last name <span className="text-brand">*</span>
+                    {t('lastName')} <span className="text-brand">*</span>
                   </label>
                   <input
                     className={inputClass}
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    placeholder="e.g. García"
+                    placeholder={t('lastNamePlaceholder')}
                   />
                 </div>
               </div>
               <div>
-                <label className={labelClass}>University</label>
+                <label className={labelClass}>{t('university')}</label>
                 <select
                   className={inputClass}
                   value={university}
@@ -236,18 +237,18 @@ export default function StudentOnboardingPage() {
               </div>
               <div>
                 <label className={labelClass}>
-                  Degree programme <span className="text-brand">*</span>
+                  {t('degree')} <span className="text-brand">*</span>
                 </label>
                 <input
                   className={inputClass}
                   value={degree}
                   onChange={(e) => setDegree(e.target.value)}
-                  placeholder="e.g. Business Administration"
+                  placeholder={t('degreePlaceholder')}
                 />
               </div>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className={labelClass}>Year of study</label>
+                  <label className={labelClass}>{t('yearOfStudy')}</label>
                   <select
                     className={inputClass}
                     value={yearOfStudy}
@@ -255,18 +256,18 @@ export default function StudentOnboardingPage() {
                   >
                     {[1, 2, 3, 4, 5, 6].map((y) => (
                       <option key={y} value={y}>
-                        Year {y}
+                        {t('year', { year: y })}
                       </option>
                     ))}
                   </select>
                 </div>
                 <div>
-                  <label className={labelClass}>Nationality</label>
+                  <label className={labelClass}>{t('nationality')}</label>
                   <input
                     className={inputClass}
                     value={nationality}
                     onChange={(e) => setNationality(e.target.value)}
-                    placeholder="e.g. Spanish, Italian…"
+                    placeholder={t('nationalityPlaceholder')}
                   />
                 </div>
               </div>
@@ -276,7 +277,7 @@ export default function StudentOnboardingPage() {
           {step === 1 && (
             <div className="space-y-5">
               <div>
-                <label className={labelClass}>Profile photo</label>
+                <label className={labelClass}>{t('profilePhoto')}</label>
                 <input
                   ref={avatarInputRef}
                   type="file"
@@ -298,22 +299,22 @@ export default function StudentOnboardingPage() {
                   }}
                 >
                   {avatarUploading ? (
-                    <p>Uploading…</p>
+                    <p>{t('uploading')}</p>
                   ) : avatarUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={avatarUrl}
-                      alt="Profile preview"
+                      alt={t('profilePreviewAlt')}
                       className="mx-auto h-24 w-24 rounded-full object-cover"
                     />
                   ) : (
-                    <p>Drag a photo or click to upload</p>
+                    <p>{t('dragPhoto')}</p>
                   )}
                 </div>
               </div>
 
               <div>
-                <label className={labelClass}>Languages you speak</label>
+                <label className={labelClass}>{t('languages')}</label>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {LANGUAGES.map((lang) => (
                     <button
@@ -329,7 +330,7 @@ export default function StudentOnboardingPage() {
               </div>
 
               <div>
-                <label className={labelClass}>Job types you&apos;re interested in</label>
+                <label className={labelClass}>{t('jobTypes')}</label>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {JOB_TYPES.map((job) => (
                     <button
@@ -345,7 +346,7 @@ export default function StudentOnboardingPage() {
               </div>
 
               <div>
-                <label className={labelClass}>Availability</label>
+                <label className={labelClass}>{t('availability')}</label>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {AVAILABILITY_SLOTS.map((slot) => (
                     <button
@@ -361,7 +362,7 @@ export default function StudentOnboardingPage() {
               </div>
 
               <div>
-                <label className={labelClass}>Home district</label>
+                <label className={labelClass}>{t('homeDistrict')}</label>
                 <select
                   className={inputClass}
                   value={district}
@@ -380,7 +381,7 @@ export default function StudentOnboardingPage() {
           {step === 2 && (
             <div className="space-y-5">
               <div>
-                <label className={labelClass}>CV</label>
+                <label className={labelClass}>{t('cv')}</label>
                 <input
                   ref={cvInputRef}
                   type="file"
@@ -402,27 +403,27 @@ export default function StudentOnboardingPage() {
                   }}
                 >
                   {cvUploading ? (
-                    <p>Uploading…</p>
+                    <p>{t('uploading')}</p>
                   ) : cvFileName ? (
-                    <p className="text-ink font-medium">✓ {cvFileName} uploaded</p>
+                    <p className="text-ink font-medium">{t('cvUploaded', { fileName: cvFileName })}</p>
                   ) : (
-                    <p>Upload PDF if you have one</p>
+                    <p>{t('uploadPdf')}</p>
                   )}
                 </div>
               </div>
 
               <div>
-                <label className={labelClass}>Past experience</label>
+                <label className={labelClass}>{t('pastExperience')}</label>
                 <textarea
                   className={`${inputClass} resize-none min-h-[100px]`}
                   value={pastExperience}
                   onChange={(e) => setPastExperience(e.target.value)}
-                  placeholder="e.g. 6 months as barista at Costa Coffee"
+                  placeholder={t('pastExperiencePlaceholder')}
                 />
               </div>
 
               <div>
-                <label className={labelClass}>Visa type</label>
+                <label className={labelClass}>{t('visaType')}</label>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {VISA_TYPES.map((visa) => (
                     <button
@@ -447,7 +448,7 @@ export default function StudentOnboardingPage() {
                   className="px-5 py-2.5 rounded-xl border border-line text-sm font-semibold text-muted-foreground hover:bg-muted/40 transition-colors"
                   onClick={() => setStep((s) => s - 1)}
                 >
-                  Back
+                  {t('back')}
                 </button>
               )}
             </div>
@@ -458,7 +459,7 @@ export default function StudentOnboardingPage() {
                   className="bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-brand-dark transition-colors"
                   onClick={goNext}
                 >
-                  Continue →
+                  {t('continue')}
                 </button>
               ) : (
                 <button
@@ -467,7 +468,7 @@ export default function StudentOnboardingPage() {
                   disabled={loading}
                   onClick={submit}
                 >
-                  {loading ? 'Saving…' : 'Create my profile →'}
+                  {loading ? t('saving') : t('createProfile')}
                 </button>
               )}
             </div>

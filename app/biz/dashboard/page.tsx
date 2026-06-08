@@ -9,6 +9,7 @@ import {
   Star,
   Users,
 } from 'lucide-react';
+import { getTranslations } from 'next-intl/server';
 import { DashShell } from '@/components/layout/DashShell';
 import { businessNav } from '@/lib/dashboard-nav';
 import { businessDashUser } from '@/lib/dashboard-user';
@@ -20,6 +21,8 @@ import { formatPayHour, formatShiftDate, formatTimeRange } from '@/lib/utils';
 export const dynamic = 'force-dynamic';
 
 export default async function BizDashboardPage() {
+  const t = await getTranslations('biz.dashboard');
+  const tNav = await getTranslations('nav.business');
   const { session, profile: business } = await requireBusinessProfile();
   const [stats, shifts] = await Promise.all([
     getDashboardStats('business', session.userId),
@@ -50,20 +53,20 @@ export default async function BizDashboardPage() {
   }));
 
   const statCards = [
-    { icon: Briefcase, label: 'Open shifts', value: stats.openShifts ?? 0 },
-    { icon: Users, label: 'Applicants to review', value: stats.pendingReview ?? 0 },
-    { icon: CheckCircle2, label: 'Filled shifts', value: stats.filledShifts ?? 0 },
-    { icon: Star, label: 'Your rating', value: Number(stats.ratingAvg ?? 0).toFixed(1) },
+    { icon: Briefcase, label: t('openShifts'), value: stats.openShifts ?? 0 },
+    { icon: Users, label: t('applicantsToReview'), value: stats.pendingReview ?? 0 },
+    { icon: CheckCircle2, label: t('filledShifts'), value: stats.filledShifts ?? 0 },
+    { icon: Star, label: t('yourRating'), value: Number(stats.ratingAvg ?? 0).toFixed(1) },
   ];
 
   return (
     <DashShell
       variant="business"
-      nav={businessNav(stats.openShifts ?? 0, stats.pendingReview ?? 0)}
-      active="Overview"
+      nav={businessNav(tNav, stats.openShifts ?? 0, stats.pendingReview ?? 0)}
+      active={tNav('overview')}
       user={user}
       topTitle={business.business_name}
-      topSub="Staff up in minutes — your command centre"
+      topSub={t('subtitle')}
       notif={stats.unreadNotifications}
     >
       <div className="space-y-6">
@@ -102,24 +105,22 @@ export default async function BizDashboardPage() {
         <section>
           <div className="flex items-end justify-between mb-4 gap-4">
             <div>
-              <h2 className="font-sora text-xl font-bold">Active listings</h2>
+              <h2 className="font-sora text-xl font-bold">{t('activeListings')}</h2>
               <p className="text-sm text-muted-foreground">{listings.length} open or filled</p>
             </div>
             <Link
               href="/biz/shifts"
               className="text-sm font-semibold text-brand hover:text-brand-dark flex items-center gap-1"
             >
-              Manage all <ArrowRight className="w-4 h-4" />
+              {t('viewAll')} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
           {listings.length === 0 ? (
             <div className="bg-card rounded-2xl border border-dashed border-line p-12 text-center">
               <Briefcase className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-              <h3 className="font-sora font-bold text-lg mb-2">No active shifts yet</h3>
-              <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
-                Post your first shift to start receiving applications from verified students.
-              </p>
+              <h3 className="font-sora font-bold text-lg mb-2">{t('noListings')}</h3>
+              <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">{t('noListingsBody')}</p>
               <Link
                 href="/biz/shifts/new"
                 className="inline-flex items-center gap-2 bg-brand text-white px-5 py-3 rounded-xl font-semibold text-sm hover:bg-brand-dark"
