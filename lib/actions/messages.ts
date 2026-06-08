@@ -9,6 +9,9 @@ export async function createConversation(
   studentId: string,
   businessId: string
 ): Promise<ActionResult<{ id: string }>> {
+  const session = await requireActionAuth();
+  if (session.error) return { error: session.error };
+
   const supabase = createAdminClient();
 
   const { data: existing } = await supabase

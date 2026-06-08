@@ -13,6 +13,9 @@ export interface NotificationInput {
 }
 
 export async function createNotification(input: NotificationInput): Promise<ActionResult<{ id: string }>> {
+  const session = await requireActionAuth();
+  if (session.error) return { error: session.error };
+
   const supabase = createAdminClient();
 
   const { data, error } = await supabase

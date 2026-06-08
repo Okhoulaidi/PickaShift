@@ -21,14 +21,21 @@ export default async function BizApplicantsPage() {
   const { data: applications } = await supabase
     .from('applications')
     .select(`
-      id, status, applied_at,
+      id, status, applied_at, student_id,
       shift:shifts!inner(id, title, shift_date, district, business_id),
-      student:students(id, university, degree, cv_url,
-        profile:profiles(first_name, last_name, avatar_url)
-      )
+      student:students(id, university, degree, cv_url)
     `)
     .eq('shift.business_id', session.userId)
     .order('applied_at', { ascending: false });
+
+  const studentIds = [...new Set((applications ?? []).map((app) => app.student_id))];
+  const { data: profiles } = studentIds.length
+    ? await supabase
+        .from('profiles')
+        .select('id, first_name, last_name, avatar_url')
+        .in('id', studentIds)
+    : { data: [] };
+  const profileMap = new Map((profiles ?? []).map((profile) => [profile.id, profile]));
 
   const grouped: Record<string, NonNullable<typeof applications>> = {};
   for (const app of applications ?? []) {
@@ -105,7 +112,7 @@ export default async function BizApplicantsPage() {
                   </div>
                   {apps!.map((app) => {
                     const student = unwrapRelation(app.student);
-                    const profile = student ? unwrapRelation(student.profile) : null;
+                    const profile = student?.id ? profileMap.get(student.id) : null;
                     const name = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || 'Student';
                     const cvHref = student?.id ? cvUrlCache.get(student.id) : null;
                     return (

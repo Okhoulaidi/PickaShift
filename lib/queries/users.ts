@@ -3,6 +3,32 @@ import { createAdminClient } from '@/lib/supabase/admin';
 export { getBusinessProfile } from '@/lib/queries/business';
 export { getStudentProfile } from '@/lib/queries/student';
 
+type ProfileSnippet = {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  avatar_url: string | null;
+  email: string;
+  created_at?: string;
+};
+
+async function fetchProfilesByIds(ids: string[]): Promise<Map<string, ProfileSnippet>> {
+  if (!ids.length) return new Map();
+
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id, first_name, last_name, avatar_url, email, created_at')
+    .in('id', ids);
+
+  if (error) {
+    console.error('[fetchProfilesByIds]', error.code, error.message);
+    return new Map();
+  }
+
+  return new Map((data ?? []).map((profile) => [profile.id, profile as ProfileSnippet]));
+}
+
 export async function getTalentPool(businessId: string) {
   const supabase = createAdminClient();
   const { data, error } = await supabase
@@ -17,30 +43,53 @@ export async function getTalentPool(businessId: string) {
         bio,
         skills,
         reliability_score,
-        shifts_completed,
-        profile:profiles(first_name, last_name, avatar_url, email)
+        shifts_completed
       )
     `)
     .eq('business_id', businessId)
     .order('added_at', { ascending: false });
 
   if (error) throw new Error(error.message);
-  return data ?? [];
+
+  const studentIds = [...new Set((data ?? []).map((row) => row.student_id))];
+  const profileMap = await fetchProfilesByIds(studentIds);
+
+  return (data ?? []).map((row) => {
+    const student = Array.isArray(row.student) ? row.student[0] : row.student;
+    return {
+      ...row,
+      student: student
+        ? {
+            ...student,
+            profile: profileMap.get(row.student_id) ?? null,
+          }
+        : row.student,
+    };
+  });
 }
 
 export async function getUnverifiedBusinesses() {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from('businesses')
-    .select(`
-      *,
-      profile:profiles(first_name, last_name, email, created_at)
-    `)
-    .eq('verified', false)
-    .order('profile.created_at', { ascending: true });
+    .select('*')
+    .eq('verified', false);
 
   if (error) throw new Error(error.message);
-  return data ?? [];
+
+  const businessIds = (data ?? []).map((business) => business.id);
+  const profileMap = await fetchProfilesByIds(businessIds);
+
+  return (data ?? [])
+    .map((business) => ({
+      ...business,
+      profile: profileMap.get(business.id) ?? null,
+    }))
+    .sort((a, b) => {
+      const aDate = a.profile?.created_at ?? '';
+      const bDate = b.profile?.created_at ?? '';
+      return aDate.localeCompare(bDate);
+    });
 }
 
 export async function getAllProfiles(limit = 100) {

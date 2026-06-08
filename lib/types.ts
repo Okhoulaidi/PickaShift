@@ -31,9 +31,10 @@ export interface DashboardStats {
   filledShifts?: number;
   ratingAvg?: number;
   totalUsers?: number;
-  pendingVerifications?: number;
+  totalBusinesses?: number;
   totalOpenShifts?: number;
   applicationsToday?: number;
+  contactSubmissions?: number;
 }
 
 export interface PlatformStats {
@@ -41,6 +42,15 @@ export interface PlatformStats {
   students: number;
   businesses: number;
   completedShifts: number;
+}
+
+export interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  created_at: string;
 }
 
 export interface Profile {

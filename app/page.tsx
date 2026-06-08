@@ -11,10 +11,10 @@ import { LandingNav } from '@/components/landing/LandingNav';
 import { Logo } from '@/components/ui/Logo';
 
 const TRUST = [
-  { icon: ShieldCheck, label: 'Verified Businesses Only' },
-  { icon: Wallet, label: 'Payments within 24h' },
-  { icon: Star, label: '4.9 / 5 Student Rating' },
-  { icon: CheckCircle2, label: 'Insured Shifts' },
+  { icon: ShieldCheck, label: 'Reviewed Businesses' },
+  { icon: Wallet, label: 'Track Your Earnings' },
+  { icon: Star, label: 'Ratings After Every Shift' },
+  { icon: CheckCircle2, label: 'Flexible Student Shifts' },
 ];
 
 export default function HomePage() {
@@ -33,8 +33,8 @@ export default function HomePage() {
               <span className="text-brand">SCHEDULE.</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-10 text-pretty">
-              Pick up hospitality and retail shifts across Madrid. Apply in one tap, get paid
-              within 24 hours of completing your shift.
+              Pick up hospitality and retail shifts across Madrid. Apply in one tap and track what
+              you earn as you complete shifts.
             </p>
             <Link
               href="/sign-up?role=student"
@@ -109,8 +109,8 @@ export default function HomePage() {
               <ol className="space-y-6">
                 {[
                   ['Create your profile', 'Tell us your availability, skills, and preferred districts. Takes under 2 minutes.'],
-                  ['Browse & apply in one tap', 'See open shifts near you. No CVs, no cover letters.'],
-                  ['Work, then get paid', 'Complete your shift. Payment lands in your account within 24h.'],
+                  ['Browse & apply in one tap', 'See open shifts near you. Optional CV upload to stand out to employers.'],
+                  ['Work, then track earnings', 'Complete your shift. Your earnings total updates in your dashboard.'],
                 ].map(([title, body], i) => (
                   <li key={title} className="flex gap-5">
                     <div className="size-10 rounded-full bg-brand-light text-brand font-sora font-extrabold flex items-center justify-center shrink-0">
@@ -131,8 +131,8 @@ export default function HomePage() {
               <ol className="space-y-6">
                 {[
                   ['Post your shift', 'Set role, date, hourly rate. Live in seconds.'],
-                  ['Review verified candidates', 'See ratings, experience and reliability scores.'],
-                  ['Staff up in minutes', 'Approve with one tap. We handle insurance & payroll.'],
+                  ['Review student profiles', 'See ratings, experience, reliability scores, and optional CVs.'],
+                  ['Staff up in minutes', 'Approve with one tap. Messaging built in for shift coordination.'],
                 ].map(([title, body], i) => (
                   <li key={title} className="flex gap-5">
                     <div className="size-10 rounded-full bg-ink text-white font-sora font-extrabold flex items-center justify-center shrink-0">
@@ -204,8 +204,8 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-6">
           <div className="bg-canvas p-8 border border-line flex flex-col justify-between min-h-64 rounded-2xl">
             <p className="italic text-lg leading-relaxed">
-              &ldquo;I found a shift at a cafe in Malasaña within an hour. Payment was in my account
-              by the next morning.&rdquo;
+              &ldquo;I found a shift at a cafe in Malasaña within an hour. The apply flow was
+              straightforward and I could see my earnings add up after the shift.&rdquo;
             </p>
             <div className="flex items-center gap-3 mt-4">
               <div className="size-10 bg-brand-light rounded-full flex items-center justify-center text-brand font-extrabold">
@@ -219,8 +219,8 @@ export default function HomePage() {
           </div>
           <div className="bg-canvas p-8 border border-line flex flex-col justify-between min-h-64 rounded-2xl">
             <p className="italic text-lg leading-relaxed">
-              &ldquo;Scaling our weekend staff used to be a nightmare. Now we post and talent shows up
-              — vetted and ready.&rdquo;
+              &ldquo;Scaling our weekend staff used to be a nightmare. Now we post and students apply
+              — with profiles and ratings to help us choose.&rdquo;
             </p>
             <div className="flex items-center gap-3 mt-4">
               <div className="size-10 bg-brand-light rounded-full flex items-center justify-center text-brand font-extrabold">
@@ -272,9 +272,14 @@ export default function HomePage() {
           <span className="flex items-center gap-2">
             <Logo className="logo logo-sm !text-white scale-75 origin-left" /> © 2026 Pick a Shift S.L.
           </span>
-          <div className="flex gap-6">
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             <Link href="/sign-in" className="hover:text-white transition-colors">Log in</Link>
             <Link href="/browse" className="hover:text-white transition-colors">Browse shifts</Link>
+            <Link href="/help" className="hover:text-white transition-colors">Help</Link>
+            <Link href="/faq" className="hover:text-white transition-colors">FAQ</Link>
+            <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
           </div>
         </div>
       </footer>

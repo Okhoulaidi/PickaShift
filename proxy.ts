@@ -10,6 +10,11 @@ const isPublicRoute = createRouteMatcher([
   '/shifts/(.*)',
   '/api/webhooks(.*)',
   '/suspended',
+  '/privacy',
+  '/terms',
+  '/help',
+  '/faq',
+  '/contact',
 ]);
 
 const isOnboardingRoute = createRouteMatcher([
@@ -58,6 +63,13 @@ export default clerkMiddleware(async (auth, req) => {
 
   if (!meta.role && !isOnboardingRoute(req) && path !== '/sign-up/role') {
     return NextResponse.redirect(new URL('/sign-up/role', req.url));
+  }
+
+  if (path.startsWith('/onboarding/student') && meta.role && meta.role !== 'student') {
+    return NextResponse.redirect(new URL(dashboardPath(meta), req.url));
+  }
+  if (path.startsWith('/onboarding/business') && meta.role && meta.role !== 'business') {
+    return NextResponse.redirect(new URL(dashboardPath(meta), req.url));
   }
 
   if (isAdminRoute(req) && meta.role !== 'admin') {

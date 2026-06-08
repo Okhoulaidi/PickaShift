@@ -64,10 +64,13 @@ export async function setUserRole(role: 'student' | 'business'): Promise<ActionR
 }
 
 export async function completeStudentOnboarding(input: StudentOnboardingInput): Promise<ActionResult> {
-  // No role restriction here — the JWT may not have refreshed yet after setUserRole.
-  // The user is proving their role by completing this form; Supabase upsert is scoped to their userId.
+  // No role restriction when meta.role is unset — JWT may not have refreshed yet after setUserRole.
   const session = await requireActionAuth();
   if (session.error) return { error: session.error };
+
+  if (session.meta?.role && session.meta.role !== 'student') {
+    return { error: 'Invalid role for this onboarding form.' };
+  }
 
   const supabase = createAdminClient();
   const user = await currentUser();
@@ -103,10 +106,13 @@ export async function completeStudentOnboarding(input: StudentOnboardingInput): 
 }
 
 export async function completeBusinessOnboarding(input: BusinessOnboardingInput): Promise<ActionResult> {
-  // No role restriction here — the JWT may not have refreshed yet after setUserRole.
-  // The user is proving their role by completing this form; Supabase upsert is scoped to their userId.
+  // No role restriction when meta.role is unset — JWT may not have refreshed yet after setUserRole.
   const session = await requireActionAuth();
   if (session.error) return { error: session.error };
+
+  if (session.meta?.role && session.meta.role !== 'business') {
+    return { error: 'Invalid role for this onboarding form.' };
+  }
 
   const supabase = createAdminClient();
   const user = await currentUser();

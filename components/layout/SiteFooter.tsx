@@ -2,11 +2,35 @@ import Link from 'next/link';
 import { Icon } from '@/components/ui/Icon';
 import { Logo } from '@/components/ui/Logo';
 
-const FOOTER_COLS = [
-  ['Platform', ['Browse Shifts', 'Post a Shift', 'How it Works', 'Pricing']],
-  ['Company', ['About', 'Careers', 'Blog', 'Press']],
-  ['Support', ['Help Center', 'Contact', 'Privacy', 'Terms']],
-] as const;
+const FOOTER_COLS: [string, { label: string; href: string }[]][] = [
+  [
+    'Platform',
+    [
+      { label: 'Browse Shifts', href: '/browse' },
+      { label: 'Post a Shift', href: '/sign-up?role=business' },
+      { label: 'How it Works', href: '/#how' },
+      { label: 'FAQ', href: '/faq' },
+    ],
+  ],
+  [
+    'Company',
+    [
+      { label: 'About', href: '#' },
+      { label: 'Blog', href: '#' },
+      { label: 'Press', href: '#' },
+      { label: 'Careers', href: '#' },
+    ],
+  ],
+  [
+    'Support',
+    [
+      { label: 'Help Center', href: '/help' },
+      { label: 'Contact', href: '/contact' },
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
+    ],
+  ],
+];
 
 export function SiteFooter() {
   return (
@@ -33,9 +57,9 @@ export function SiteFooter() {
           {FOOTER_COLS.map(([heading, items]) => (
             <div className="foot-col" key={heading}>
               <h5>{heading}</h5>
-              {items.map((item) => (
-                <Link key={item} href="#">
-                  {item}
+              {items.map(({ label, href }) => (
+                <Link key={label} href={href}>
+                  {label}
                 </Link>
               ))}
             </div>

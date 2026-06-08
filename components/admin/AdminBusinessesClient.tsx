@@ -52,26 +52,27 @@ export function AdminBusinessesClient({
 
   return (
     <DashShell
-      nav={adminNav(stats.pendingVerifications ?? 0)}
+      nav={adminNav(stats.contactSubmissions ?? 0)}
       active="Businesses"
       user={user}
-      topTitle="Business verification"
-      topSub={`${list.length} awaiting review`}
+      topTitle="Business directory"
+      topSub={`${list.length} pending manual review (auto-verified at signup)`}
       notif={stats.unreadNotifications}
     >
       <div className="content">
         <nav className="admin-nav">
           <Link href="/admin">Overview</Link>
           <Link href="/admin/businesses" className="active">
-            Verifications
+            Businesses
           </Link>
           <Link href="/admin/users">Users</Link>
+          <Link href="/admin/contact">Contact</Link>
         </nav>
 
         {list.length === 0 ? (
           <div className="empty-state panel">
-            <h3>Queue empty</h3>
-            <p>All businesses are verified.</p>
+            <h3>No pending reviews</h3>
+            <p>New businesses are verified automatically when they complete onboarding.</p>
           </div>
         ) : (
           <div className="panel">

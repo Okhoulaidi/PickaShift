@@ -37,7 +37,7 @@ export function AdminUsersClient({
 
   return (
     <DashShell
-      nav={adminNav(stats.pendingVerifications ?? 0)}
+      nav={adminNav(stats.contactSubmissions ?? 0)}
       active="Users"
       user={user}
       topTitle="Users"
@@ -51,6 +51,7 @@ export function AdminUsersClient({
           <Link href="/admin/users" className="active">
             Users
           </Link>
+          <Link href="/admin/contact">Contact</Link>
         </nav>
 
         <div className="panel">

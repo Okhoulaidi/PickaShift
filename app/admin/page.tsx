@@ -25,7 +25,7 @@ export default async function AdminPage() {
 
   return (
     <DashShell
-      nav={adminNav(stats.pendingVerifications ?? 0)}
+      nav={adminNav(stats.contactSubmissions ?? 0)}
       active="Overview"
       user={user}
       topTitle="Platform overview"
@@ -38,9 +38,10 @@ export default async function AdminPage() {
             Overview
           </Link>
           <Link href="/admin/businesses">
-            Verifications {stats.pendingVerifications ? `(${stats.pendingVerifications})` : ''}
+            Businesses
           </Link>
           <Link href="/admin/users">Users</Link>
+          <Link href="/admin/contact">Contact</Link>
         </nav>
 
         <div className="dash-stats">
@@ -59,8 +60,8 @@ export default async function AdminPage() {
                 <Icon name="briefcase" size={20} />
               </div>
             </div>
-            <div className="ds-num">{stats.pendingVerifications ?? 0}</div>
-            <div className="ds-lbl">Pending verifications</div>
+            <div className="ds-num">{stats.totalBusinesses ?? 0}</div>
+            <div className="ds-lbl">Total businesses</div>
           </div>
           <div className="dash-stat">
             <div className="ds-top">

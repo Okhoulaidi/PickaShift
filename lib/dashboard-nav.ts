@@ -47,7 +47,7 @@ export function businessNav(openShifts = 0, pendingReview = 0): DashNavItem[] {
   ];
 }
 
-export function adminNav(pendingVerifications = 0): DashNavItem[] {
+export function adminNav(contactCount = 0): DashNavItem[] {
   return [
     { label: 'Overview', short: 'Home', icon: 'home', href: '/admin' },
     {
@@ -55,8 +55,14 @@ export function adminNav(pendingVerifications = 0): DashNavItem[] {
       short: 'Biz',
       icon: 'briefcase',
       href: '/admin/businesses',
-      pill: pendingVerifications || undefined,
     },
     { label: 'Users', short: 'Users', icon: 'users', href: '/admin/users' },
+    {
+      label: 'Contact',
+      short: 'Inbox',
+      icon: 'mail',
+      href: '/admin/contact',
+      pill: contactCount || undefined,
+    },
   ];
 }

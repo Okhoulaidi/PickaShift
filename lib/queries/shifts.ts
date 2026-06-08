@@ -2,6 +2,31 @@ import { startOfDay } from 'date-fns';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { DashboardStats, PlatformStats, ShiftFilters } from '@/lib/types';
 
+type ProfileSnippet = {
+  id: string;
+  first_name: string | null;
+  last_name: string | null;
+  avatar_url: string | null;
+  email: string;
+};
+
+async function fetchProfilesByIds(ids: string[]): Promise<Map<string, ProfileSnippet>> {
+  if (!ids.length) return new Map();
+
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('id, first_name, last_name, avatar_url, email')
+    .in('id', ids);
+
+  if (error) {
+    console.error('[fetchProfilesByIds]', error.code, error.message);
+    return new Map();
+  }
+
+  return new Map((data ?? []).map((profile) => [profile.id, profile as ProfileSnippet]));
+}
+
 const SHIFT_SELECT = `
   *,
   business:businesses!inner(
@@ -146,15 +171,29 @@ export async function getShiftApplicants(shiftId: string, businessId: string) {
         bio,
         skills,
         reliability_score,
-        shifts_completed,
-        profile:profiles(first_name, last_name, avatar_url, email)
+        shifts_completed
       )
     `)
     .eq('shift_id', shiftId)
     .order('applied_at', { ascending: true });
 
   if (error) throw new Error(error.message);
-  return data ?? [];
+
+  const studentIds = [...new Set((data ?? []).map((app) => app.student_id))];
+  const profileMap = await fetchProfilesByIds(studentIds);
+
+  return (data ?? []).map((app) => {
+    const student = Array.isArray(app.student) ? app.student[0] : app.student;
+    return {
+      ...app,
+      student: student
+        ? {
+            ...student,
+            profile: profileMap.get(app.student_id) ?? null,
+          }
+        : app.student,
+    };
+  });
 }
 
 export async function getDashboardStats(role: 'student' | 'business' | 'admin', userId: string): Promise<DashboardStats> {
@@ -229,20 +268,23 @@ export async function getDashboardStats(role: 'student' | 'business' | 'admin', 
     };
   }
 
-  const [users, pendingVerifications, openShifts, applicationsToday, unread] = await Promise.all([
+  const [users, totalBusinesses, openShifts, applicationsToday, contactSubmissions, unread] =
+    await Promise.all([
     supabase.from('profiles').select('id', { count: 'exact', head: true }),
-    supabase.from('businesses').select('id', { count: 'exact', head: true }).eq('verified', false),
+    supabase.from('businesses').select('id', { count: 'exact', head: true }),
     supabase.from('shifts').select('id', { count: 'exact', head: true }).eq('status', 'open'),
     supabase.from('applications').select('id', { count: 'exact', head: true }).gte('applied_at', `${today}T00:00:00`),
+    supabase.from('contact_submissions').select('id', { count: 'exact', head: true }),
     unreadQuery,
   ]);
 
   return {
     role,
     totalUsers: users.count ?? 0,
-    pendingVerifications: pendingVerifications.count ?? 0,
+    totalBusinesses: totalBusinesses.count ?? 0,
     totalOpenShifts: openShifts.count ?? 0,
     applicationsToday: applicationsToday.count ?? 0,
+    contactSubmissions: contactSubmissions.count ?? 0,
     unreadNotifications: unread.count ?? 0,
   };
 }

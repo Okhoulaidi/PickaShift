@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { SITE } from '@/lib/site';
 
 export default function SuspendedPage() {
   return (
@@ -9,7 +10,7 @@ export default function SuspendedPage() {
           Your Pick a Shift account has been suspended. If you believe this is a mistake, please contact
           our support team.
         </p>
-        <Link href="mailto:support@pickashift.es" className="btn btn-primary">
+        <Link href={`mailto:${SITE.emails.support}`} className="btn btn-primary">
           Contact support
         </Link>
       </div>
