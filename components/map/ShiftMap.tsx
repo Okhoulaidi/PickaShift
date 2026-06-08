@@ -94,8 +94,8 @@ export function ShiftMap({
           new mapboxgl.Popup({ offset: 24, closeButton: false }).setHTML(
             `<div style="font-family:Inter,system-ui,sans-serif;padding:2px 0;">
               <div style="font-weight:800;font-size:14px;">${shift.business.business_name}</div>
-              <div style="color:#6B6B6B;font-size:13px;margin-top:2px;">${shift.title}</div>
-              <div style="font-weight:800;color:#E8401C;margin-top:6px;">${formatPayHour(shift.pay_per_hour_cents)}/hr</div>
+              <div style="color:#9EA8B3;font-size:13px;margin-top:2px;">${shift.title}</div>
+              <div style="font-weight:800;color:#CC0000;margin-top:6px;">${formatPayHour(shift.pay_per_hour_cents)}/hr</div>
             </div>`,
           ),
         )
@@ -161,11 +161,11 @@ export function ShiftMap({
           border-radius: 50% 50% 50% 0;
           background: var(--primary);
           transform: rotate(-45deg);
-          box-shadow: 0 4px 10px rgba(232, 64, 28, 0.35);
+          box-shadow: 0 4px 10px rgba(204, 0, 0, 0.35);
           border: 2px solid #fff;
         }
         .shift-map-pin-dot.urgent {
-          background: #1A1A1A;
+          background: #0A1628;
         }
         .shift-map-pin:hover .shift-map-pin-dot {
           transform: rotate(-45deg) scale(1.15);

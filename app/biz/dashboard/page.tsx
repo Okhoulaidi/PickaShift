@@ -179,7 +179,7 @@ export default async function BizDashboardPage() {
         </section>
 
         {(stats.pendingReview ?? 0) > 0 && (
-          <section className="bg-ink text-white rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <section className="bg-navy text-white rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-white/60 mb-1">
                 Action needed

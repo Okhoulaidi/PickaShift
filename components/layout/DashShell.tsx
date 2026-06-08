@@ -58,7 +58,7 @@ export function DashShell({
     };
   }, [open]);
 
-  const sidebarBg = isBusiness ? 'bg-ink border-white/10' : 'bg-card border-line';
+  const sidebarBg = isBusiness ? 'bg-navy border-white/10' : 'bg-card border-line';
   const logoClass = isBusiness ? 'logo logo-sm !text-white [&_.logo-icon]:fill-white' : 'logo logo-sm';
   const linkBase = isBusiness
     ? 'text-white/55 hover:bg-white/6 hover:text-white/90'

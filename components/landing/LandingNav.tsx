@@ -8,13 +8,13 @@ export function LandingNav() {
   const { isLoaded, isSignedIn } = useAuth();
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-card/80 backdrop-blur-md border-b border-line">
+    <nav className="sticky top-0 z-50 w-full bg-navy/95 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center gap-4">
         <Logo className="logo scale-90 sm:scale-100 origin-left" />
-        <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          <a href="#how" className="hover:text-brand transition-colors">How it works</a>
+        <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-wider text-white/60">
+          <a href="#how" className="hover:text-white transition-colors">How it works</a>
           <a href="#pricing" className="hover:text-brand transition-colors">Pricing</a>
-          <Link href="/browse" className="hover:text-brand transition-colors">Browse</Link>
+          <Link href="/browse" className="hover:text-white transition-colors">Browse</Link>
         </div>
         <div className="flex gap-2 sm:gap-3 items-center">
           {isLoaded && isSignedIn ? (
@@ -23,7 +23,7 @@ export function LandingNav() {
             <>
               <Link
                 href="/sign-in"
-                className="text-sm font-semibold px-3 sm:px-4 py-2 hover:text-brand transition-colors"
+                className="text-sm font-semibold px-3 sm:px-4 py-2 text-white/80 hover:text-white transition-colors"
               >
                 Log in
               </Link>

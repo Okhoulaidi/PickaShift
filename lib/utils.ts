@@ -1,7 +1,7 @@
 import { format, parseISO, isToday, isTomorrow } from 'date-fns';
 
 export function bizColor(name: string): string {
-  const colors = ['#E8401C', '#2B7A55', '#3454D1', '#9333A8', '#0E7C86', '#C9890E', '#1A1A1A', '#B23A48'];
+  const colors = ['#CC0000', '#2B7A55', '#3454D1', '#9333A8', '#0E7C86', '#C9890E', '#0A1628', '#B23A48'];
   let h = 0;
   for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0;
   return colors[h % colors.length];

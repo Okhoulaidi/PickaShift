@@ -6,8 +6,7 @@ export interface LogoProps {
 
 /**
  * Pick a Shift wordmark — rendered inline as HTML + SVG mark.
- * Transparent background, uses Inter (already loaded), primary orange via CSS var.
- * Mark paths taken from the designed pas-mark_orange.svg asset.
+ * Transparent background, primary red via CSS var.
  */
 export function Logo({ className = 'logo' }: LogoProps) {
   return (

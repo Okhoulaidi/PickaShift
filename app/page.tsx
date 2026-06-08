@@ -46,16 +46,16 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="relative w-full lg:w-1/2 bg-brand flex flex-col justify-center px-8 sm:px-12 lg:px-20 py-20 text-white">
+        <div className="relative w-full lg:w-1/2 bg-navy flex flex-col justify-center px-8 sm:px-12 lg:px-20 py-20 text-white">
           <div className="max-w-md animate-reveal [animation-delay:200ms]">
-            <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-brand-light opacity-80 mb-4 block">
+            <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-white/60 mb-4 block">
               For Business
             </span>
             <h2 className="font-sora text-5xl md:text-6xl xl:text-7xl font-extrabold leading-[0.9] tracking-tighter mb-8 text-balance">
               SCALE ON <br />
               DEMAND.
             </h2>
-            <p className="text-lg text-brand-light/90 mb-10 text-pretty">
+            <p className="text-lg text-white/75 mb-10 text-pretty">
               Instantly connect with Madrid&apos;s best student talent. Fill last-minute gaps in
               minutes, not days.
             </p>
@@ -135,7 +135,7 @@ export default function HomePage() {
                   ['Staff up in minutes', 'Approve with one tap. Messaging built in for shift coordination.'],
                 ].map(([title, body], i) => (
                   <li key={title} className="flex gap-5">
-                    <div className="size-10 rounded-full bg-ink text-white font-sora font-extrabold flex items-center justify-center shrink-0">
+                    <div className="size-10 rounded-full bg-navy-mid text-white font-sora font-extrabold flex items-center justify-center shrink-0">
                       {i + 1}
                     </div>
                     <div>
@@ -192,7 +192,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/sign-up?role=business"
-              className="block w-full text-center bg-ink !text-white py-4 rounded-xl font-sora font-bold text-xs uppercase tracking-widest hover:bg-brand transition-colors"
+              className="block w-full text-center bg-navy !text-white py-4 rounded-xl font-sora font-bold text-xs uppercase tracking-widest hover:bg-brand transition-colors"
             >
               Get Started
             </Link>
@@ -244,7 +244,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <footer className="bg-ink text-white py-24 px-6 overflow-hidden relative">
+      <footer className="bg-navy text-white py-24 px-6 overflow-hidden relative">
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center text-center">
           <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-white/60 mb-6">
             <Clock className="size-3" /> Live in Madrid
