@@ -8,7 +8,7 @@ export function LandingNav() {
   const { isLoaded, isSignedIn } = useAuth();
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-brand/95 backdrop-blur-md border-b border-white/10">
+    <nav className="sticky top-0 z-50 w-full bg-navy/95 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center gap-4">
         <Logo className="logo scale-90 sm:scale-100 origin-left !text-white [&_.logo-icon]:fill-white" />
         <div className="hidden md:flex gap-8 text-xs font-semibold uppercase tracking-wider text-white/75">
@@ -29,7 +29,7 @@ export function LandingNav() {
               </Link>
               <Link
                 href="/sign-up?role=student"
-                className="bg-navy !text-white text-sm font-semibold px-4 sm:px-5 py-2 rounded-lg hover:bg-navy-mid transition-colors"
+                className="bg-brand !text-white text-sm font-semibold px-4 sm:px-5 py-2 rounded-lg hover:bg-brand-dark transition-colors"
               >
                 Join
               </Link>
