@@ -21,10 +21,11 @@ export default async function BizMessageThreadPage({ params }: { params: Promise
     getMessages(id),
   ]);
 
-  const student = unwrapRelation(conversation.student);
-  const profile = student ? unwrapRelation(student.profile) : null;
   const shift = unwrapRelation(conversation.shift);
-  const partnerName = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || 'Student';
+  const partnerName =
+    [conversation.student_profile?.first_name, conversation.student_profile?.last_name]
+      .filter(Boolean)
+      .join(' ') || 'Student';
 
   const mapped = messages.map((m) => {
     const sender = unwrapRelation(m.sender);

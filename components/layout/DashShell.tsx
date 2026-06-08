@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { SignOutButton } from '@clerk/nextjs';
 import { useEffect, useState, type ReactNode } from 'react';
 import { Logo } from '@/components/ui/Logo';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
@@ -90,7 +91,7 @@ export function DashShell({
                 href={item.href}
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
-                  isActive ? linkActive : `${linkBase} ${linkIdle}`
+                  isActive ? `${linkActive} biz-nav-active` : `${linkBase} ${linkIdle}`
                 }`}
               >
                 <Icon className="w-4 h-4 shrink-0" />
@@ -128,6 +129,24 @@ export function DashShell({
               </div>
             </div>
           </div>
+        </div>
+
+        <div className={`px-3 pb-3 ${isBusiness ? 'border-white/10' : 'border-line'}`}>
+          <SignOutButton>
+            <button
+              type="button"
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors ${
+                isBusiness
+                  ? 'text-white/50 hover:text-white/80 hover:bg-white/6'
+                  : 'text-muted-foreground hover:text-ink hover:bg-muted/40'
+              }`}
+            >
+              <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
+              </svg>
+              Sign out
+            </button>
+          </SignOutButton>
         </div>
       </aside>
 

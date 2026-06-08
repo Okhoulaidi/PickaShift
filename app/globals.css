@@ -29,6 +29,19 @@
 }
 .animate-reveal { animation: slideInUp 0.8s cubic-bezier(0.19, 1, 0.22, 1) both; }
 
+/* Business sidebar nav — explicit styles to avoid Tailwind v4 purging dynamic classes */
+.biz-mode aside nav a {
+  color: rgba(255, 255, 255, 0.6);
+}
+.biz-mode aside nav a:hover {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+}
+.biz-mode aside nav a.biz-nav-active {
+  color: #ffffff;
+  background: #E8401C;
+}
+
 .font-sora { font-family: var(--font-sora), ui-sans-serif, system-ui, sans-serif; }
 .font-manrope { font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif; }
 

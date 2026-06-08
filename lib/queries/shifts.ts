@@ -1,6 +1,4 @@
-import { auth } from '@clerk/nextjs/server';
 import { startOfDay } from 'date-fns';
-import { getClerkMetadata } from '@/lib/auth';
 import { createAdminClient } from '@/lib/supabase/admin';
 import type { DashboardStats, PlatformStats, ShiftFilters } from '@/lib/types';
 
@@ -125,19 +123,16 @@ export async function getStudentApplications(studentId: string, status?: string)
   return data ?? [];
 }
 
-export async function getShiftApplicants(shiftId: string) {
-  const { userId, sessionClaims } = await auth();
-  if (!userId) throw new Error('Unauthorized');
-
-  const meta = getClerkMetadata(sessionClaims as Record<string, unknown> | null | undefined);
-  if (meta.role !== 'business' && meta.role !== 'admin') throw new Error('Forbidden');
-
+export async function getShiftApplicants(shiftId: string, businessId: string) {
   const supabase = createAdminClient();
 
-  if (meta.role === 'business') {
-    const { data: shift } = await supabase.from('shifts').select('business_id').eq('id', shiftId).single();
-    if (!shift || shift.business_id !== userId) throw new Error('Forbidden');
-  }
+  const { data: shift } = await supabase
+    .from('shifts')
+    .select('business_id')
+    .eq('id', shiftId)
+    .single();
+
+  if (!shift || shift.business_id !== businessId) throw new Error('Forbidden');
 
   const { data, error } = await supabase
     .from('applications')
@@ -192,14 +187,34 @@ export async function getDashboardStats(role: 'student' | 'business' | 'admin', 
   }
 
   if (role === 'business') {
+    // Get shift IDs for this business first.
+    // We can't use an embedded join with head:true to filter pending apps —
+    // PostgREST drops the join condition on HEAD requests, returning the wrong count.
+    const { data: bizShifts } = await supabase
+      .from('shifts')
+      .select('id')
+      .eq('business_id', userId);
+
+    const shiftIds = bizShifts?.map((s) => s.id) ?? [];
+
     const [open, pending, filled, biz, unread] = await Promise.all([
-      supabase.from('shifts').select('id', { count: 'exact', head: true }).eq('business_id', userId).eq('status', 'open'),
       supabase
-        .from('applications')
-        .select('id, shift:shifts!inner(business_id)', { count: 'exact', head: true })
-        .eq('status', 'pending')
-        .eq('shift.business_id', userId),
-      supabase.from('shifts').select('id', { count: 'exact', head: true }).eq('business_id', userId).eq('status', 'filled'),
+        .from('shifts')
+        .select('id', { count: 'exact', head: true })
+        .eq('business_id', userId)
+        .eq('status', 'open'),
+      shiftIds.length
+        ? supabase
+            .from('applications')
+            .select('id', { count: 'exact', head: true })
+            .in('shift_id', shiftIds)
+            .eq('status', 'pending')
+        : Promise.resolve({ count: 0 }),
+      supabase
+        .from('shifts')
+        .select('id', { count: 'exact', head: true })
+        .eq('business_id', userId)
+        .eq('status', 'filled'),
       supabase.from('businesses').select('rating_avg').eq('id', userId).single(),
       unreadQuery,
     ]);

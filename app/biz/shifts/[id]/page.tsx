@@ -16,7 +16,7 @@ export default async function BizShiftDetailPage({ params }: { params: Promise<{
 
   const [stats, applicants] = await Promise.all([
     getDashboardStats('business', session.userId),
-    getShiftApplicants(id),
+    getShiftApplicants(id, session.userId),
   ]);
 
   const mapped = applicants.map((app) => {

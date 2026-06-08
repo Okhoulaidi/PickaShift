@@ -29,16 +29,25 @@ export default async function BizDashboardPage() {
   const user = businessDashUser(business);
   const supabase = createAdminClient();
 
-  const listings = await Promise.all(
-    shifts.map(async (shift) => {
-      const { count } = await supabase
+  // Batch fetch all pending counts in one query instead of N individual requests
+  const shiftIds = shifts.map((s) => s.id);
+  const { data: pendingRows } = shiftIds.length
+    ? await supabase
         .from('applications')
-        .select('id', { count: 'exact', head: true })
-        .eq('shift_id', shift.id)
-        .eq('status', 'pending');
-      return { ...shift, applicantCount: count ?? 0 };
-    }),
-  );
+        .select('shift_id')
+        .in('shift_id', shiftIds)
+        .eq('status', 'pending')
+    : { data: [] };
+
+  const countByShift = (pendingRows ?? []).reduce<Record<string, number>>((acc, row) => {
+    acc[row.shift_id] = (acc[row.shift_id] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  const listings = shifts.map((shift) => ({
+    ...shift,
+    applicantCount: countByShift[shift.id] ?? 0,
+  }));
 
   const statCards = [
     { icon: Briefcase, label: 'Open shifts', value: stats.openShifts ?? 0 },

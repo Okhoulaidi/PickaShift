@@ -19,11 +19,10 @@ export default async function BizMessagesPage() {
 
   const items = await Promise.all(
     conversations.map(async (c) => {
-      const student = unwrapRelation(c.student);
-      const profile = student ? unwrapRelation(student.profile) : null;
       const shift = unwrapRelation(c.shift);
       const preview = await getLastMessagePreview(c.id);
-      const name = [profile?.first_name, profile?.last_name].filter(Boolean).join(' ') || 'Student';
+      const name =
+        [c.student_profile?.first_name, c.student_profile?.last_name].filter(Boolean).join(' ') || 'Student';
       return {
         id: c.id,
         title: shift?.title ?? 'Shift',
